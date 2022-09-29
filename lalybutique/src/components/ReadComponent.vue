@@ -26,8 +26,12 @@
                                 <td>{{producto.stock_critico}}</td>
                                 <td>{{producto.precio}}</td>
                                 <td>{{producto.estado}}</td>
-                                <td><a name="" id="" class="btn btn-primary" href="#" role="button">Editar</a>
-                                <a name="" id="" class="btn btn-primary" href="#" role="button">Eliminar</a></td>
+                                <td>
+                                    <div class="btn-group" role="group" aria-label="">
+                                        <button type="button" class="btn btn-warning">Editar</button>
+                                        <button type="button" v-on:click="borrarProducto(producto.id)" class="btn btn-danger">Eliminar</button>
+                                    </div>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -63,6 +67,16 @@ export default {
                 }
             })
             .catch(console.log)
+        },
+        borrarProducto(id){
+            fetch('http://localhost/test/?eliminar='+id)
+            .then(respuesta=>respuesta.json())
+            .then((datosRespuesta)=>{
+                console.log(datosRespuesta)
+                window.location.href='read'
+            })
+            .catch(console.log)
+            
         }
     }
 }
