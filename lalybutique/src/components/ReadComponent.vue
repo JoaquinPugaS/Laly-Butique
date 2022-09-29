@@ -52,12 +52,12 @@ export default {
     methods:{
 
         consultarProductos(){
-            fetch('http://localhost/test/')
+            fetch('http://localhost/test/?leer')
             .then(respuesta=>respuesta.json())
             .then((datosRespuesta)=>{
                 console.log(datosRespuesta)
                 this.productos=[]
-                if(typeof datosRespuesta[1].success=== 'undefined' )
+                if(typeof datosRespuesta[0].success=== 'undefined' )
                 {
                     this.productos=datosRespuesta;
                 }

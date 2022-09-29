@@ -13,15 +13,15 @@
                     <small id="helpId" class="form-text text-muted">Ingresa el nombre del producto</small>
                 </div>
                 <div class="mb-3">
-                    <label for="Stock" class="form-label">Stock: </label>
+                    <label for="stock" class="form-label">Stock: </label>
                     <input type="number"
-                        class="form-control" name="Stock" v-model="producto.stock" id="Stock" aria-describedby="helpId" placeholder="Stock">
+                        class="form-control" name="stock" v-model="producto.stock" id="stock" aria-describedby="helpId" placeholder="Stock">
                     <small id="helpId" class="form-text text-muted">Ingresa el Stock del producto</small>
                 </div>
                 <div class="mb-3">
-                    <label for="Stock_critico" class="form-label">Stock Critico: </label>
+                    <label for="stock_critico" class="form-label">Stock Critico: </label>
                     <input type="number"
-                        class="form-control" name="Stock_critico" v-model="producto.stock_critico" id="Stock_critico" aria-describedby="helpId" placeholder="Stock critico">
+                        class="form-control" name="stock_critico" v-model="producto.stock_critico" id="stock_critico" aria-describedby="helpId" placeholder="Stock critico">
                     <small id="helpId" class="form-text text-muted">Ingresa el Stock critico del producto</small>
                 </div>
                 <div class="mb-3">
@@ -37,9 +37,9 @@
                     <small id="helpId" class="form-text text-muted">Ingresa la imagen del producto</small>
                 </div>
                 <div class="mb-3">
-                    <label for="Estado" class="form-label">Estado: </label>
+                    <label for="estado" class="form-label">Estado: </label>
                     <input type="number"
-                        class="form-control" name="Estado" v-model="producto.estado" id="Estado" aria-describedby="helpId" placeholder="Estado">
+                        class="form-control" name="estado" v-model="producto.estado" id="estado" aria-describedby="helpId" placeholder="Estado">
                     <small id="helpId" class="form-text text-muted">Ingresa el Estado del producto</small>
                 </div>
                 <div class="btn-group" role="group" aria-label="">
@@ -63,6 +63,17 @@ export default {
     methods:{
         AñadirProducto(){
             console.log(this.producto);
+        
+        var datosEnviar={nombre:this.producto.nombre,stock:this.producto.stock,stock_critico:this.producto.stock_critico,precio:this.producto.precio,imagen:this.producto.imagen,estado:this.producto.estado}
+        fetch('http://localhost/test/?insertar=1',{
+            method:'POST',
+            body:JSON.stringify(datosEnviar)
+        })
+        .then(respuesta=>respuesta.json())
+        .then((datosRespuesta=>{
+            console.log(datosRespuesta);
+            window.location.href='read'
+        }))
         }
     }
 }
