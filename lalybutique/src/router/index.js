@@ -3,7 +3,7 @@ import HomeView from '../views/HomeView.vue'
 
 import CreateComponent from '../components/CreateComponent'
 import ReadComponent from '../components/ReadComponent'
-
+import EditComponent from '../components/EditComponent'
 
 const routes = [
   {
@@ -16,11 +16,11 @@ const routes = [
     name: 'create',
     component: CreateComponent
   },
-  // {
-  //   path: '/modify',
-  //   name: 'modify',
-  //   component: ModifyComponent
-  // },
+  {
+    path: '/edit/:id',
+    name: 'edit',
+    component: EditComponent
+  },
   {
     path: '/read',
     name: 'read',
