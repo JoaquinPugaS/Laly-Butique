@@ -4,7 +4,7 @@
         <div class="card-header">
             Productos
         </div>
-        <div class="card-body">
+        <div class="card-body" style="text-align: left">
             <form v-on:submit.prevent="AñadirProducto" >
                 <div class="mb-3">
                     <label for="nombre" class="form-label">Nombre: </label>
