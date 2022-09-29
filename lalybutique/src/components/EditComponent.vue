@@ -5,29 +5,29 @@
             Editar Productos
         </div>
         <div class="card-body" style="text-align: left">
-            <form v-on:submit.prevent="EditarProductos" >
+            <form v-on:submit.prevent="ModificarProducto" >
                 <div class="mb-3">
                     <label for="nombre" class="form-label">Nombre: </label>
                     <input type="text"
-                        class="form-control" required name="nombre" v-model="producto.nombre" id="nombre" aria-describedby="helpId" placeholder="Nombre">
+                        class="form-control"  name="nombre" v-model="producto.nombre" id="nombre" aria-describedby="helpId" placeholder="Nombre">
                     <small id="helpId" class="form-text text-muted">Ingresa el nombre del producto</small>
                 </div>
                 <div class="mb-3">
                     <label for="stock" class="form-label">Stock: </label>
                     <input type="number"
-                        class="form-control" required name="stock" v-model="producto.stock" id="stock" aria-describedby="helpId" placeholder="Stock">
+                        class="form-control"  name="stock" v-model="producto.stock" id="stock" aria-describedby="helpId" placeholder="Stock">
                     <small id="helpId" class="form-text text-muted">Ingresa el Stock del producto</small>
                 </div>
                 <div class="mb-3">
                     <label for="stock_critico" class="form-label">Stock Critico: </label>
                     <input type="number"
-                        class="form-control" required name="stock_critico" v-model="producto.stock_critico" id="stock_critico" aria-describedby="helpId" placeholder="Stock critico">
+                        class="form-control"  name="stock_critico" v-model="producto.stock_critico" id="stock_critico" aria-describedby="helpId" placeholder="Stock critico">
                     <small id="helpId" class="form-text text-muted">Ingresa el Stock critico del producto</small>
                 </div>
                 <div class="mb-3">
                     <label for="precio" class="form-label">Precio: </label>
                     <input type="number"
-                        class="form-control" required name="precio" v-model="producto.precio" id="precio" aria-describedby="helpId" placeholder="Precio">
+                        class="form-control"  name="precio" v-model="producto.precio" id="precio" aria-describedby="helpId" placeholder="Precio">
                     <small id="helpId" class="form-text text-muted">Ingresa el Precio del producto</small>
                 </div>
                 <div class="mb-3">
@@ -39,7 +39,7 @@
                 <div class="mb-3">
                     <label for="estado" class="form-label">Estado: </label>
                     <input type="number"
-                        class="form-control" required name="estado" v-model="producto.estado" id="estado" aria-describedby="helpId" placeholder="Estado">
+                        class="form-control"  name="estado" v-model="producto.estado" id="estado" aria-describedby="helpId" placeholder="Estado">
                     <small id="helpId" class="form-text text-muted">Ingresa el Estado del producto</small>
                 </div>
                 <div class="btn-group" role="group" aria-label="">
@@ -75,14 +75,14 @@ export default {
     ModificarProducto(){
                 
         var datosEnviar={id:this.$route.params.id,nombre:this.producto.nombre,stock:this.producto.stock,stock_critico:this.producto.stock_critico,precio:this.producto.precio,imagen:this.producto.imagen,estado:this.producto.estado}
-        fetch('http://localhost/test/?insertar=1',{
+        fetch('http://localhost/test/?modificar='+this.$route.params.id,{
             method:'POST',
             body:JSON.stringify(datosEnviar)
         })
         .then(respuesta=>respuesta.json())
         .then((datosRespuesta=>{
             console.log(datosRespuesta);
-            window.location.href='read'
+            window.location.href='../read'
         }))
     }
     }

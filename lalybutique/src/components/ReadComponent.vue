@@ -29,8 +29,6 @@
                                 <td>
                                     <div class="btn-group" role="group" aria-label="">
                                         <router-link :to="{ name: 'edit', params: { id: producto.id },}" class="btn btn-success">Editar</router-link>
-
-                                        <!-- <button type="button" v-on:click="modificarProducto(producto.id)" class="btn btn-success">Editar</button> -->
                                         <button type="button" v-on:click="borrarProducto(producto.id)" class="btn btn-danger">Eliminar</button>
                                     </div>
                                 </td>
