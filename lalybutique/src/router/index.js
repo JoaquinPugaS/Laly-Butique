@@ -4,7 +4,7 @@ import HomeView from '../views/HomeView.vue'
 import CreateComponent from '../components/CreateComponent'
 import ReadComponent from '../components/ReadComponent'
 import EditComponent from '../components/EditComponent'
-import CloudinaryUpload from '../components/CloudinaryUpload'
+// import CloudinaryUpload from '../components/CloudinaryUpload'
 const routes = [
   {
     path: '/',
@@ -16,11 +16,11 @@ const routes = [
     name: 'create',
     component: CreateComponent
   },
-  {
-    path: '/upload',
-    name: 'upload',
-    component: CloudinaryUpload
-  },
+  // {
+  //   path: '/upload',
+  //   name: 'upload',
+  //   component: CloudinaryUpload
+  // },
   {
     path: '/edit/:id',
     name: 'edit',

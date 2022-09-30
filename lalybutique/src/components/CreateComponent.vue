@@ -5,7 +5,7 @@
             Productos
         </div>
         <div class="card-body" style="text-align: left">
-            <form v-on:submit.prevent="AñadirProducto" >
+            <form v-on:submit.prevent="upload" >
                 <div class="mb-3">
                     <label for="nombre" class="form-label">Nombre: </label>
                     <input type="text"
@@ -30,11 +30,10 @@
                         class="form-control" required name="precio" v-model="producto.precio" id="precio" aria-describedby="helpId" placeholder="Precio">
                     <small id="helpId" class="form-text text-muted">Ingresa el Precio del producto</small>
                 </div>
-                <div class="mb-3">
-                    <label for="imagen" class="form-label">imagen: </label>
-                    <input type="text"
-                        class="form-control" name="imagen" v-model="producto.imagen" id="imagen" aria-describedby="helpId" placeholder="imagen">
-                    <small id="helpId" class="form-text text-muted">Ingresa la imagen del producto</small>
+                <div class="mb-3" id="uploadImage">
+                    <label for="imagen" class="form-label">Imagen: </label>
+                    <input type="file"
+                        class="form-control" required name="imagen" id="file-input" aria-describedby="helpId" placeholder="imagen" accept="image/png, image/jpeg" @change="handleFileChange($event)">
                 </div>
                 <div class="mb-3">
                     <label for="estado" class="form-label">Estado: </label>
@@ -53,27 +52,91 @@
 </template>
 
 <script>
+var urll = " ";
+import axios from "axios";
 export default {
-    
+
     data(){
         return{
             producto:{}
         }
     },
     methods:{
-        AñadirProducto(){
+        AñadirProducto(urla){
+            this.urll = urla ;
             console.log(this.producto);
-        
-        var datosEnviar={nombre:this.producto.nombre,stock:this.producto.stock,stock_critico:this.producto.stock_critico,precio:this.producto.precio,imagen:this.producto.imagen,estado:this.producto.estado}
-        fetch('http://localhost/test/?insertar=1',{
-            method:'POST',
-            body:JSON.stringify(datosEnviar)
-        })
-        .then(respuesta=>respuesta.json())
-        .then((datosRespuesta=>{
-            console.log(datosRespuesta);
-            window.location.href='read'
-        }))
+            var datosEnviar={nombre:this.producto.nombre,stock:this.producto.stock,stock_critico:this.producto.stock_critico,precio:this.producto.precio,imagen:this.urll,estado:this.producto.estado}
+            fetch('http://localhost/test/?insertar=1',{
+                method:'POST',
+                body:JSON.stringify(datosEnviar)
+            })
+            .then(respuesta=>respuesta.json())
+            .then((datosRespuesta=>{
+                console.log(datosRespuesta);
+                window.location.href='read'
+            }))
+        },
+        handleFileChange: function(event) {
+            console.log("handlefilechange", event.target.files);
+            this.file = event.target.files[0];
+            this.filesSelected = event.target.files.length;
+        },
+        prepareFormData: function() {
+            var preset = 'vue-upload';
+            this.formData = new FormData();
+            this.formData.append("upload_preset", preset);
+            this.formData.append("tags", this.tags); 
+            this.formData.append("file", this.fileContents);
+        },
+        upload: function() {
+            console.log("upload", this.file.name);
+            let reader = new FileReader();
+            reader.addEventListener(
+                "load",
+                function() {
+                this.fileContents = reader.result;
+                this.prepareFormData();
+                let cloudinaryUploadURL = `https://api.cloudinary.com/v1_1/dcmca9cgi/upload`;
+                let requestObj = {
+                    url: cloudinaryUploadURL,
+                    method: "POST",
+                    data: this.formData,
+                    onUploadProgress: function(progressEvent) {
+                    console.log("progress", progressEvent);
+                    this.progress = Math.round(
+                        (progressEvent.loaded * 100.0) / progressEvent.total
+                    );
+                    console.log(this.progress);
+                    }.bind(this)
+                };
+                this.showProgress = true;
+                axios(requestObj)
+                    .then(response => {
+                    this.results = response.data;
+                    console.log(this.results);
+                    console.log("public_id", this.results.public_id);
+                    console.log("URL",this.results.url);
+                    urll = this.results.url;
+                    this.AñadirProducto(urll);
+                    })
+                    .catch(error => {
+                    this.errors.push(error);
+                    console.log(this.error);
+                    })
+                    .finally(() => {
+                    setTimeout(
+                        function() {
+                        this.showProgress = false;
+                        }.bind(this),
+                        1000
+                    );
+                    });
+                }.bind(this),
+                false
+            );
+            if (this.file && this.file.name) {
+                reader.readAsDataURL(this.file);
+            }
         }
     }
 }
