@@ -50,12 +50,10 @@
     </div>
     </div>
 </template>
-
 <script>
 var urll = " ";
 import axios from "axios";
 export default {
-
     data(){
         return{
             producto:{}
