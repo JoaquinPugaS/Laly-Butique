@@ -5,11 +5,23 @@
     <router-link to="/create">Crear</router-link> |
     <router-link to="/read">Productos</router-link> |
     <a href="http://localhost/test/">asd</a> |
-    <router-link to="/test">Imagen</router-link>
+    <router-link to="/upload">Imagen</router-link>
   </nav>
   <router-view/>
+  <!-- <div id="app">
+  <img class="vue-logo" src="./assets/logo.png" />
+  <cl-upload class="align" />
+  </div> -->
 </template>
-
+<script>
+import CloudinaryUpload from './components/CloudinaryUpload';
+export default{
+  name: "App",
+  components:{
+      "cl-upload": CloudinaryUpload
+  }
+};
+</script>
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
