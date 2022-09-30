@@ -15,6 +15,7 @@
                                 <th scope="col">STOCK CRITICO</th>
                                 <th scope="col">PRECIO</th>
                                 <th scope="col">ESTADO</th>
+                                <th scope="col">imagen</th>
                                 <th scope="col">ACCIONES</th>
                             </tr>
                         </thead>
@@ -26,6 +27,7 @@
                                 <td>{{producto.stock_critico}}</td>
                                 <td>{{producto.precio}}</td>
                                 <td>{{producto.estado}}</td>
+                                <td>{{producto.imagen}}</td>
                                 <td>
                                     <div class="btn-group" role="group" aria-label="">
                                         <router-link :to="{ name: 'edit', params: { id: producto.id },}" class="btn btn-success">Editar</router-link>

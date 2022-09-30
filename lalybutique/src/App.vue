@@ -4,7 +4,8 @@
     <router-link to="/about">About</router-link> |
     <router-link to="/create">Crear</router-link> |
     <router-link to="/read">Productos</router-link> |
-    <a href="http://localhost/test/">asd</a>
+    <a href="http://localhost/test/">asd</a> |
+    <router-link to="/test">Imagen</router-link>
   </nav>
   <router-view/>
 </template>

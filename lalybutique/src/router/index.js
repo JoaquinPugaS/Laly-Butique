@@ -4,7 +4,7 @@ import HomeView from '../views/HomeView.vue'
 import CreateComponent from '../components/CreateComponent'
 import ReadComponent from '../components/ReadComponent'
 import EditComponent from '../components/EditComponent'
-
+import TestUpload from '../components/TestUpload'
 const routes = [
   {
     path: '/',
@@ -15,6 +15,11 @@ const routes = [
     path: '/create',
     name: 'create',
     component: CreateComponent
+  },
+  {
+    path: '/test',
+    name: 'test',
+    component: TestUpload
   },
   {
     path: '/edit/:id',
