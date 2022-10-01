@@ -101,10 +101,12 @@ export default {
                 console.log(datosRespuesta)
                 this.producto=datosRespuesta[0];
                 this.EstadoSeleccionado.nombre = this.producto.estado
+                
         })
     },
     ModificarProducto(urla){
         this.urll = urla;
+        console.log('link',urll)
         this.producto.estado = this.EstadoSeleccionado.nombre
         var datosEnviar={id:this.$route.params.id,nombre:this.producto.nombre,stock:this.producto.stock,stock_critico:this.producto.stock_critico,precio:this.producto.precio,imagen:this.urll,estado:this.producto.estado}
         fetch('http://localhost/test/?modificar='+this.$route.params.id,{
@@ -130,9 +132,10 @@ export default {
             this.formData.append("file", this.fileContents);
         },
         upload: function() {
-            console.log("upload", this.file.name);
-            let reader = new FileReader();
-            reader.addEventListener(
+            if(this.file){
+                console.log("upload", this.file.name);
+                let reader = new FileReader();
+                reader.addEventListener(
                 "load",
                 function() {
                 this.fileContents = reader.result;
@@ -177,6 +180,9 @@ export default {
             );
             if (this.file && this.file.name) {
                 reader.readAsDataURL(this.file);
+            }
+            }else{
+                this.ModificarProducto(this.producto.imagen);
             }
         }
     }
