@@ -56,6 +56,27 @@ Function Insertar(){
     if(isset($_GET["insertar"])){
     Insertar();
 }
+Function Login(){
+    include_once 'db.php';
+    $objeto = new Conexion();
+    $conexion = $objeto->Conectar();
+    $data = json_decode(file_get_contents("php://input"));
+    $username = $data->username;
+    $password = $data->password;
+    $sql = "SELECT * FROM  admin WHERE username= '$username' and password ='$password'";
+    $query = $conexion-> query($sql);
+    if($query->rowCount()){
+        echo json_encode(["success"=>1]);
+        exit();
+    }else{
+        echo json_encode(["success"=>0]);
+    }
+}
+
+if(isset($_GET["login"])){
+    Login();
+}
+
 
 Function Eliminar($id){
     include_once 'db.php';
