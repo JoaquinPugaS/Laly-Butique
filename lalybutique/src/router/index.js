@@ -4,6 +4,7 @@ import HomeView from '../views/HomeView.vue'
 import CreateComponent from '../components/CreateComponent'
 import ReadComponent from '../components/ReadComponent'
 import EditComponent from '../components/EditComponent'
+import LoginView from '../components/LoginView'
 // import CloudinaryUpload from '../components/CloudinaryUpload'
 const routes = [
   {
@@ -38,6 +39,11 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+  },
+  {
+    path:'/LoginView',
+    name:'Login',
+    component:LoginView
   }
 ]
 
