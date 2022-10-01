@@ -33,7 +33,7 @@
                 <div class="mb-3" id="uploadImage">
                     <label for="imagen" class="form-label">Imagen: </label>
                     <input type="file"
-                        class="form-control"  name="imagen" id="file-input" aria-describedby="helpId" placeholder="imagen" accept="image/png, image/jpeg, image/jpg" @change="handleFileChange($event)">
+                        class="form-control" required name="imagen" id="file-input" aria-describedby="helpId" placeholder="imagen" accept="image/png, image/jpeg, image/jpg" @change="handleFileChange($event)">
                 </div>
                 <div class="mb-3">
                     <label for="estado" class="form-label">Estado: </label> <br>
@@ -50,6 +50,8 @@
                             </ListboxOption>
                         </ListboxOptions>
                     </Listbox>
+                    <br>
+                    <small id="helpId" class="form-text text-muted">Ingresa el Estado del producto</small>
                 </div>
                 <div class="btn-group" role="group" aria-label="">
                     <button type="submit" class="btn btn-success">Añadir</button>
@@ -72,7 +74,11 @@ const estados= [
     {id: 1, nombre: 'Disponible', nodisponible: false},
     {id: 2, nombre: 'No disponible', nodisponible: false},
 ]
-const EstadoSeleccionado = ref(estados[0])
+const estadoD=[
+    {id: 0, nombre: 'Seleccione uno', nodisponible: false},
+
+]
+const EstadoSeleccionado = ref(estadoD[0])
 </script>
 <script>
 var urll = " ";

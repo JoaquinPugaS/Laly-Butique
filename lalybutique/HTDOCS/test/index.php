@@ -88,7 +88,7 @@ Function Modificar($id){
     $precio = $data->precio;
     $imagen = $data->imagen;
     $estado = $data->estado;
-    $sql = "UPDATE productos SET nombre='$nombre', stock=$stock, stock_critico=$stock_critico,precio=$precio,imagen='$imagen',estado=$estado where id='$id'";
+    $sql = "UPDATE productos SET nombre='$nombre', stock=$stock, stock_critico=$stock_critico,precio=$precio,imagen='$imagen',estado='$estado' where id='$id'";
     $query = $conexion -> query($sql);
     echo json_encode(["success"=>1]);
     exit();

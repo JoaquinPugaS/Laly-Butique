@@ -33,12 +33,23 @@
                 <div class="mb-3" id="uploadImage">
                     <label for="imagen" class="form-label">Imagen: </label>
                     <input type="file"
-                        class="form-control" required name="imagen" id="file-input" aria-describedby="helpId" placeholder="imagen" accept="image/png, image/jpeg, image/jpg" @change="handleFileChange($event)">
+                        class="form-control"  name="imagen" id="file-input" aria-describedby="helpId" placeholder="imagen" accept="image/png, image/jpeg, image/jpg" @change="handleFileChange($event)">
                 </div>
                 <div class="mb-3">
                     <label for="estado" class="form-label">Estado: </label>
-                    <input type="number"
-                        class="form-control"  name="estado" v-model="producto.estado" id="estado" aria-describedby="helpId" placeholder="Estado">
+                    <Listbox v-model="EstadoSeleccionado">
+                        <ListboxButton>{{ EstadoSeleccionado.nombre }}</ListboxButton>
+                        <ListboxOptions>
+                            <ListboxOption 
+                            v-for="estado in estados"
+                            :key="estado.id" 
+                            :value="estado" 
+                            :disabled="estado.nodisponible"
+                            >
+                                {{estado.nombre}}
+                            </ListboxOption>
+                        </ListboxOptions>
+                    </Listbox><br>
                     <small id="helpId" class="form-text text-muted">Ingresa el Estado del producto</small>
                 </div>
                 <div class="btn-group" role="group" aria-label="">
@@ -50,6 +61,25 @@
     </div>
     </div>
 </template>
+<script setup>
+import {ref} from 'vue'
+
+
+import{
+    Listbox,
+    ListboxButton,
+    ListboxOptions,
+    ListboxOption,
+} from '@headlessui/vue'
+const estados= [
+    {id: 1, nombre: 'Disponible', nodisponible: false},
+    {id: 2, nombre: 'No disponible', nodisponible: false},
+]
+const estadoD=[
+{id: 0, nombre:'', nodisponible: false},
+]
+const EstadoSeleccionado = ref(estadoD[0])
+</script>
 <script>
 var urll = " ";
 import axios from "axios";
@@ -70,12 +100,12 @@ export default {
             .then((datosRespuesta)=>{
                 console.log(datosRespuesta)
                 this.producto=datosRespuesta[0];
-                
+                this.EstadoSeleccionado.nombre = this.producto.estado
         })
     },
     ModificarProducto(urla){
         this.urll = urla;
-
+        this.producto.estado = this.EstadoSeleccionado.nombre
         var datosEnviar={id:this.$route.params.id,nombre:this.producto.nombre,stock:this.producto.stock,stock_critico:this.producto.stock_critico,precio:this.producto.precio,imagen:this.urll,estado:this.producto.estado}
         fetch('http://localhost/test/?modificar='+this.$route.params.id,{
             method:'POST',
@@ -87,10 +117,10 @@ export default {
             window.location.href='../read'
         }))
     },
-            handleFileChange: function(event) {
-            console.log("handlefilechange", event.target.files);
-            this.file = event.target.files[0];
-            this.filesSelected = event.target.files.length;
+        handleFileChange: function(event) {
+        console.log("handlefilechange", event.target.files);
+        this.file = event.target.files[0];
+        this.filesSelected = event.target.files.length;
         },
         prepareFormData: function() {
             var preset = 'vue-upload';
