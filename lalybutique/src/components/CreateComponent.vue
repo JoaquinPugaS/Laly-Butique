@@ -73,6 +73,7 @@ import{
 const estados= [
     {id: 1, nombre: 'Disponible', nodisponible: false},
     {id: 2, nombre: 'No disponible', nodisponible: false},
+    {id: 3, nombre: 'Agotado', nodisponible: false},
 ]
 const estadoD=[
     {id: 0, nombre: 'Seleccione uno', nodisponible: false},
