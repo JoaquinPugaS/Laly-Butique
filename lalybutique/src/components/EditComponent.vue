@@ -35,20 +35,40 @@
                     <input type="file"
                         class="form-control"  name="imagen" id="file-input" aria-describedby="helpId" placeholder="imagen" accept="image/png, image/jpeg, image/jpg" @change="handleFileChange($event)">
                 </div>
-                <div class="mb-3">
+                <div class="fixed top-16 w-72">
                     <label for="estado" class="form-label">Estado: </label>
                     <Listbox v-model="EstadoSeleccionado">
-                        <ListboxButton>{{ EstadoSeleccionado.nombre }}</ListboxButton>
-                        <ListboxOptions>
+                        <div class="relative mt-1">
+                        <ListboxButton 
+                        >
+                            <span class="block truncate">{{ EstadoSeleccionado.nombre }}</span>
+                            <span>
+                                <ChevronUpDownIcon style="width:30px" aria-hidden="true"/>
+                            </span>
+                        </ListboxButton>
+                        <transition
+                        leave-active-class="transition duration-100 ease-in"
+                        leave-from-class="opacity-100"
+                        leave-to-class="opacity-0"
+                        >
+                        <ListboxOptions class="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                             <ListboxOption 
                             v-for="estado in estados"
                             :key="estado.id" 
                             :value="estado" 
                             :disabled="estado.nodisponible"
+                            v-slot="{active, selected}"
+                            as="ListBox"
                             >
-                                {{estado.nombre}}
+                            <li :class="[active ? 'bg-amber-100 text-amber-900' : 'text-gray-900','relative cursor-default select-none py-2 pl-10 pr-4',]">
+                                <span
+                                :class="[selected ? 'font-small' : 'font-normal','block truncate',]">
+                                {{estado.nombre}}</span>
+                            </li>
                             </ListboxOption>
                         </ListboxOptions>
+                        </transition>
+                        </div>
                     </Listbox><br>
                     <small id="helpId" class="form-text text-muted">Ingresa el Estado del producto</small>
                 </div>
@@ -63,14 +83,13 @@
 </template>
 <script setup>
 import {ref} from 'vue'
-
-
 import{
     Listbox,
     ListboxButton,
     ListboxOptions,
     ListboxOption,
 } from '@headlessui/vue'
+import {ChevronUpDownIcon} from '@heroicons/vue/20/solid'
 const estados= [
     {id: 1, nombre: 'Disponible', nodisponible: false},
     {id: 2, nombre: 'No disponible', nodisponible: false},
@@ -84,6 +103,8 @@ const EstadoSeleccionado = ref(estadoD[0])
 var urll = " ";
 import axios from "axios";
 export default {
+    components: {ChevronUpDownIcon},
+
     data(){
         return{
             producto:{}
