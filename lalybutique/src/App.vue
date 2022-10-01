@@ -5,7 +5,6 @@
     <router-link to="/create">Crear</router-link> |
     <router-link to="/read">Productos</router-link> |
     <a href="http://localhost/test/">asd</a> |
-    <router-link to="/upload">Imagen</router-link>
   </nav>
   <router-view/>
 </template>

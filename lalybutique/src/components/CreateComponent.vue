@@ -33,13 +33,23 @@
                 <div class="mb-3" id="uploadImage">
                     <label for="imagen" class="form-label">Imagen: </label>
                     <input type="file"
-                        class="form-control" required name="imagen" id="file-input" aria-describedby="helpId" placeholder="imagen" accept="image/png, image/jpeg, image/jpg" @change="handleFileChange($event)">
+                        class="form-control"  name="imagen" id="file-input" aria-describedby="helpId" placeholder="imagen" accept="image/png, image/jpeg, image/jpg" @change="handleFileChange($event)">
                 </div>
                 <div class="mb-3">
-                    <label for="estado" class="form-label">Estado: </label>
-                    <input type="number"
-                        class="form-control" required name="estado" v-model="producto.estado" id="estado" aria-describedby="helpId" placeholder="Estado">
-                    <small id="helpId" class="form-text text-muted">Ingresa el Estado del producto</small>
+                    <label for="estado" class="form-label">Estado: </label> <br>
+                    <Listbox v-model="EstadoSeleccionado">
+                        <ListboxButton>{{ EstadoSeleccionado.nombre }}</ListboxButton>
+                        <ListboxOptions>
+                            <ListboxOption 
+                            v-for="estado in estados"
+                            :key="estado.id" 
+                            :value="estado" 
+                            :disabled="estado.nodisponible"
+                            >
+                                {{estado.nombre}}
+                            </ListboxOption>
+                        </ListboxOptions>
+                    </Listbox>
                 </div>
                 <div class="btn-group" role="group" aria-label="">
                     <button type="submit" class="btn btn-success">Añadir</button>
@@ -50,6 +60,20 @@
     </div>
     </div>
 </template>
+<script setup>
+import {ref} from 'vue'
+import{
+    Listbox,
+    ListboxButton,
+    ListboxOptions,
+    ListboxOption,
+} from '@headlessui/vue'
+const estados= [
+    {id: 1, nombre: 'Disponible', nodisponible: false},
+    {id: 2, nombre: 'No disponible', nodisponible: false},
+]
+const EstadoSeleccionado = ref(estados[0])
+</script>
 <script>
 var urll = " ";
 import axios from "axios";
@@ -62,6 +86,7 @@ export default {
     methods:{
         AñadirProducto(urla){
             this.urll = urla ;
+            this.producto.estado = this.EstadoSeleccionado.nombre
             console.log(this.producto);
             var datosEnviar={nombre:this.producto.nombre,stock:this.producto.stock,stock_critico:this.producto.stock_critico,precio:this.producto.precio,imagen:this.urll,estado:this.producto.estado}
             fetch('http://localhost/test/?insertar=1',{
@@ -113,8 +138,8 @@ export default {
                     this.results = response.data;
                     console.log(this.results);
                     console.log("public_id", this.results.public_id);
-                    console.log("URL",this.results.url);
                     urll = this.results.url;
+                    console.log(urll)
                     this.AñadirProducto(urll);
                     })
                     .catch(error => {

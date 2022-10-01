@@ -47,7 +47,7 @@ Function Insertar(){
         $precio = $data->precio;
         $imagen = $data->imagen;
         $estado = $data->estado;
-        $sql = "INSERT INTO productos (nombre, stock, stock_critico, precio, imagen, estado) VALUES ('$nombre', $stock, $stock_critico, $precio, '$imagen',$estado)";
+        $sql = "INSERT INTO productos (nombre, stock, stock_critico, precio, imagen, estado) VALUES ('$nombre', $stock, $stock_critico, $precio, '$imagen', '$estado')";
         $query = $conexion -> query($sql);
         echo json_encode(["success"=>1]);
         exit();
