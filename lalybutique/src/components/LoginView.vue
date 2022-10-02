@@ -2,27 +2,30 @@
     <div id="Login">
 
     </div>
-        <div class="wrapper fadeInDown">
-  <div id="formContent">
+    <div class="wrapper fadeInDown">
+    <div id="formContent">
     <!-- Tabs Titles -->
 
     <!-- Icon -->
     <div class="fadeIn first">
-      <br>
-      <img src="../assets/logo2.png" id="icon" alt="User Icon" />
-      <br>
+        <br>
+        <img src="../assets/logo2.png" id="icon" alt="User Icon" />
+        <br>
     </div>
 
     <!-- Login Form -->
-    <form>
-      <input type="text" id="login" class="fadeIn second" name="login" placeholder="Correo">
-      <input type="text" id="password" class="fadeIn third" name="login" placeholder="Contraseña">
-      <input type="submit" class="fadeIn fourth" value="Entrar">
+    <form v-on:submit.prevent="Login">
+        <input type="text" id="username" class="fadeIn second" required name="username" v-model="usuario.username" placeholder="Nombre de usuario">
+        <input type="text" id="password" class="fadeIn third" name="password" v-model="usuario.password" placeholder="Contraseña">
+        <input type="submit" class="fadeIn fourth" value="Entrar">
+        <div class="alert alter-danger" role="alert" v-if="error">
+            Error, Nombre de usuario o contraseña Incorrectos..
+        </div>
     </form>
 
     <!-- Remind Passowrd -->
     <div id="formFooter">
-      <a class="underlineHover" href="#">Olvidaste la contraseña?</a>
+        <a class="underlineHover" href="#">Olvidaste la contraseña?</a>
     </div>
 
   </div>
