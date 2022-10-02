@@ -5,6 +5,9 @@
         <label for="password">Contrasenia:</label><br>
         <input type="password" required name="password" v-model="usuario.password" id="passowrd"><br><br>
         <input type="submit" value="Log In">
+        <div class="alert alert-danger" role="alert" v-if="error">
+            Error, Datos incorrectos
+        </div>
     </form>
 
 
@@ -13,7 +16,8 @@
     export default{
         data(){
             return{
-                usuario:[]
+                usuario:[],
+                error: false,
             }
         },
         methods:{
@@ -33,6 +37,7 @@
                         window.location.href='/'
                     }else{
                         console.log('Error');
+                        this.error = true;
                     }
                 
                 }))
