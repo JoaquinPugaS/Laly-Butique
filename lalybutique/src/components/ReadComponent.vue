@@ -32,7 +32,7 @@
                                         <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#Confirmar">Eliminar</button>
                                         <div class="modal fade" id="Confirmar" tabindex="-1" aria-labelledby="ConfirmarLabel" aria-hidden="true">
                                         <div class="modal-dialog">
-                                            <div class="modal-content">
+                                            <div class="modal-content" style="border-radius: 45px">
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="ConfirmarLabel" style="Color:black">Confirmar</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
