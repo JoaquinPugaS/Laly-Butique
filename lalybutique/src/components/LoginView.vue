@@ -1,15 +1,4 @@
 <template>
-<<<<<<< Updated upstream
-    <form v-on:submit.prevent="Login">
-        <label for="username">Usuario:</label><br>
-        <input type="text" required name="username" v-model="usuario.username" id="username"><br>
-        <label for="password">Contrasenia:</label><br>
-        <input type="password" required name="password" v-model="usuario.password" id="passowrd"><br><br>
-        <input type="submit" value="Log In">
-        <div class="alert alert-danger" role="alert" v-if="error">
-            Error, Datos incorrectos
-        </div>
-=======
     <div id="Login">
 
     </div>
@@ -29,7 +18,6 @@
       <input type="text" id="login" class="fadeIn second" name="login" placeholder="Correo">
       <input type="text" id="password" class="fadeIn third" name="login" placeholder="Contraseña">
       <input type="submit" class="fadeIn fourth" value="Entrar">
->>>>>>> Stashed changes
     </form>
 
     <!-- Remind Passowrd -->
