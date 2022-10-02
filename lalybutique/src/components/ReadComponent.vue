@@ -29,7 +29,24 @@
                                 <td>
                                     <div class="btn-group" role="group" aria-label="">
                                         <router-link :to="{ name: 'edit', params: { id: producto.id },}" class="btn btn-success">Editar</router-link>
-                                        <button type="button" v-on:click="borrarProducto(producto.id)" class="btn btn-danger">Eliminar</button>
+                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#Confirmar">Eliminar</button>
+                                        <div class="modal fade" id="Confirmar" tabindex="-1" aria-labelledby="ConfirmarLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="ConfirmarLabel" style="Color:black">Confirmar</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <h5 style="color:black">¿Desea eliminar el producto seleccionado?</h5>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" v-on:click="borrarProducto(producto.id)" class="btn btn-success">Aceptar</button>
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        </div>
                                     </div>
                                 </td>
                             </tr>
@@ -50,11 +67,9 @@ export default {
         }
     },
     created:function(){
-
         this.consultarProductos();
     },
     methods:{
-
         consultarProductos(){
             fetch('http://localhost/test/?leer')
             .then(respuesta=>respuesta.json())
