@@ -17,16 +17,16 @@
           
           
         </li>
-        <li>
+        <!-- <li>
           <a class="nav-link" href="http://localhost/test/">test base de datos</a> 
           
-        </li>
+        </li> -->
         
         
       </ul>
       <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Search">
+        <button class="btn btn-outline my-2 my-sm-0" type="submit" style="background-color:white; border-color:purple;color:purple">Buscar</button>
       </form>
       <a class="nav-link" ><router-link to='/LoginView'><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
         <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
