@@ -60,14 +60,24 @@ Function Login(){
     include_once 'db.php';
     $objeto = new Conexion();
     $conexion = $objeto->Conectar();
+    $Boolean = FALSE;
     $data = json_decode(file_get_contents("php://input"));
     $username = $data->username;
     $password = $data->password;
-    $sql = "SELECT * FROM  admin WHERE username= '$username' and password ='$password'";
+    $sql = "SELECT * FROM  admin WHERE username= '$username'";
     $query = $conexion-> query($sql);
     if($query->rowCount()){
-        echo json_encode(["success"=>1]);
-        exit();
+        while($row = $query-> fetch(PDO::FETCH_ASSOC)){
+            if(password_verify($password,$row['password'])){
+                $Boolean = TRUE;
+            }
+        }
+        if($Boolean == TRUE){
+            echo json_encode(["success"=>1]);
+            exit();
+        }else{
+            echo json_encode(["success"=>0]);
+        }
     }else{
         echo json_encode(["success"=>0]);
     }
