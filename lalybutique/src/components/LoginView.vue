@@ -2,21 +2,21 @@
     <div id="Login">
 
     </div>
-    <div class="wrapper fadeInDown">
-    <div id="formContent">
+        <div class="wrapper fadeInDown">
+  <div id="formContent">
     <!-- Tabs Titles -->
 
     <!-- Icon -->
     <div class="fadeIn first">
-        <br>
-        <img src="../assets/logo2.png" id="icon" alt="User Icon" />
-        <br>
+      <br>
+      <img src="../assets/logo2.png" id="icon" alt="User Icon" />
+      <br>
     </div>
 
     <!-- Login Form -->
     <form v-on:submit.prevent="Login">
         <input type="text" id="username" class="fadeIn second" required name="username" v-model="usuario.username" placeholder="Nombre de usuario">
-        <input type="text" id="password" class="fadeIn third"  required name="password" v-model="usuario.password" placeholder="Contraseña">
+        <input type="password" id="password" class="fadeIn third"  required name="password" v-model="usuario.password" placeholder="Contraseña">
         <input type="submit" class="fadeIn fourth" value="Entrar">
         <div class="alert alter-danger" role="alert" v-if="error">
             Error, Nombre de usuario o contraseña Incorrectos..
@@ -25,7 +25,7 @@
 
     <!-- Remind Passowrd -->
     <div id="formFooter">
-        <a class="underlineHover" href="#">Olvidaste la contraseña?</a>
+      <a class="underlineHover" href="#">Olvidaste la contraseña?</a>
     </div>
 
   </div>
@@ -186,7 +186,7 @@
       transform: scale(0.95);
     }
     
-    input[type=text] {
+    input[type=text],[type=password] {
       background-color: #f6f6f6;
       border: none;
       color: #0d0d0d;
