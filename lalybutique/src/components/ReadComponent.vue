@@ -29,7 +29,7 @@
                                 <td>
                                     <div class="btn-group" role="group" aria-label="">
                                         <router-link :to="{ name: 'edit', params: { id: producto.id },}" class="btn btn-success">Editar</router-link>
-                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#Confirmar">Eliminar</button>
+                                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#Confirmar" v-on:click="borrarProducto(producto.id,false) ">Eliminar</button>
                                         <div class="modal fade" id="Confirmar" tabindex="-1" aria-labelledby="ConfirmarLabel" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content" style="border-radius: 45px">
@@ -41,7 +41,7 @@
                                                 <h5 style="color:black">¿Desea eliminar el producto seleccionado?</h5>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" v-on:click="borrarProducto(producto.id)" class="btn btn-success">Aceptar</button>
+                                                <button type="button" v-on:click="borrarProducto('',true)" class="btn btn-success">Aceptar</button>
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                                             </div>
                                             </div>
@@ -60,6 +60,8 @@
     </div>
 </template>
 <script>
+// eslint-disable-next-line
+var idd = ' ';
 export default {
     data(){
         return{
@@ -83,7 +85,17 @@ export default {
             })
             .catch(console.log)
         },
-        borrarProducto(id){
+        borrarProducto(id,conf){
+            if(conf == false){
+                this.idd = id
+                console.log(this.idd)
+            }
+            if(conf == true){
+                this.confirmar(this.idd)
+            }
+
+            },
+        confirmar(id){
             fetch('http://localhost/test/?eliminar='+id)
             .then(respuesta=>respuesta.json())
             .then((datosRespuesta)=>{
@@ -91,7 +103,6 @@ export default {
                 window.location.href='read'
             })
             .catch(console.log)
-            
         },
         modificarProducto(id){
             fetch('edit'+id)
