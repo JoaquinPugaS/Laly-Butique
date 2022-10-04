@@ -9,31 +9,31 @@
                 <div class="mb-3">
                     <label for="nombre" class="form-label">Nombre: </label>
                     <input type="text"
-                        class="form-control" required name="nombre" v-model="producto.nombre" id="nombre" aria-describedby="helpId" placeholder="Nombre">
+                        class="form-control" required minlength="1" maxlength="50" name="nombre" v-model="producto.nombre" id="nombre" aria-describedby="helpId" placeholder="Nombre">
                     <small id="helpId" class="form-text text-muted">Ingresa el nombre del producto</small>
                 </div>
                 <div class="mb-3">
                     <label for="stock" class="form-label">Stock: </label>
                     <input type="number"
-                        class="form-control" required name="stock" v-model="producto.stock" id="stock" aria-describedby="helpId" placeholder="Stock">
+                        class="form-control" required min="1" max="9999"  name="stock" v-model="producto.stock" maxlength="4"  id="stock" aria-describedby="helpId" placeholder="Stock">
                     <small id="helpId" class="form-text text-muted">Ingresa el Stock del producto</small>
                 </div>
                 <div class="mb-3">
                     <label for="stock_critico" class="form-label">Stock Critico: </label>
                     <input type="number"
-                        class="form-control" required name="stock_critico" v-model="producto.stock_critico" id="stock_critico" aria-describedby="helpId" placeholder="Stock critico">
+                        class="form-control" required min="1" max="99" name="stock_critico" v-model="producto.stock_critico" id="stock_critico" aria-describedby="helpId" placeholder="Stock critico">
                     <small id="helpId" class="form-text text-muted">Ingresa el Stock critico del producto</small>
                 </div>
                 <div class="mb-3">
                     <label for="precio" class="form-label">Precio: </label>
-                    <input type="number"
-                        class="form-control" required name="precio" v-model="producto.precio" id="precio" aria-describedby="helpId" placeholder="Precio">
+                    <input type="number" min="1" max="999999999"
+                        class="form-control" required  name="precio" v-model="producto.precio" id="precio" aria-describedby="helpId" placeholder="Precio">
                     <small id="helpId" class="form-text text-muted">Ingresa el Precio del producto</small>
                 </div>
                 <div class="mb-3" id="uploadImage">
                     <label for="imagen" class="form-label">Imagen: </label>
                     <input type="file"
-                        class="form-control" required name="imagen" id="file-input" aria-describedby="helpId" placeholder="imagen" accept="image/png, image/jpeg, image/jpg" @change="handleFileChange($event)">
+                        class="form-control" name="imagen" id="file-input" aria-describedby="helpId" placeholder="imagen" accept="image/png, image/jpeg, image/jpg" @change="handleFileChange($event)">
                 </div>
                 <div class="mb-3">
                     <label for="estado" class="form-label">Estado: </label> <br>
@@ -83,6 +83,8 @@ const EstadoSeleccionado = ref(estadoD[0])
 </script>
 <script>
 var urll = " ";
+// eslint-disable-next-line
+var sw = 0;
 import axios from "axios";
 export default {
     data(){
@@ -110,6 +112,7 @@ export default {
             console.log("handlefilechange", event.target.files);
             this.file = event.target.files[0];
             this.filesSelected = event.target.files.length;
+            this.sw = 1;
         },
         prepareFormData: function() {
             var preset = 'vue-upload';
@@ -119,7 +122,9 @@ export default {
             this.formData.append("file", this.fileContents);
         },
         upload: function() {
-            console.log("upload", this.file.name);
+            if(this.sw === 1){
+
+                console.log("upload", this.file.name);
             let reader = new FileReader();
             reader.addEventListener(
                 "load",
@@ -166,6 +171,9 @@ export default {
             );
             if (this.file && this.file.name) {
                 reader.readAsDataURL(this.file);
+            }
+            }else{
+                this.AñadirProducto(urll);
             }
         }
     }
