@@ -47,14 +47,19 @@ Function Insertar(){
         $precio = $data->precio;
         $imagen = $data->imagen;
         $estado = $data->estado;
-        $sql = "INSERT INTO productos (nombre, stock, stock_critico, precio, imagen, estado) VALUES ('$nombre', $stock, $stock_critico, $precio, '$imagen', '$estado')";
+        $sql = "SELECT * FROM productos where nombre = '$nombre'";
         $query = $conexion -> query($sql);
-        echo json_encode(["success"=>1]);
-        exit();
-        
+        if($query->rowCount()){
+            echo json_encode(["success"=>0]);
+        }else{
+            $sql = "INSERT INTO productos (nombre, stock, stock_critico, precio, imagen, estado) VALUES ('$nombre', $stock, $stock_critico, $precio, '$imagen', '$estado')";
+            $query = $conexion -> query($sql);
+            echo json_encode(["success"=>1]);
+            exit();
+        }
     }
-    if(isset($_GET["insertar"])){
-    Insertar();
+if(isset($_GET["insertar"])){
+Insertar();
 }
 Function Login(){
     include_once 'db.php';

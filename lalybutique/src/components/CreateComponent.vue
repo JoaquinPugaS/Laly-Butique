@@ -6,6 +6,9 @@
         </div>
         <div class="card-body" style="text-align: left">
             <form v-on:submit.prevent="upload" >
+                <div class="alert alter-danger" role="alert" v-if="error">
+                    Error, El nombre del producto ya existe en la base de datos
+                </div>
                 <div class="mb-3">
                     <label for="nombre" class="form-label">Nombre: </label>
                     <input type="text"
@@ -89,7 +92,8 @@ import axios from "axios";
 export default {
     data(){
         return{
-            producto:{}
+            producto:{},
+            error: false,
         }
     },
     methods:{
@@ -105,7 +109,12 @@ export default {
             .then(respuesta=>respuesta.json())
             .then((datosRespuesta=>{
                 console.log(datosRespuesta);
-                window.location.href='read'
+                if(datosRespuesta.success===1){
+                    window.location.href='read'
+                }else{
+                    console.log('Error');
+                    this.error = true;
+                }
             }))
         },
         handleFileChange: function(event) {

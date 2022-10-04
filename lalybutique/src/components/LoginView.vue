@@ -60,12 +60,9 @@
                         console.log('Error');
                         this.error = true;
                     }
-                
                 }))
-
             }
         }
-
     }
 
 </script>
