@@ -6,7 +6,7 @@
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-dark table-striped">
+                    <table class="table table-striped" style="background-color:rgb(192, 145, 244); color:black">
                         <thead>
                             <tr>
                                 <th scope="col">ID</th>
