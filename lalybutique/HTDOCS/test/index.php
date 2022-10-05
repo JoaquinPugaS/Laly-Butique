@@ -14,13 +14,13 @@ function getAll(){
         if($query->rowCount()){
             while($row = $query-> fetch(PDO::FETCH_ASSOC)){
                 $item = array(
-                    'id' => $row['id'],
-                    'nombre' => $row['nombre'],
-                    'stock' => $row['stock'],
-                    'stock_critico' => $row['stock_critico'],
-                    'precio' => $row['precio'],
-                    'imagen' => $row['imagen'],
-                    'estado' => $row['estado']
+                    'id' => $row['id_producto'],
+                    'nombre' => $row['nombre_producto'],
+                    'stock' => $row['stock_producto'],
+                    'stock_critico' => $row['stock_critico_producto'],
+                    'precio' => $row['precio_producto'],
+                    'imagen' => $row['imagen_producto'],
+                    'estado' => $row['estado_producto']
                 );
                 array_push($productos, $item);
             }
@@ -47,12 +47,12 @@ Function Insertar(){
         $precio = $data->precio;
         $imagen = $data->imagen;
         $estado = $data->estado;
-        $sql = "SELECT * FROM productos where nombre = '$nombre'";
+        $sql = "SELECT * FROM productos where nombre_producto = '$nombre'";
         $query = $conexion -> query($sql);
         if($query->rowCount()){
             echo json_encode(["success"=>0]);
         }else{
-            $sql = "INSERT INTO productos (nombre, stock, stock_critico, precio, imagen, estado) VALUES ('$nombre', $stock, $stock_critico, $precio, '$imagen', '$estado')";
+            $sql = "INSERT INTO productos (nombre_producto, stock_producto, stock_critico_producto, precio_producto, imagen_producto, estado_producto) VALUES ('$nombre', $stock, $stock_critico, $precio, '$imagen', '$estado')";
             $query = $conexion -> query($sql);
             echo json_encode(["success"=>1]);
             exit();
@@ -69,7 +69,7 @@ Function Login(){
     $data = json_decode(file_get_contents("php://input"));
     $username = $data->username;
     $password = $data->password;
-    $sql = "SELECT * FROM  admin WHERE username= '$username'";
+    $sql = "SELECT * FROM  admin WHERE id_admin= '$username'";
     $query = $conexion-> query($sql);
     if($query->rowCount()){
         while($row = $query-> fetch(PDO::FETCH_ASSOC)){
@@ -113,7 +113,7 @@ Function Eliminar($id){
     include_once 'db.php';
     $objeto = new Conexion();
     $conexion = $objeto->Conectar();
-    $sql = "DELETE FROM productos WHERE id ='$id'";
+    $sql = "DELETE FROM productos WHERE id_producto ='$id'";
     $query = $conexion -> query($sql);
     if($query){
         echo json_encode(["success"=>1]);
@@ -140,7 +140,7 @@ Function Modificar($id){
     $precio = $data->precio;
     $imagen = $data->imagen;
     $estado = $data->estado;
-    $sql = "UPDATE productos SET nombre='$nombre', stock=$stock, stock_critico=$stock_critico,precio=$precio,imagen='$imagen',estado='$estado' where id='$id'";
+    $sql = "UPDATE productos SET nombre_producto='$nombre', stock_producto=$stock, stock_critico_producto=$stock_critico,precio_producto=$precio,imagen_producto='$imagen',estado_producto='$estado' where id_producto='$id'";
     $query = $conexion -> query($sql);
     echo json_encode(["success"=>1]);
     exit();
@@ -156,18 +156,18 @@ Function Consultar($id){
     $objeto = new Conexion();
     $conexion = $objeto->Conectar();
     $productos = array();
-    $sql = "SELECT * FROM productos WHERE id ='$id'";
+    $sql = "SELECT * FROM productos WHERE id_producto ='$id'";
     $query = $conexion -> query($sql);
     if($query->rowCount()){
         while($row = $query-> fetch(PDO::FETCH_ASSOC)){
             $item = array(
-                'id' => $row['id'],
-                'nombre' => $row['nombre'],
-                'stock' => $row['stock'],
-                'stock_critico' => $row['stock_critico'],
-                'precio' => $row['precio'],
-                'imagen' => $row['imagen'],
-                'estado' => $row['estado']
+                'id' => $row['id_producto'],
+                'nombre' => $row['nombre_producto'],
+                'stock' => $row['stock_producto'],
+                'stock_critico' => $row['stock_critico_producto'],
+                'precio' => $row['precio_producto'],
+                'imagen' => $row['imagen_producto'],
+                'estado' => $row['estado_producto']
             );
             array_push($productos, $item);
         }
