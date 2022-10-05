@@ -10,6 +10,7 @@
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
+set FOREIGN_KEYS_CHECKS = 0;
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -144,7 +145,6 @@ INSERT INTO `usuarios` (`rut_usuario`, `nombre_usuario`, `apellido_usuario`, `em
 --
 
 --
-set FOREIGN_KEYS_CHECKS = 0;
 -- Indices de la tabla `productos`
 --
 ALTER TABLE `admin`
