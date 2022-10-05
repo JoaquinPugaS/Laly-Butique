@@ -22,7 +22,6 @@ SET time_zone = "+00:00";
 --
 
 -- --------------------------------------------------------
-DROP DATABASE productos;
 
 CREATE DATABASE LalyBoutique;
 USE DATABASE;
