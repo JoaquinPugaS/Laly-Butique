@@ -56,9 +56,11 @@
                     console.log(datosRespuesta.success)
                     if(datosRespuesta.success===1){
                         window.location.href='/AdminView'
-                    }else{
-                        console.log('Error');
-                        this.error = true;
+                    }else if(datosRespuesta.success===2){
+                        window.location.href='/HomePeople'
+                      }else{
+                      console.log('Error');
+                      this.error = true;
                     }
                 }))
             }

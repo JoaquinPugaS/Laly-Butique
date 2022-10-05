@@ -84,7 +84,23 @@ Function Login(){
             echo json_encode(["success"=>0]);
         }
     }else{
+        $sql = "SELECT * FROM  usuarios WHERE email_usuario= '$username' and contraseña_usuario = '$password'";
+        $query = $conexion-> query($sql);
+        if($query->rowCount()){
+            $Boolean = TRUE;
+            // while($row = $query-> fetch(PDO::FETCH_ASSOC)){
+            //     if(password_verify($password,$row['contraseña_usuario'])){
+            //     }
+            // }
+            if($Boolean == TRUE){
+                echo json_encode(["success"=>2]);
+                exit();
+            }else{
+                echo json_encode(["success"=>0]);
+            }
+        }else{
         echo json_encode(["success"=>0]);
+        }
     }
 }
 
