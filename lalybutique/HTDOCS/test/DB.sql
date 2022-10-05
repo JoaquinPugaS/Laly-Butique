@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 CREATE DATABASE LalyBoutique;
-USE DATABASE;
+USE LalyBoutique;
 --
 -- Estructura de tabla para la tabla `admin`
 --
