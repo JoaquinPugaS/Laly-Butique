@@ -78,7 +78,7 @@ CREATE TABLE `pedido` (
 CREATE TABLE `productos` (
   `id_producto` int(5) NOT NULL,
   `nombre_producto` varchar(50) NOT NULL,
-  `stock_producto` tinyint(4) NOT NULL,
+  `stock_producto` int(4) NOT NULL,
   `stock_critico_producto` tinyint(2) NOT NULL,
   `precio_producto` int(9) NOT NULL,
   `imagen_producto` varchar(255) NOT NULL,
@@ -144,6 +144,7 @@ INSERT INTO `usuarios` (`rut_usuario`, `nombre_usuario`, `apellido_usuario`, `em
 --
 
 --
+set FOREIGN_KEYS_CHECKS = 0;
 -- Indices de la tabla `productos`
 --
 ALTER TABLE `admin`
@@ -159,9 +160,9 @@ ALTER TABLE `usuarios`
 ALTER TABLE `categoria_producto`
   ADD CONSTRAINT PRIMARY KEY (`id_producto`);
 
-ALTER TABLE `producto_pedido`
-  ADD CONSTRAINT FOREIGN KEY (`id_pedido`) REFERENCES `pedido`(`id_pedido`),
-  ADD CONSTRAINT FOREIGN KEY (`id_producto`) REFERENCES `productos`(`id_producto`);
+-- ALTER TABLE `producto_pedido`
+--   ADD CONSTRAINT FOREIGN KEY (`id_pedido`) REFERENCES `pedido`(`id_pedido`),
+--   ADD CONSTRAINT FOREIGN KEY (`id_producto`) REFERENCES `productos`(`id_producto`);
 
 --
 -- AUTO_INCREMENT de la tabla `productos`
