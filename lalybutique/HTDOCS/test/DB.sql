@@ -32,7 +32,7 @@ USE LalyBoutique;
 
 CREATE TABLE `admin` (
   `id_admin` varchar(24) NOT NULL,
-  `contraseña_admin` varchar(255) NOT NULL,
+  `contrasenia_admin` varchar(255) NOT NULL,
   `email_admin` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -40,7 +40,7 @@ CREATE TABLE `admin` (
 -- Volcado de datos para la tabla `admin`
 --
 
-INSERT INTO `admin` (`id_admin`, `contraseña_admin`, `email_admin`) VALUES
+INSERT INTO `admin` (`id_admin`, `contrasenia_admin`, `email_admin`) VALUES
 ('admin', '$2y$10$HUCOTO1VAwh3i2iadjyEB.ReFWMqx5NZ97ZH5AUUlGSirkB5d7Tdu', '');
 
 -- --------------------------------------------------------
@@ -124,7 +124,7 @@ CREATE TABLE `usuarios` (
   `apellido_usuario` varchar(30) COLLATE utf8mb4_spanish2_ci NOT NULL,
   `email_usuario` varchar(255) COLLATE utf8mb4_spanish2_ci NOT NULL,
   `direccion_usuario` varchar(100) COLLATE utf8mb4_spanish2_ci NOT NULL,
-  `contraseña_usuario` varchar(100) COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `contrasenia_usuario` varchar(100) COLLATE utf8mb4_spanish2_ci NOT NULL,
   `telefono_usuario` varchar(9) COLLATE utf8mb4_spanish2_ci NOT NULL,
   `deuda_usuario` int(9) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
@@ -133,7 +133,7 @@ CREATE TABLE `usuarios` (
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`rut_usuario`, `nombre_usuario`, `apellido_usuario`, `email_usuario`, `direccion_usuario`, `contraseña_usuario`, `telefono_usuario`, `deuda_usuario`) VALUES
+INSERT INTO `usuarios` (`rut_usuario`, `nombre_usuario`, `apellido_usuario`, `email_usuario`, `direccion_usuario`, `contrasenia_usuario`, `telefono_usuario`, `deuda_usuario`) VALUES
 ('1233123', 'hola', 'si', 'asd@gmail.com', 'xaxurro casa', 'vichito', '123', 0);
 
 --

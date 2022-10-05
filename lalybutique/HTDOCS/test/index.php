@@ -73,7 +73,7 @@ Function Login(){
     $query = $conexion-> query($sql);
     if($query->rowCount()){
         while($row = $query-> fetch(PDO::FETCH_ASSOC)){
-            if(password_verify($password,$row['password'])){
+            if(password_verify($password,$row['contrasenia_admin'])){
                 $Boolean = TRUE;
             }
         }
@@ -84,7 +84,7 @@ Function Login(){
             echo json_encode(["success"=>0]);
         }
     }else{
-        $sql = "SELECT * FROM  usuarios WHERE email_usuario= '$username' and contraseña_usuario = '$password'";
+        $sql = "SELECT * FROM  usuarios WHERE email_usuario= '$username' and contrasenia_usuario = '$password'";
         $query = $conexion-> query($sql);
         if($query->rowCount()){
             $Boolean = TRUE;
