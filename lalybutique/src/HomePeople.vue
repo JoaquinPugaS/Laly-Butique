@@ -1,7 +1,7 @@
 <template>
   
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" ><router-link to="/"><img width = "250" height = "60" src="./assets/logo2.png" alt="logo"></router-link></a>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light invisible">
+            <a class="navbar-brand" ><router-link to="/"><img width = "250" height = "60" src="./assets/logo2.png" alt="logo"></router-link></a>
       
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">

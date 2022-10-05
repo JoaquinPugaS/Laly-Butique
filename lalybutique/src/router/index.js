@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeAdminView from '../views/AdminView'
+import AdminDash from '../views/AdminDash'
 import HomeView from '../views/HomeView'
 import CreateComponent from '../components/CreateComponent'
 import ReadComponent from '../components/ReadComponent'
@@ -15,6 +16,11 @@ const routes = [
     path: '/AdminView',
     name: 'homeAdmin',
     component: HomeAdminView
+  },
+  {
+    path: '/AdminDash',
+    name: 'Dashboard',
+    component: AdminDash
   },
   {
     path: '/create',

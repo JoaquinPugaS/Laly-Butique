@@ -1,12 +1,12 @@
 <template>
   
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" ><router-link to="/AdminView"><img width = "250" height = "60" src="../assets/logo2.png" alt="logo"></router-link></a>
+    <a class="navbar-brand" ><router-link to="/AdminDash"><img width = "250" height = "60" src="../assets/logo2.png" alt="logo"></router-link></a>
     
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li>
-          <a class="nav-link" ><router-link to="/AdminView">Resumen</router-link> </a>
+          <a class="nav-link" ><router-link to="/AdminDash">Resumen</router-link> </a>
         </li>
         <li>
           <a class="nav-link" ><router-link to="/create">Crear</router-link> </a>
@@ -48,9 +48,11 @@ nav a {
   color: #000000;
 }
 nav a:hover {
+  transform:scale(1.2);
   font-weight: bold;
   color: #be7af0;
   text-decoration: none;
+  transition: .3s;
 }
 
 nav a.router-link-exact-active {
@@ -72,11 +74,11 @@ input[type=button], input[type=submit], input[type=reset]  {
       -webkit-border-radius: 5px 5px 5px 5px;
       border-radius: 5px 5px 5px 5px;
       margin: 5px 20px 40px 20px;
-      -webkit-transition: all 0.3s ease-in-out;
+      /* -webkit-transition: all 0.3s ease-in-out;
       -moz-transition: all 0.3s ease-in-out;
       -ms-transition: all 0.3s ease-in-out;
       -o-transition: all 0.3s ease-in-out;
-      transition: all 0.3s ease-in-out;
+      transition: all 0.3s ease-in-out; */
     }
     
     input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover  {
