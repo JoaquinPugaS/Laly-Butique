@@ -99,6 +99,9 @@ export default {
     methods:{
         AñadirProducto(urla){
             this.urll = urla ;
+            if(this.EstadoSeleccionado.nombre === 'Seleccione uno'){
+                this.EstadoSeleccionado.nombre = 'Disponible'
+            }
             this.producto.estado = this.EstadoSeleccionado.nombre
             console.log(this.producto);
             var datosEnviar={nombre:this.producto.nombre,stock:this.producto.stock,stock_critico:this.producto.stock_critico,precio:this.producto.precio,imagen:this.urll,estado:this.producto.estado}
