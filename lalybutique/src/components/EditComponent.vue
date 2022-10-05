@@ -9,25 +9,25 @@
                 <div class="mb-3">
                     <label for="nombre" class="form-label">Nombre: </label>
                     <input type="text"
-                        class="form-control"  name="nombre" v-model="producto.nombre" id="nombre" aria-describedby="helpId" placeholder="Nombre">
+                        class="form-control" required name="nombre" minlength="1" maxlength="50" v-model="producto.nombre" id="nombre" aria-describedby="helpId" placeholder="Nombre">
                     <small id="helpId" class="form-text text-muted">Ingresa el nombre del producto</small>
                 </div>
                 <div class="mb-3">
                     <label for="stock" class="form-label">Stock: </label>
                     <input type="number"
-                        class="form-control"  name="stock" v-model="producto.stock" id="stock" aria-describedby="helpId" placeholder="Stock">
+                        class="form-control" required name="stock" min="1" max="9999" v-model="producto.stock" id="stock" aria-describedby="helpId" placeholder="Stock">
                     <small id="helpId" class="form-text text-muted">Ingresa el Stock del producto</small>
                 </div>
                 <div class="mb-3">
                     <label for="stock_critico" class="form-label">Stock Critico: </label>
                     <input type="number"
-                        class="form-control"  name="stock_critico" v-model="producto.stock_critico" id="stock_critico" aria-describedby="helpId" placeholder="Stock critico">
+                        class="form-control" required name="stock_critico" min="1" max="99" v-model="producto.stock_critico" id="stock_critico" aria-describedby="helpId" placeholder="Stock critico">
                     <small id="helpId" class="form-text text-muted">Ingresa el Stock critico del producto</small>
                 </div>
                 <div class="mb-3">
                     <label for="precio" class="form-label">Precio: </label>
                     <input type="number"
-                        class="form-control"  name="precio" v-model="producto.precio" id="precio" aria-describedby="helpId" placeholder="Precio">
+                        class="form-control" required name="precio" min="1" max="999999999" v-model="producto.precio" id="precio" aria-describedby="helpId" placeholder="Precio">
                     <small id="helpId" class="form-text text-muted">Ingresa el Precio del producto</small>
                 </div>
                 <div class="mb-3" id="uploadImage">
