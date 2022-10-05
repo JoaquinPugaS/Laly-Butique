@@ -1,16 +1,20 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-
+import HomeAdminView from '../views/AdminView'
+import HomeView from '../views/HomeView'
 import CreateComponent from '../components/CreateComponent'
 import ReadComponent from '../components/ReadComponent'
 import EditComponent from '../components/EditComponent'
+import RopaHombre from '../components/RopaHombre'
+import RopaMujer from '../components/RopaMujer'
 import LoginView from '../components/LoginView'
+import HomePeople from '../HomePeople'
+
 // import CloudinaryUpload from '../components/CloudinaryUpload'
 const routes = [
   {
-    path: '/',
-    name: 'home',
-    component: HomeView
+    path: '/AdminView',
+    name: 'homeAdmin',
+    component: HomeAdminView
   },
   {
     path: '/create',
@@ -33,18 +37,31 @@ const routes = [
     component: ReadComponent
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+    path:'/HomePeople',
+    name:'Home',
+    component:HomePeople
+  },
+  {
+    path:'/RopaHombre',
+    name:'Hombre',
+    component:RopaHombre
+  },
+  {
+    path:'/RopaMujer',
+    name:'Mujer',
+    component:RopaMujer
   },
   {
     path:'/LoginView',
     name:'Login',
     component:LoginView
-  }
+  },
+  {
+    path:'/',
+    name:'HomeView',
+    component:HomeView
+  },
+  
 ]
 
 const router = createRouter({

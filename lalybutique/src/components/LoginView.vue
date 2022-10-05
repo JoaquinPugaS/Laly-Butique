@@ -55,7 +55,7 @@
                 .then((datosRespuesta=>{
                     console.log(datosRespuesta.success)
                     if(datosRespuesta.success===1){
-                        window.location.href='/'
+                        window.location.href='/AdminView'
                     }else{
                         console.log('Error');
                         this.error = true;
