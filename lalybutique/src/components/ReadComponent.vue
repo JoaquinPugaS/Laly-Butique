@@ -60,6 +60,8 @@
     </div>
 </template>
 <script>
+import axios from "axios";
+
 // eslint-disable-next-line
 var idd = ' ';
 export default {
@@ -73,17 +75,19 @@ export default {
     },
     methods:{
         consultarProductos(){
-            fetch('http://localhost/test/?leer')
-            .then(respuesta=>respuesta.json())
-            .then((datosRespuesta)=>{
-                console.log(datosRespuesta)
-                this.productos=[]
-                if(typeof datosRespuesta[0].success=== 'undefined' )
-                {
-                    this.productos=datosRespuesta;
-                }
-            })
-            .catch(console.log)
+            // fetch('http://localhost/test/?leer')
+            // .then(respuesta=>respuesta.json())
+            let url  = 'http://localhost/test/?leer';
+            axios.get(url).then((datosRespuesta)=>(this.productos = datosRespuesta.data));
+            // .then((datosRespuesta)=>{
+            //     console.log(datosRespuesta)
+            //     this.productos=[]
+            //     if(typeof datosRespuesta[0].success=== 'undefined' )
+            //     {
+            //         this.productos=datosRespuesta;
+            //     }
+            // })
+            // .catch(console.log)
         },
         borrarProducto(id,conf){
             if(conf == false){
@@ -96,8 +100,10 @@ export default {
 
             },
         confirmar(id){
-            fetch('http://localhost/test/?eliminar='+id)
-            .then(respuesta=>respuesta.json())
+            let url = 'http://localhost/test/?eliminar='+id;
+            // fetch('http://localhost/test/?eliminar='+id)
+            // .then(respuesta=>respuesta.json())
+            axios.post(url)
             .then((datosRespuesta)=>{
                 console.log(datosRespuesta)
                 window.location.href='read'
@@ -105,8 +111,10 @@ export default {
             .catch(console.log)
         },
         modificarProducto(id){
-            fetch('edit'+id)
-            .then(respuesta=>respuesta.json())
+            let url = 'edit'+id;
+            // fetch('edit'+id)
+            // .then(respuesta=>respuesta.json())
+            axios.post(url)
             .then((datosRespuesta)=>{
                 console.log(datosRespuesta)
                 window.location.href='edit'

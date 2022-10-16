@@ -105,14 +105,15 @@ export default {
             this.producto.estado = this.EstadoSeleccionado.nombre
             console.log(this.producto);
             var datosEnviar={nombre:this.producto.nombre,stock:this.producto.stock,stock_critico:this.producto.stock_critico,precio:this.producto.precio,imagen:this.urll,estado:this.producto.estado}
-            fetch('http://localhost/test/?insertar=1',{
-                method:'POST',
-                body:JSON.stringify(datosEnviar)
-            })
-            .then(respuesta=>respuesta.json())
+            // fetch('http://localhost/test/?insertar=1',{
+            //     method:'POST',
+            //     body:JSON.stringify(datosEnviar)
+            // })
+            let url = 'http://localhost/test/?insertar=1';
+            axios.post(url,datosEnviar)
+            // .then(respuesta=>respuesta.json())
             .then((datosRespuesta=>{
-                console.log(datosRespuesta);
-                if(datosRespuesta.success===1){
+                if(datosRespuesta.data.success===1){
                     window.location.href='read'
                 }else{
                     console.log('Error');

@@ -34,6 +34,7 @@
 
 </template>
 <script>
+import axios from 'axios';
     export default{
         data(){
             return{
@@ -47,16 +48,18 @@
                 },
             EnviarDatos(){
                 var datosEnviar={username:this.usuario.username,password:this.usuario.password}
-                fetch('http://localhost/test/?login=1',{
-                    method:'POST',
-                    body:JSON.stringify(datosEnviar)
-                })
-                .then(respuesta=>respuesta.json())
+                // fetch('http://localhost/test/?login=1',{
+                //     method:'POST',
+                //     body:JSON.stringify(datosEnviar)
+                // })
+                // .then(respuesta=>respuesta.json())
+                let url = 'http://localhost/test/?login=1';
+                axios.post(url,datosEnviar)
                 .then((datosRespuesta=>{
                     console.log(datosRespuesta.success)
-                    if(datosRespuesta.success===1){
+                    if(datosRespuesta.data.success===1){
                         window.location.href='/AdminDash'
-                    }else if(datosRespuesta.success===2){
+                    }else if(datosRespuesta.data.success===2){
                         window.location.href='/HomePeople'
                       }else{
                       console.log('Error');

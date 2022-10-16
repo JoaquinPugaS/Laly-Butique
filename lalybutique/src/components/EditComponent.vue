@@ -131,11 +131,13 @@ export default {
         console.log('link',urll)
         this.producto.estado = this.EstadoSeleccionado.nombre
         var datosEnviar={id:this.$route.params.id,nombre:this.producto.nombre,stock:this.producto.stock,stock_critico:this.producto.stock_critico,precio:this.producto.precio,imagen:this.urll,estado:this.producto.estado}
-        fetch('http://localhost/test/?modificar='+this.$route.params.id,{
-            method:'POST',
-            body:JSON.stringify(datosEnviar)
-        })
-        .then(respuesta=>respuesta.json())
+        // fetch('http://localhost/test/?modificar='+this.$route.params.id,{
+        //     method:'POST',
+        //     body:JSON.stringify(datosEnviar)
+        // })
+        // .then(respuesta=>respuesta.json())
+        let url = 'http://localhost/test/?modificar='+this.$route.params.id;
+        axios.post(url,datosEnviar)
         .then((datosRespuesta=>{
             console.log(datosRespuesta);
             window.location.href='../read'
