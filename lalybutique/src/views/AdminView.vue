@@ -9,11 +9,11 @@
           <a class="nav-link" id="nava"><router-link to="/AdminDash">Resumen</router-link> </a>
         </li>
         <li>
-          <a class="nav-link" id="nava"><router-link to="/create">Crear</router-link> </a>
+          <a class="nav-link" id="nava"><router-link to="/CreateProduct">Crear</router-link> </a>
           
         </li>
         <li>
-          <a class="nav-link" id="nava" > <router-link to="/read">Productos</router-link> </a>
+          <a class="nav-link" id="nava" > <router-link to="/ListProducts">Productos</router-link> </a>
           
           
         </li>

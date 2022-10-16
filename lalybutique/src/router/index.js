@@ -2,9 +2,9 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeAdminView from '../views/AdminView'
 import AdminDash from '../views/AdminDash'
 import HomeView from '../views/HomeView'
-import CreateComponent from '../components/CreateComponent'
-import ReadComponent from '../components/ReadComponent'
-import EditComponent from '../components/EditComponent'
+import CreateProduct from '../components/Admin/CreateProduct'
+import ListProducts from '../components/Admin/ListProducts'
+import EditProduct from '../components/Admin/EditProduct'
 import RopaHombre from '../components/RopaHombre'
 import RopaMujer from '../components/RopaMujer'
 import LoginView from '../components/LoginView'
@@ -23,9 +23,9 @@ const routes = [
     component: AdminDash
   },
   {
-    path: '/create',
-    name: 'create',
-    component: CreateComponent
+    path: '/CreateProduct',
+    name: 'CreateProduct',
+    component: CreateProduct
   },
   // {
   //   path: '/upload',
@@ -33,14 +33,14 @@ const routes = [
   //   component: CloudinaryUpload
   // },
   {
-    path: '/edit/:id',
-    name: 'edit',
-    component: EditComponent
+    path: '/EditProduct/:id',
+    name: 'EditProduct',
+    component: EditProduct
   },
   {
-    path: '/read',
-    name: 'read',
-    component: ReadComponent
+    path: '/ListProducts',
+    name: 'ListProducts',
+    component: ListProducts
   },
   {
     path:'/HomePeople',

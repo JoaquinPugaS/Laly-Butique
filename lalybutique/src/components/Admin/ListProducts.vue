@@ -28,7 +28,7 @@
                                 <td>{{producto.estado}}</td>
                                 <td>
                                     <div class="btn-group" role="group" aria-label="">
-                                        <router-link :to="{ name: 'edit', params: { id: producto.id },}" class="btn btn-success">Editar</router-link>
+                                        <router-link :to="{ name: 'EditProduct', params: { id: producto.id },}" class="btn btn-success">Editar</router-link>
                                                 <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#Confirmar" v-on:click="borrarProducto(producto.id,false) ">Eliminar</button>
                                         <div class="modal fade" id="Confirmar" tabindex="-1" aria-labelledby="ConfirmarLabel" aria-hidden="true">
                                         <div class="modal-dialog">
@@ -106,18 +106,18 @@ export default {
             axios.post(url)
             .then((datosRespuesta)=>{
                 console.log(datosRespuesta)
-                window.location.href='read'
+                window.location.href='ListProducts'
             })
             .catch(console.log)
         },
         modificarProducto(id){
-            let url = 'edit'+id;
+            let url = 'EditProduct'+id;
             // fetch('edit'+id)
             // .then(respuesta=>respuesta.json())
             axios.post(url)
             .then((datosRespuesta)=>{
                 console.log(datosRespuesta)
-                window.location.href='edit'
+                window.location.href='EditProduct'
             })
             .catch(console.log)
             

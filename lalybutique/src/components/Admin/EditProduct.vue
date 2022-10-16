@@ -74,7 +74,7 @@
                 </div>
                 <div class="btn-group" role="group" aria-label="">
                     <button type="submit" class="btn btn-success">Modificar</button>
-                    <router-link :to="{name:'read'}" class="btn btn-warning">Cancelar </router-link>
+                    <router-link :to="{name:'ListProducts'}" class="btn btn-warning">Cancelar </router-link>
                 </div>
             </form>
         </div>
@@ -140,7 +140,7 @@ export default {
         axios.post(url,datosEnviar)
         .then((datosRespuesta=>{
             console.log(datosRespuesta);
-            window.location.href='../read'
+            window.location.href='../ListProducts'
         }))
     },
         handleFileChange: function(event) {

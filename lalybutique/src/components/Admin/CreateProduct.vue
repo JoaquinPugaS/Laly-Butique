@@ -2,7 +2,7 @@
     <div class="container">
     <div class="card">
         <div class="card-header">
-            Productos
+            Agregar un producto
         </div>
         <div class="card-body" style="text-align: left">
             <form v-on:submit.prevent="upload" >
@@ -58,7 +58,7 @@
                 </div>
                 <div class="btn-group" role="group" aria-label="">
                     <button type="submit" class="btn btn-success">Añadir</button>
-                    <router-link :to="{name:'read'}" class="btn btn-warning">Cancelar </router-link>
+                    <router-link :to="{name:'ListProducts'}" class="btn btn-warning">Cancelar </router-link>
                 </div>
             </form>
         </div>
@@ -114,7 +114,7 @@ export default {
             // .then(respuesta=>respuesta.json())
             .then((datosRespuesta=>{
                 if(datosRespuesta.data.success===1){
-                    window.location.href='read'
+                    window.location.href='ListProducts'
                 }else{
                     console.log('Error');
                     this.error = true;
