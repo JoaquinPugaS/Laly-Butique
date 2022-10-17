@@ -9,8 +9,8 @@ import RopaHombre from '../components/RopaHombre'
 import RopaMujer from '../components/RopaMujer'
 import LoginView from '../components/LoginView'
 import HomePeople from '../HomePeople'
+import ProductsCatalog from '../components/ProductsCatalog'
 
-// import CloudinaryUpload from '../components/CloudinaryUpload'
 const routes = [
   {
     path: '/AdminView',
@@ -27,11 +27,11 @@ const routes = [
     name: 'CreateProduct',
     component: CreateProduct
   },
-  // {
-  //   path: '/upload',
-  //   name: 'upload',
-  //   component: CloudinaryUpload
-  // },
+  {
+    path: '/Products',
+    name: 'Products',
+    component: ProductsCatalog
+  },
   {
     path: '/EditProduct/:id',
     name: 'EditProduct',
