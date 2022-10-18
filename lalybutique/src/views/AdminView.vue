@@ -17,6 +17,11 @@
           
           
         </li>
+        <li>
+          <a class="nav-link" id="nava" > <router-link to="/Products">Catalogo</router-link> </a>
+          
+          
+        </li>
         <!-- <li>
           <a class="nav-link" href="http://localhost/test/">test base de datos</a> 
           

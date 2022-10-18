@@ -10,6 +10,7 @@ import RopaMujer from '../components/RopaMujer'
 import LoginView from '../components/LoginView'
 import HomePeople from '../HomePeople'
 import ProductsCatalog from '../components/ProductsCatalog'
+import ProductDetail from '../components/ProductDetail'
 
 const routes = [
   {
@@ -36,6 +37,11 @@ const routes = [
     path: '/EditProduct/:id',
     name: 'EditProduct',
     component: EditProduct
+  },
+  {
+    path: '/Product/:id',
+    name: 'ProductDetail',
+    component: ProductDetail
   },
   {
     path: '/ListProducts',
