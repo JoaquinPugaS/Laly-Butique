@@ -36,6 +36,35 @@ if(isset($_GET["leer"])){
     
 }
 
+Function Catalogo(){
+    include 'db.php';
+    $objeto = new Conexion();
+    $conexion = $objeto->Conectar();
+        $productos = array();
+        $query = $conexion -> query('SELECT * FROM productos WHERE estado_producto = "Disponible"');
+        if($query->rowCount()){
+            while($row = $query-> fetch(PDO::FETCH_ASSOC)){
+                $item = array(
+                    'id' => $row['id_producto'],
+                    'nombre' => $row['nombre_producto'],
+                    'stock' => $row['stock_producto'],
+                    'stock_critico' => $row['stock_critico_producto'],
+                    'precio' => $row['precio_producto'],
+                    'imagen' => $row['imagen_producto'],
+                    'estado' => $row['estado_producto']
+                );
+                array_push($productos, $item);
+            }
+    
+            echo json_encode($productos);
+        }else{
+            echo json_encode(array('mensaje'=>'no hay elementos'));
+        }
+}
+if(isset($_GET['listar'])){
+Catalogo();
+}
+
 Function Insertar(){
     include_once 'db.php';
         $objeto = new Conexion();

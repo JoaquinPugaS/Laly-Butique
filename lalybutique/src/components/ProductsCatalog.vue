@@ -25,7 +25,7 @@ export default {
     },
     methods:{
         consultarProductos(){
-            let url  = 'http://localhost/test/?leer';
+            let url  = 'http://localhost/test/?listar';
             axios.get(url).then((datosRespuesta)=>(this.productos = datosRespuesta.data));
         },
     }
