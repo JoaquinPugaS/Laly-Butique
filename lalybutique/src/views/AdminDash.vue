@@ -10,6 +10,15 @@
 
     </div>
 </template>
+<script>
+export default {
+    mounted(){
+  if(!localStorage.getItem('admin_token')){
+      window.location.href='/Login'
+  }
+  },
+}
+</script>
 <style>
     div.b {
   position: absolute;

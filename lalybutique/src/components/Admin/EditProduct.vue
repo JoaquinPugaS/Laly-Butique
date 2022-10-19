@@ -112,6 +112,11 @@ export default {
         }
 
     },
+    mounted(){
+    if(!localStorage.getItem('admin_token')){
+        window.location.href='/Login'
+    }
+    },
     created:function(){
         this.obtenerInformacionID();
     },

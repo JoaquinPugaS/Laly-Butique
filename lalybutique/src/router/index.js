@@ -8,7 +8,7 @@ import EditProduct from '../components/Admin/EditProduct'
 import RopaHombre from '../components/RopaHombre'
 import RopaMujer from '../components/RopaMujer'
 import LoginView from '../components/LoginView'
-import HomePeople from '../HomePeople'
+import HomePeople from '../views/HomePeople'
 import ProductsCatalog from '../components/ProductsCatalog'
 import ProductDetail from '../components/ProductDetail'
 
@@ -64,7 +64,7 @@ const routes = [
     component:RopaMujer
   },
   {
-    path:'/LoginView',
+    path:'/Login',
     name:'Login',
     component:LoginView
   },

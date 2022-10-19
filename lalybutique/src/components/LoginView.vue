@@ -25,7 +25,8 @@
 
     <!-- Remind Passowrd -->
     <div id="formFooter">
-      <a class="underlineHover" href="#">Olvidaste la contraseña?</a>
+      <a class="underlineHover" href="#">Olvidaste la contraseña?</a><br>
+      <a class="underlineHover" href="#">Registrarse</a>
     </div>
 
   </div>
@@ -53,13 +54,19 @@ import axios from 'axios';
                 //     body:JSON.stringify(datosEnviar)
                 // })
                 // .then(respuesta=>respuesta.json())
+                // let config = {
+                //   Headers:{
+                //     "Content-Type": "application/json",
+                //   },
+                // };
                 let url = 'http://localhost/test/?login=1';
                 axios.post(url,datosEnviar)
                 .then((datosRespuesta=>{
-                    console.log(datosRespuesta.success)
-                    if(datosRespuesta.data.success===1){
+                  if(datosRespuesta.data.success===1){
+                    localStorage.setItem('admin_token', datosRespuesta.data.token);
                         window.location.href='/AdminDash'
                     }else if(datosRespuesta.data.success===2){
+                      localStorage.setItem('user_token', datosRespuesta.data.token);
                         window.location.href='/HomePeople'
                       }else{
                       console.log('Error');

@@ -70,8 +70,12 @@ export default {
             productos:[]
         }
     },
-    created:function(){
-        this.consultarProductos();
+    mounted(){
+        if(localStorage.getItem('admin_token')){
+            this.consultarProductos();
+        }else{
+            window.location.href='/Login'
+        }
     },
     methods:{
         consultarProductos(){

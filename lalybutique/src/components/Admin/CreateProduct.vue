@@ -96,6 +96,11 @@ export default {
             error: false,
         }
     },
+    mounted(){
+    if(!localStorage.getItem('admin_token')){
+        window.location.href='/Login'
+    }
+    },
     methods:{
         AñadirProducto(urla){
             this.urll = urla ;

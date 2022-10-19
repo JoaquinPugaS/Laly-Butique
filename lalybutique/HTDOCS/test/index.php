@@ -5,7 +5,7 @@ header("Access-Control-Allow-Methods: GET,POST");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-function getAll(){
+function ObtenerProductos(){
     include_once 'db.php';
     $objeto = new Conexion();
     $conexion = $objeto->Conectar();
@@ -32,37 +32,36 @@ function getAll(){
     }
 
 if(isset($_GET["leer"])){
-    getAll();
-    
+    ObtenerProductos();
 }
 
-Function Catalogo(){
-    include 'db.php';
-    $objeto = new Conexion();
-    $conexion = $objeto->Conectar();
-        $productos = array();
-        $query = $conexion -> query('SELECT * FROM productos WHERE estado_producto = "Disponible"');
-        if($query->rowCount()){
-            while($row = $query-> fetch(PDO::FETCH_ASSOC)){
-                $item = array(
-                    'id' => $row['id_producto'],
-                    'nombre' => $row['nombre_producto'],
-                    'stock' => $row['stock_producto'],
-                    'stock_critico' => $row['stock_critico_producto'],
-                    'precio' => $row['precio_producto'],
-                    'imagen' => $row['imagen_producto'],
-                    'estado' => $row['estado_producto']
-                );
-                array_push($productos, $item);
+    Function Catalogo(){
+        include 'db.php';
+        $objeto = new Conexion();
+        $conexion = $objeto->Conectar();
+            $productos = array();
+            $query = $conexion -> query('SELECT * FROM productos WHERE estado_producto = "Disponible"');
+            if($query->rowCount()){
+                while($row = $query-> fetch(PDO::FETCH_ASSOC)){
+                    $item = array(
+                        'id' => $row['id_producto'],
+                        'nombre' => $row['nombre_producto'],
+                        'stock' => $row['stock_producto'],
+                        'stock_critico' => $row['stock_critico_producto'],
+                        'precio' => $row['precio_producto'],
+                        'imagen' => $row['imagen_producto'],
+                        'estado' => $row['estado_producto']
+                    );
+                    array_push($productos, $item);
+                }
+        
+                echo json_encode($productos);
+            }else{
+                echo json_encode(array('mensaje'=>'no hay elementos'));
             }
-    
-            echo json_encode($productos);
-        }else{
-            echo json_encode(array('mensaje'=>'no hay elementos'));
-        }
 }
 if(isset($_GET['listar'])){
-Catalogo();
+    Catalogo();
 }
 
 Function Insertar(){
@@ -107,7 +106,7 @@ Function Login(){
             }
         }
         if($Boolean == TRUE){
-            echo json_encode(["success"=>1]);
+            echo json_encode(["success"=>1,"token"=>bin2hex(openssl_random_pseudo_bytes(16))]);
             exit();
         }else{
             echo json_encode(["success"=>0]);
@@ -122,7 +121,7 @@ Function Login(){
             //     }
             // }
             if($Boolean == TRUE){
-                echo json_encode(["success"=>2]);
+                echo json_encode(["success"=>2,"token"=>bin2hex(openssl_random_pseudo_bytes(16))]);
                 exit();
             }else{
                 echo json_encode(["success"=>0]);
