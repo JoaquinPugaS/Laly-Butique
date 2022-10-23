@@ -8,7 +8,7 @@ import EditProduct from '../components/Admin/EditProduct'
 import RopaHombre from '../components/RopaHombre'
 import RopaMujer from '../components/RopaMujer'
 import LoginView from '../components/LoginView'
-// import HomePeople from '../views/HomePeople'
+import Cart from '../components/ShoppingCart'
 import ProductsCatalog from '../components/ProductsCatalog'
 import ProductDetail from '../components/ProductDetail'
 
@@ -40,11 +40,6 @@ const routes = [
       },
     ]
   },
-  // {
-  //   path:'/HomePeople',
-  //   name:'Home',
-  //   component:HomePeople
-  // },
   {
     path:'/',
     name:'UsersView',
@@ -75,6 +70,11 @@ const routes = [
         name:'Mujer',
         component:RopaMujer
       },
+      {
+        path:'/Cart',
+        name: 'Cart',
+        component: Cart
+      }
       
     ]
   },

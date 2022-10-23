@@ -8,13 +8,14 @@
           <a class="nav-link" id="nava" > <router-link to="/Products">Productos</router-link> </a>
         </li>
         <li>
-          <button>
-            <i class="fas fa-shopping-cart"></i>
-          </button>
-          <span class="cantidad-total">0</span>
-          <div class="cart-dropdown">
-            <ul class="cart-dropdown_list">
-              <li>Producto</li>
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" >
+              Carrito
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <li><a class="dropdown-item" >Action</a></li>
+              <li><a class="dropdown-item" >Another action</a></li>
+              <li><a class="dropdown-item" >Something else here</a></li>
             </ul>
           </div>
         </li>

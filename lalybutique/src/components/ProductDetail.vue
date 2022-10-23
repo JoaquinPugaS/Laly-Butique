@@ -42,8 +42,7 @@
                             <h6 class="text-uppercase">Colores</h6> <label class="radio"> <input type="radio" name="size" value="ROJO" checked> <span>ROJO</span> </label> <label class="radio"> <input type="radio" name="size" value="AZUL"> <span>AZUL</span> </label> <label class="radio"> <input type="radio" name="size" value="AMARILLO"> <span>AMARILLO</span> </label>
                         </div>
 						<div class="action">
-							Cantidad: <input name="Cantidad" id="Cantidad" type="number" max="10" value="Cantidad" ><br><br>
-							<button type="button" class="btn btn-primary">Agregar al carrito</button>
+							<button type="button" class="btn btn-primary" @click="AgregarAlCarrito(producto)">Agregar al carrito</button>
 						</div>
 					</div>
 				</div>
@@ -55,7 +54,8 @@
 export default {
     data(){
         return{
-            producto:{}
+            producto:{},
+            carrito:[],
         }
     },
     created:function(){
@@ -66,10 +66,24 @@ export default {
                 fetch('http://localhost/test/?consultar='+this.$route.params.id)
                 .then(respuesta=>respuesta.json())
                 .then((datosRespuesta)=>{
-                    console.log(datosRespuesta)
                     this.producto=datosRespuesta[0];
             })
         },
+        AgregarAlCarrito(producto) {
+            const itemCart = this.carrito.filter((item) => item.id == producto.id)[0]; 
+            if(itemCart != undefined){
+                itemCart.cantidad++;
+            }else{
+                const itemCart = {
+                    id: producto.id,
+                    nombre: producto.nombre,
+                    precio: producto.precio,
+                    cantidad: 1
+                };
+                this.carrito.push(itemCart);
+            }
+            console.log(this.carrito);
+        }
     }
 }
 </script>
