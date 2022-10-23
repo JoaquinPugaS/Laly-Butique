@@ -13,8 +13,6 @@
         </li>
         <li>
           <a class="nav-link" id="nava" > <router-link to="/ListProducts">Productos</router-link> </a>
-          
-          
         </li>
 
       </ul>
@@ -29,7 +27,7 @@ export default {
   methods: {
     CerrarSesion(){
       localStorage.removeItem('admin_token');
-      window.location.href='/HomePeople'
+      window.location.href='/'
     }
   }
 }

@@ -28,6 +28,6 @@ export default {
             let url  = 'http://localhost/test/?listar';
             axios.get(url).then((datosRespuesta)=>(this.productos = datosRespuesta.data));
         },
-    }
+    },
 }
 </script>

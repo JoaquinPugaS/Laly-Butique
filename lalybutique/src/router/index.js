@@ -1,77 +1,82 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeAdminView from '../views/AdminView'
 import AdminDash from '../views/AdminDash'
-import HomeView from '../views/HomeView'
+import UsersView from '../views/UsersView'
 import CreateProduct from '../components/Admin/CreateProduct'
 import ListProducts from '../components/Admin/ListProducts'
 import EditProduct from '../components/Admin/EditProduct'
 import RopaHombre from '../components/RopaHombre'
 import RopaMujer from '../components/RopaMujer'
 import LoginView from '../components/LoginView'
-import HomePeople from '../views/HomePeople'
+// import HomePeople from '../views/HomePeople'
 import ProductsCatalog from '../components/ProductsCatalog'
 import ProductDetail from '../components/ProductDetail'
 
 const routes = [
   {
-    path: '/AdminView',
-    name: 'homeAdmin',
-    component: HomeAdminView
+    path: '/admin',
+    name: 'admin',
+    component: HomeAdminView,
+    children: [
+      {
+        path: '/admin/CreateProduct',
+        name: 'CreateProduct',
+        component: CreateProduct
+      },
+      {
+        path: '/admin/EditProduct/:id',
+        name: 'EditProduct',
+        component: EditProduct
+      },
+      {
+        path: '/admin/ListProducts',
+        name: 'ListProducts',
+        component: ListProducts
+      },
+      {
+        path: '/AdminDash',
+        name: 'Dashboard',
+        component: AdminDash
+      },
+    ]
   },
-  {
-    path: '/AdminDash',
-    name: 'Dashboard',
-    component: AdminDash
-  },
-  {
-    path: '/CreateProduct',
-    name: 'CreateProduct',
-    component: CreateProduct
-  },
-  {
-    path: '/Products',
-    name: 'Products',
-    component: ProductsCatalog
-  },
-  {
-    path: '/EditProduct/:id',
-    name: 'EditProduct',
-    component: EditProduct
-  },
-  {
-    path: '/Product/:id',
-    name: 'ProductDetail',
-    component: ProductDetail
-  },
-  {
-    path: '/ListProducts',
-    name: 'ListProducts',
-    component: ListProducts
-  },
-  {
-    path:'/HomePeople',
-    name:'Home',
-    component:HomePeople
-  },
-  {
-    path:'/RopaHombre',
-    name:'Hombre',
-    component:RopaHombre
-  },
-  {
-    path:'/RopaMujer',
-    name:'Mujer',
-    component:RopaMujer
-  },
-  {
-    path:'/Login',
-    name:'Login',
-    component:LoginView
-  },
+  // {
+  //   path:'/HomePeople',
+  //   name:'Home',
+  //   component:HomePeople
+  // },
   {
     path:'/',
-    name:'HomeView',
-    component:HomeView
+    name:'UsersView',
+    component:UsersView,
+    children:[
+      {
+        path: '/Products',
+        name: 'Products',
+        component: ProductsCatalog
+      },
+      {
+        path: '/Product/:id',
+        name: 'ProductDetail',
+        component: ProductDetail
+      },
+      {
+        path:'/Login',
+        name:'Login',
+        component:LoginView
+      },
+      {
+        path:'/RopaHombre',
+        name:'Hombre',
+        component:RopaHombre
+      },
+      {
+        path:'/RopaMujer',
+        name:'Mujer',
+        component:RopaMujer
+      },
+      
+    ]
   },
   
 ]

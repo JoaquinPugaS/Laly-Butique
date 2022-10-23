@@ -7,7 +7,17 @@
         <li>
           <a class="nav-link" id="nava" > <router-link to="/Products">Productos</router-link> </a>
         </li>
-
+        <li>
+          <button>
+            <i class="fas fa-shopping-cart"></i>
+          </button>
+          <span class="cantidad-total">0</span>
+          <div class="cart-dropdown">
+            <ul class="cart-dropdown_list">
+              <li>Producto</li>
+            </ul>
+          </div>
+        </li>
       </ul>
       <a class="nav-link"  id="nava"><router-link to='/Login'><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
         <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
