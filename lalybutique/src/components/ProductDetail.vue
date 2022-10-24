@@ -42,7 +42,7 @@
                             <h6 class="text-uppercase">Colores</h6> <label class="radio"> <input type="radio" name="size" value="ROJO" checked> <span>ROJO</span> </label> <label class="radio"> <input type="radio" name="size" value="AZUL"> <span>AZUL</span> </label> <label class="radio"> <input type="radio" name="size" value="AMARILLO"> <span>AMARILLO</span> </label>
                         </div>
 						<div class="action">
-							<button type="button" class="btn btn-primary" @click="AgregarAlCarrito(producto)">Agregar al carrito</button>
+							<button type="button" class="btn btn-primary" @click="addtoCart()">Agregar al carrito</button>
 						</div>
 					</div>
 				</div>
@@ -55,12 +55,14 @@ export default {
     data(){
         return{
             producto:{},
-            carrito:[],
+            // carrito:[],
         }
     },
     created:function(){
         this.obtenerInformacionID();
     },
+    // eslint-disable-next-line
+    // props: ['producto'],
     methods:{
             obtenerInformacionID(){
                 fetch('http://localhost/test/?consultar='+this.$route.params.id)
@@ -69,20 +71,28 @@ export default {
                     this.producto=datosRespuesta[0];
             })
         },
-        AgregarAlCarrito(producto) {
-            const itemCart = this.carrito.filter((item) => item.id == producto.id)[0]; 
-            if(itemCart != undefined){
-                itemCart.cantidad++;
-            }else{
-                const itemCart = {
-                    id: producto.id,
-                    nombre: producto.nombre,
-                    precio: producto.precio,
-                    cantidad: 1
-                };
-                this.carrito.push(itemCart);
-            }
-            console.log(this.carrito);
+        // AgregarAlCarrito(producto) {
+        //     const itemCart = this.carrito.filter((item) => item.id == producto.id)[0]; 
+        //     if(itemCart != undefined){
+        //         itemCart.cantidad++;
+        //     }else{
+        //         const itemCart = {
+        //             id: producto.id,
+        //             nombre: producto.nombre,
+        //             precio: producto.precio,
+        //             cantidad: 1
+        //         };
+        //         this.carrito.push(itemCart);
+        //     }
+        //     console.log(this.carrito);
+        // },
+        addtoCart(){
+            this.$store.commit('addtoCart',this.producto)
+        }
+    },
+    computed:{
+        product_total(){
+            return this.$store.getters.productQuantity(this.producto)
         }
     }
 }

@@ -8,16 +8,8 @@
           <a class="nav-link" id="nava" > <router-link to="/Products">Productos</router-link> </a>
         </li>
         <li>
-          <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" >
-              Carrito
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-              <li><a class="dropdown-item" >Action</a></li>
-              <li><a class="dropdown-item" >Another action</a></li>
-              <li><a class="dropdown-item" >Something else here</a></li>
-            </ul>
-          </div>
+          
+          <a class="nav-link" id="nava" > <router-link to="/Cart">Carrito</router-link> </a>
         </li>
       </ul>
       <a class="nav-link"  id="nava"><router-link to='/Login'><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
