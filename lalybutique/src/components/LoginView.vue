@@ -64,7 +64,7 @@ import axios from 'axios';
                 .then((datosRespuesta=>{
                   if(datosRespuesta.data.success===1){
                     localStorage.setItem('admin_token', datosRespuesta.data.token);
-                        window.location.href='/AdminDash'
+                        window.location.href='/admin/Dashboard'
                     }else if(datosRespuesta.data.success===2){
                       localStorage.setItem('user_token', datosRespuesta.data.token);
                         window.location.href='/'

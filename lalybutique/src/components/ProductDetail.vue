@@ -42,7 +42,7 @@
                             <h6 class="text-uppercase">Colores</h6> <label class="radio"> <input type="radio" name="size" value="ROJO" checked> <span>ROJO</span> </label> <label class="radio"> <input type="radio" name="size" value="AZUL"> <span>AZUL</span> </label> <label class="radio"> <input type="radio" name="size" value="AMARILLO"> <span>AMARILLO</span> </label>
                         </div>
 						<div class="action">
-							<button type="button" class="btn btn-primary" @click="addtoCart()">Agregar al carrito</button>
+							<button type="button" class="btn btn-primary" @click="addtoCart();">Agregar al carrito</button>
 						</div>
 					</div>
 				</div>
