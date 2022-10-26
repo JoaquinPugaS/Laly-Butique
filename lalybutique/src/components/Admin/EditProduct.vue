@@ -112,7 +112,7 @@ export default {
         }
 
     },
-    mounted(){
+    beforeMount(){
     if(!localStorage.getItem('admin_token')){
         window.location.href='/Login'
     }

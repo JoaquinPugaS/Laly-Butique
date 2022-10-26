@@ -70,7 +70,7 @@ export default {
             productos:[]
         }
     },
-    mounted(){
+    beforeMount(){
         if(localStorage.getItem('admin_token')){
             this.consultarProductos();
         }else{
@@ -121,7 +121,7 @@ export default {
             axios.post(url)
             .then((datosRespuesta)=>{
                 console.log(datosRespuesta)
-                window.location.href='EditProduct'
+                window.location.href='/admin/EditProduct/'
             })
             .catch(console.log)
             

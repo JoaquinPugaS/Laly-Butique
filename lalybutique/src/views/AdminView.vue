@@ -1,18 +1,18 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" ><router-link to="/AdminDash"><img width = "250" height = "60" src="../assets/logo2.png" alt="logo"></router-link></a>
+    <a class="navbar-brand" ><router-link to="/admin/Dashboard"><img width = "250" height = "60" src="../assets/logo2.png" alt="logo"></router-link></a>
     
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li>
-          <a class="nav-link" id="nava"><router-link to="/AdminDash">Resumen</router-link> </a>
+          <a class="nav-link" id="nava"><router-link to="/admin/Dashboard">Resumen</router-link> </a>
         </li>
         <li>
-          <a class="nav-link" id="nava"><router-link to="/CreateProduct">Crear</router-link> </a>
+          <a class="nav-link" id="nava"><router-link to="/admin/CreateProduct">Crear</router-link> </a>
           
         </li>
         <li>
-          <a class="nav-link" id="nava" > <router-link to="/ListProducts">Productos</router-link> </a>
+          <a class="nav-link" id="nava" > <router-link to="/admin/ListProducts">Productos</router-link> </a>
         </li>
 
       </ul>
