@@ -67,7 +67,7 @@ import axios from 'axios';
                         window.location.href='/AdminDash'
                     }else if(datosRespuesta.data.success===2){
                       localStorage.setItem('user_token', datosRespuesta.data.token);
-                        window.location.href='/HomePeople'
+                        window.location.href='/'
                       }else{
                       console.log('Error');
                       this.error = true;
