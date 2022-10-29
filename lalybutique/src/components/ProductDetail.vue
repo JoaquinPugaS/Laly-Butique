@@ -71,21 +71,7 @@ export default {
                     this.producto=datosRespuesta[0];
             })
         },
-        // AgregarAlCarrito(producto) {
-        //     const itemCart = this.carrito.filter((item) => item.id == producto.id)[0]; 
-        //     if(itemCart != undefined){
-        //         itemCart.cantidad++;
-        //     }else{
-        //         const itemCart = {
-        //             id: producto.id,
-        //             nombre: producto.nombre,
-        //             precio: producto.precio,
-        //             cantidad: 1
-        //         };
-        //         this.carrito.push(itemCart);
-        //     }
-        //     console.log(this.carrito);
-        // },
+
         addtoCart(){
             this.$store.commit('addtoCart',this.producto)
         }

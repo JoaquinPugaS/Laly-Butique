@@ -11,7 +11,8 @@ import LoginView from '../components/LoginView'
 import Cart from '../components/ShoppingCart'
 import ProductsCatalog from '../components/ProductsCatalog'
 import ProductDetail from '../components/ProductDetail'
-
+import CheckoutCart from '../components/CheckoutCart'
+import ConfirmacionPago from '../views/ConfirmacionPago'
 const routes = [
   {
     path: '/admin',
@@ -74,7 +75,18 @@ const routes = [
         path:'/Cart',
         name: 'Cart',
         component: Cart
-      }
+      },
+      {
+        path:'/Checkout',
+        name: 'Checkout',
+        component: CheckoutCart
+      },
+      {
+        path:'/confirmacion',
+        name: 'confirmacion',
+        component: ConfirmacionPago
+      },
+      
       
     ]
   },

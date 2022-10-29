@@ -11,14 +11,14 @@ export default createStore({
     getters:{
         productQuantity: state => product => {
             const item = state.Cart.find(i => i.id === product.id)
-            if(item) return item.quantity
+            if(item) return item.cantidad
             else return null
         },
         cartItems: state => {
             return state.Cart
         },
         cartTotal: state => {
-            return state.Cart.reduce((a, b) => a + (b.precio * b.quantity),0)
+            return state.Cart.reduce((a, b) => a + (b.precio * b.cantidad),0)
         }
 
     },
@@ -27,9 +27,9 @@ export default createStore({
             let item = state.Cart.find(i => i.id === product.id)
 
             if(item){
-                item.quantity++
+                item.cantidad++
             }else{
-                state.Cart.push({...product, quantity: 1})
+                state.Cart.push({...product, cantidad: 1})
             }
             updateLocalStorage(state.Cart)
         },
@@ -37,8 +37,8 @@ export default createStore({
             let item = state.Cart.find(i => i.id === product.id)
 
             if(item){
-                if(item.quantity > 1){
-                    item.quantity--
+                if(item.cantidad > 1){
+                    item.cantidad--
                 }else{
                     state.Cart = state.Cart.filter(i => i.id !== product.id)
                 }

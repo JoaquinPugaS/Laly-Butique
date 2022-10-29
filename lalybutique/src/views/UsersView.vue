@@ -40,6 +40,7 @@ export default {
   methods: {
     CerrarSesion(){
       localStorage.removeItem('user_token');
+      localStorage.removeItem('user_rut');
       window.location.href='/Products'
     },
   }

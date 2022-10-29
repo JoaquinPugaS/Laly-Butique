@@ -49,16 +49,6 @@ import axios from 'axios';
                 },
             EnviarDatos(){
                 var datosEnviar={username:this.usuario.username,password:this.usuario.password}
-                // fetch('http://localhost/test/?login=1',{
-                //     method:'POST',
-                //     body:JSON.stringify(datosEnviar)
-                // })
-                // .then(respuesta=>respuesta.json())
-                // let config = {
-                //   Headers:{
-                //     "Content-Type": "application/json",
-                //   },
-                // };
                 let url = 'http://localhost/test/?login=1';
                 axios.post(url,datosEnviar)
                 .then((datosRespuesta=>{
@@ -67,6 +57,7 @@ import axios from 'axios';
                         window.location.href='/admin/Dashboard'
                     }else if(datosRespuesta.data.success===2){
                       localStorage.setItem('user_token', datosRespuesta.data.token);
+                      localStorage.setItem('user_rut', datosRespuesta.data.rut);
                         window.location.href='/'
                       }else{
                       console.log('Error');
