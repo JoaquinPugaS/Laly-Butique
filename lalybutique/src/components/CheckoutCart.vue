@@ -11,7 +11,7 @@
         <a @click="invitado()">Si Quieres comprar como invitado click aquí</a>
     </div>
     <div v-if="datos == true">
-        <form v-on:submit.prevent="Pagar">
+        <form>
             <div class="mb-3">
                 <label for="nombre" class="form-label">Nombre</label>
                 <input type="text" class="form-control" id="nombre" aria-describedby="emailHelp" v-model="datosUser.nombre">
@@ -35,13 +35,19 @@
                 <label for="Telefono" class="form-label">Teléfono</label>
                 <input type="text" class="form-control" id="Telefono" v-model="datosUser.telefono">
             </div>
-            <button type="submit" class="btn btn-primary">Continuar</button>
+            <button type="submit" @click="webPayf()" class="btn btn-primary">Confirmar</button>
         </form>
     </div>
+        <form v-if="final == true" method="post" action="https://webpay3gint.transbank.cl/webpayserver/initTransaction">
+            <input type="hidden" name="token_ws" value="{{this.tokenn}}" />
+            <input type="submit" value="Ir a pagar" />
+        </form>
 </template>
 <script>
-// import { WebpayPlus } from 'transbank-sdk'; // ES6 Modules
-// import { Options, IntegrationApiKeys, Environment, IntegrationCommerceCodes } from 'transbank-sdk';
+// eslint-disable-next-line
+const url = '';
+import { WebpayPlus } from 'transbank-sdk'; // ES6 Modules
+import { Options, IntegrationApiKeys, Environment, IntegrationCommerceCodes } from 'transbank-sdk';
 import axios from 'axios';
     export default{
         data(){
@@ -51,6 +57,8 @@ import axios from 'axios';
                 session: false,
                 datos: false,
                 datosUser:{},
+                tokenn : '',
+                final: false,
             }
         },
         beforeMount(){
@@ -64,8 +72,24 @@ import axios from 'axios';
             Login: function(){
                 this.EnviarDatos();
                 },
-            Pagar: function(){
-                this.Pagar();
+            webPayf: function(){
+                this.webPay();
+            },
+            async webPay(){
+            this.datos = false;
+            this.final = true;
+            const tx = new WebpayPlus.Transaction(new Options(IntegrationCommerceCodes.WEBPAY_PLUS, IntegrationApiKeys.WEBPAY, Environment.Integration))
+            const buyorder = 'Laly-ASDJKH32ASH3';
+            const sessionId = localStorage.getItem('user_token');
+            const returnUrl = 'https://google.cl'  
+            // eslint-disable-next-line
+            const response = await tx.create(buyorder, sessionId, this.cart_total, returnUrl);
+            console.log('pasó')
+            console.log(response)
+            this.tokenn = response.token
+            // localStorage.setItem('url',response.url);
+            // localStorage.setItem('token',response.token);
+            // chrome.exe --user-data-dir="C://Chrome dev session" --disable-web-security
             },
             EnviarDatos(){
                 var datosEnviar={username:this.usuario.username,password:this.usuario.password}
@@ -88,18 +112,10 @@ import axios from 'axios';
             fetch('http://localhost/test/?consultaruser='+localStorage.getItem('user_rut'))
             .then(respuesta=>respuesta.json())
             .then((datosRespuesta)=>{
-                console.log(datosRespuesta)
+                // console.log(datosRespuesta)
                 this.datosUser=datosRespuesta[0];
                 })
             },
-            // Pagar(){
-            //     const tx = new WebpayPlus.Transaction(new Options(IntegrationCommerceCodes.WEBPAY_PLUS, IntegrationApiKeys.WEBPAY, Environment.Integration));
-            //     let buy_order = "Laly-boutique";
-            //     const response = await tx.create(buy_order, sessionId, this.cart_total(), returnUrl);
-            //     response.url
-            //     response.token
-            // }
-            
         },
         computed:{
             cart_total(){
