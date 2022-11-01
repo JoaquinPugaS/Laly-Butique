@@ -39,13 +39,11 @@
         </form>
     </div>
         <form v-if="final == true" method="post" action="https://webpay3gint.transbank.cl/webpayserver/initTransaction">
-            <input type="hidden" name="token_ws" value="{{this.tokenn}}" />
+            <input type="hidden" ref="token" name="token_ws" value="" />
             <input type="submit" value="Ir a pagar" />
         </form>
 </template>
 <script>
-// eslint-disable-next-line
-const url = '';
 import { WebpayPlus } from 'transbank-sdk'; // ES6 Modules
 import { Options, IntegrationApiKeys, Environment, IntegrationCommerceCodes } from 'transbank-sdk';
 import axios from 'axios';
@@ -57,18 +55,22 @@ import axios from 'axios';
                 session: false,
                 datos: false,
                 datosUser:{},
-                tokenn : '',
+                respuesta : {},
                 final: false,
+                token: ''
             }
         },
         beforeMount(){
-        if(localStorage.getItem('user_token') && localStorage.getItem('user_rut')){
-            this.session = true;
-            this.datos = true;
-            this.ObtenerDatosUser();
+            if(localStorage.getItem('user_token') && localStorage.getItem('user_rut')){
+                this.session = true;
+                this.datos = true;
+                this.ObtenerDatosUser();
+            }
+        },
+        mounted(){
+            this.$refs["token"] = this.token
         }
-    },
-        methods:{
+        ,methods:{
             Login: function(){
                 this.EnviarDatos();
                 },
@@ -79,16 +81,21 @@ import axios from 'axios';
             this.datos = false;
             this.final = true;
             const tx = new WebpayPlus.Transaction(new Options(IntegrationCommerceCodes.WEBPAY_PLUS, IntegrationApiKeys.WEBPAY, Environment.Integration))
-            const buyorder = 'Laly-ASDJKH32ASH3';
+            const random = Math.floor(Math.random() * 50);
+            const buyorder = 'Laly Boutique-'+random;
+            console.log(buyorder)
+            if(!localStorage.getItem('user_token')){
+                const sessionId = Math.floor(Math.random() * 50);
+                localStorage.setItem('user_token',sessionId)
+            }
             const sessionId = localStorage.getItem('user_token');
-            const returnUrl = 'https://google.cl'  
-            // eslint-disable-next-line
+            const returnUrl = 'http://localhost:3000/confirmacion/'  
             const response = await tx.create(buyorder, sessionId, this.cart_total, returnUrl);
-            console.log('pasó')
             console.log(response)
-            this.tokenn = response.token
-            // localStorage.setItem('url',response.url);
-            // localStorage.setItem('token',response.token);
+            this.respuesta = response
+            this.token = response.token
+            console.log(this.token)
+            localStorage.setItem('User',this.datosUser)
             // chrome.exe --user-data-dir="C://Chrome dev session" --disable-web-security
             },
             EnviarDatos(){
@@ -107,20 +114,24 @@ import axios from 'axios';
             },
             invitado(){
                 this.datos =true;
+                this.session = true;
             },
             ObtenerDatosUser(){
             fetch('http://localhost/test/?consultaruser='+localStorage.getItem('user_rut'))
             .then(respuesta=>respuesta.json())
             .then((datosRespuesta)=>{
-                // console.log(datosRespuesta)
                 this.datosUser=datosRespuesta[0];
                 })
             },
+            setToken(){
+                this.token = this.response.token
+            }
         },
+
         computed:{
             cart_total(){
                 return this.$store.getters.cartTotal
-        },
+            },
         }
 }
 

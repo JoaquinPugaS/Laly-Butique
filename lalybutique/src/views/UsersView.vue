@@ -31,7 +31,7 @@ export default {
         }
     },
   beforeMount(){
-    if(!localStorage.getItem('user_token')){
+    if(!localStorage.getItem('user_token') && !localStorage.getItem('user_rut')){
       this.token = false
     }else{
       this.token = true
