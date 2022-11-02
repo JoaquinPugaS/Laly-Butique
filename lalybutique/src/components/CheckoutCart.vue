@@ -39,7 +39,7 @@
         </form>
     </div>
         <form v-if="final == true" method="post" action="https://webpay3gint.transbank.cl/webpayserver/initTransaction">
-            <input type="hidden" ref="token" name="token_ws" value="" />
+            <input type="hidden" ref="token" name="token_ws" value="01ab763e71c2018f1daa22744a0dbd659cf4f665a5fa4b68b1717afbb63bd895" />
             <input type="submit" value="Ir a pagar" />
         </form>
 </template>
@@ -67,10 +67,7 @@ import axios from 'axios';
                 this.ObtenerDatosUser();
             }
         },
-        mounted(){
-            this.$refs["token"] = this.token
-        }
-        ,methods:{
+        methods:{
             Login: function(){
                 this.EnviarDatos();
                 },
