@@ -38,8 +38,8 @@
             <button type="submit" @click="webPayf()" class="btn btn-primary">Confirmar</button>
         </form>
     </div>
-        <form v-if="final == true" method="post" action="https://webpay3gint.transbank.cl/webpayserver/initTransaction">
-            <input type="hidden" ref="token" name="token_ws" value="01ab763e71c2018f1daa22744a0dbd659cf4f665a5fa4b68b1717afbb63bd895" />
+        <form v-if="final == true" method="post" action="https://webpay3gint.transbank.cl/webpayserver/init_transaction.cgi">
+            <input type="hidden"  name="token_ws" v-model="respuesta.token" />
             <input type="submit" value="Ir a pagar" />
         </form>
 </template>
@@ -54,10 +54,9 @@ import axios from 'axios';
                 error: false,
                 session: false,
                 datos: false,
-                datosUser:{},
+                datosUser:[],
                 respuesta : {},
                 final: false,
-                token: ''
             }
         },
         beforeMount(){
@@ -88,11 +87,10 @@ import axios from 'axios';
             const sessionId = localStorage.getItem('user_token');
             const returnUrl = 'http://localhost:3000/confirmacion/'  
             const response = await tx.create(buyorder, sessionId, this.cart_total, returnUrl);
-            console.log(response)
             this.respuesta = response
-            this.token = response.token
-            console.log(this.token)
-            localStorage.setItem('User',this.datosUser)
+            console.log(this.datosUser)
+            const nombre = this.datosUser.nombre + " " + this.datosUser.apellido
+            localStorage.setItem('user_nombre',nombre)
             // chrome.exe --user-data-dir="C://Chrome dev session" --disable-web-security
             },
             EnviarDatos(){
@@ -120,11 +118,7 @@ import axios from 'axios';
                 this.datosUser=datosRespuesta[0];
                 })
             },
-            setToken(){
-                this.token = this.response.token
-            }
         },
-
         computed:{
             cart_total(){
                 return this.$store.getters.cartTotal

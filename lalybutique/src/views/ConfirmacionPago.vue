@@ -1,9 +1,40 @@
 <template>
 <a>{{respuesta}}</a>
-<div v-if="aprobado==true">
+<div v-if="aprobado==1">
     APROBADO
+    <div style="text-align: left">
+        Fecha: <a>{{respuesta.transaction_date}}</a><br>
+        Nombre: <a>{{nombre}}</a><br>
+        Rut: <a>{{rut}}</a><br>
+        <br>
+    </div>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Cantidad</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Precio</th>
+                    <th scope="col">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="producto in productos" :key="producto.id">
+                    <td scope="row">{{producto.id}}</td>
+                    <td>{{producto.cantidad}}</td>
+                    <td>{{producto.nombre}}</td>
+                    <td>${{producto.precio}}</td>
+                    <td>${{producto.precio * producto.cantidad}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div style="text-align:right">
+        Total a pagar: <a style="padding-right: 100px">${{cart_total}}</a>
+    </div>
 </div>
-<div v-else>
+<div v-if="aprobado==0">
     RECHAZADO
 </div>
 </template>
@@ -18,7 +49,9 @@ export default {
     data(){
         return{
             respuesta:{},
-            aprobado: true
+            aprobado: -1,
+            nombre: '',
+            rut: '',
         }
     }
     ,beforeMount(){
@@ -26,11 +59,13 @@ export default {
     }
     ,methods:{
         async ObtenerToken(){
+        this.rut = localStorage.getItem('user_rut')
+        this.nombre = localStorage.getItem('user_nombre')
         const tx = new WebpayPlus.Transaction(new Options(IntegrationCommerceCodes.WEBPAY_PLUS, IntegrationApiKeys.WEBPAY, Environment.Integration));
         const response = await tx.commit(tokenn);
         this.respuesta = response
         if(this.respuesta.status=='AUTHORIZED' && this.respuesta.response_code == 0){
-            this.aprobado = true;
+            this.aprobado = 1;
             var rut = localStorage.getItem('user_rut')
             var monto = this.respuesta.amount
             var fecha = this.respuesta.transaction_date
@@ -49,13 +84,16 @@ export default {
             
             
         }else{
-            this.aprobado = false;
+            this.aprobado = 0;
         }
         }
     }
     ,computed:{
             cart_total(){
                 return this.$store.getters.cartTotal
+            },
+            productos(){
+                return this.$store.getters.cartItems
             },
         }
 }
