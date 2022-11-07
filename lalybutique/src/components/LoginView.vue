@@ -26,7 +26,7 @@
     <!-- Remind Passowrd -->
     <div id="formFooter">
       <a class="underlineHover" href="#">Olvidaste la contraseña?</a><br>
-      <a class="underlineHover" href="#">Registrarse</a>
+      <router-link :to="{ name: 'Register'}" ><a class="underlineHover" href="#">Registrarse</a> </router-link>
     </div>
 
   </div>

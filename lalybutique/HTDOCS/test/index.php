@@ -86,8 +86,8 @@ Function Insertar(){
             exit();
         }
     }
-if(isset($_GET["insertar"])){
-Insertar();
+    if(isset($_GET["insertar"])){
+        Insertar();
 }
 Function Login(){
     include_once 'db.php';
@@ -112,22 +112,23 @@ Function Login(){
             echo json_encode(["success"=>0]);
         }
     }else{
-        $sql = "SELECT * FROM  usuarios WHERE email_usuario= '$username' and contrasenia_usuario = '$password'";
+        $sql = "SELECT * FROM  usuarios WHERE email_usuario= '$username'";
         $query = $conexion-> query($sql);
         if($query->rowCount()){
-            $Boolean = TRUE;
-            // while($row = $query-> fetch(PDO::FETCH_ASSOC)){
-            //     if(password_verify($password,$row['contraseña_usuario'])){
-            //     }
-            // }
+            while($row = $query-> fetch(PDO::FETCH_ASSOC)){
+                if(password_verify($password,$row['contrasenia_usuario'])){
+                    $Boolean = TRUE;
+                    $rut = $row['rut_usuario'];
+                }
+            }
             if($Boolean == TRUE){
-                echo json_encode(["success"=>2,"token"=>bin2hex(openssl_random_pseudo_bytes(16))]);
+                echo json_encode(["success"=>2,"token"=>bin2hex(openssl_random_pseudo_bytes(16)),"rut"=>$rut]);
                 exit();
             }else{
                 echo json_encode(["success"=>0]);
             }
         }else{
-        echo json_encode(["success"=>0]);
+            echo json_encode(["success"=>0]);
         }
     }
 }
@@ -202,13 +203,107 @@ Function Consultar($id){
         echo json_encode($productos);
         exit();
         
-        }else{  
+    }else{  
         echo json_encode(["success"=>0]);
     }
 }
 if(isset($_GET["consultar"])){
     $id = $_GET["consultar"];
     Consultar($id);
+}
+Function ConsultarUsuario($rut){
+    include_once 'db.php';
+    $objeto = new Conexion();
+    $conexion = $objeto->Conectar();
+    $usuario = array();
+    $sql = "SELECT * FROM usuarios WHERE rut_usuario ='$rut'";
+    $query = $conexion -> query($sql);
+    if($query->rowCount()){
+        while($row = $query-> fetch(PDO::FETCH_ASSOC)){
+            $item = array(
+                'rut' => $row['rut_usuario'],
+                'nombre' => $row['nombre_usuario'],
+                'apellido' => $row['apellido_usuario'],
+                'email' => $row['email_usuario'],
+                'direccion' => $row['direccion_usuario'],
+                'telefono' => $row['telefono_usuario']
+            );
+            array_push($usuario, $item);
+        }
+        echo json_encode($usuario);
+        exit();
+        
+    }else{  
+        echo json_encode(["success"=>0]);
+    }
+}
+if(isset($_GET["consultaruser"])){
+    $rut = $_GET["consultaruser"];
+    ConsultarUsuario($rut);
+}
+Function InsertarVenta(){
+    include_once 'db.php';
+        $objeto = new Conexion();
+        $conexion = $objeto->Conectar();
+        $data = json_decode(file_get_contents("php://input"));
+        $rut = $data->rut;
+        $total = $data->total;
+        $estado = $data->estado;
+        $fecha = $data->fecha;
+        $codseg = $data->codseg;
+        $id = 0001;
+        $sql = "INSERT INTO pedido (id_pedido, rut_usuario, total_a_pagar_orden, estado_de_orden, fecha_pedido, codigo_seguimiento) VALUES ($id, '$rut', $total, '$estado', '$fecha', '$codseg')";
+        $query = $conexion -> query($sql);
+        echo json_encode(["success"=>1]);
+        exit();
+        
+    }
+    
+    
+if(isset($_GET["venta"])){
+    InsertarVenta();
+}
+
+Function RegistrarUser(){
+    include_once 'db.php';
+        $objeto = new Conexion();
+        $conexion = $objeto->Conectar();
+        $data = json_decode(file_get_contents("php://input"));
+        $nombre = $data->nombre;
+        $apellido = $data->apellido;
+        $rut = $data->rut;
+        $email = $data->email;
+        $telefono = $data->telefono;
+        $direccion = $data->direccion;
+        $password1 = $data->contraseña;
+        $password = password_hash($password1, PASSWORD_DEFAULT);
+        $error = 0;
+        $sql = "SELECT * FROM usuarios WHERE rut_usuario = '$rut'";
+        $query = $conexion -> query($sql);
+        if($query->rowCount()){
+            $error = 1;
+            echo json_encode(["success"=>2]);
+            exit();
+        }
+        $sql = "SELECT * FROM usuarios WHERE email_usuario = '$email'";
+        $query = $conexion -> query($sql);
+        if($query->rowCount()){
+            $error = 2;
+            echo json_encode(["success"=>3]);
+            exit();
+        }
+        if($error == 0){
+            $sql = "INSERT INTO usuarios (rut_usuario, nombre_usuario, apellido_usuario, email_usuario, direccion_usuario, contrasenia_usuario, telefono_usuario, deuda_usuario) VALUES ('$rut','$nombre','$apellido','$email','$direccion','$password','$telefono',0)";
+            $query = $conexion -> query($sql);
+            echo json_encode(["success"=>1]);
+            exit();
+        }
+        
+    }
+    
+
+if(isset($_GET["RegistrarUser"])){
+    RegistrarUSer();
 }
 
 ?>

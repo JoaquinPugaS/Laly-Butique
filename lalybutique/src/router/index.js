@@ -13,6 +13,7 @@ import ProductsCatalog from '../components/ProductsCatalog'
 import ProductDetail from '../components/ProductDetail'
 import CheckoutCart from '../components/CheckoutCart'
 import ConfirmacionPago from '../views/ConfirmacionPago'
+import RegisterView from '../components/RegisterView'
 const routes = [
   {
     path: '/admin',
@@ -85,6 +86,11 @@ const routes = [
         path:'/confirmacion',
         name: 'confirmacion',
         component: ConfirmacionPago
+      },
+      {
+        path:'/Register',
+        name: 'Register',
+        component: RegisterView
       },
       
       
