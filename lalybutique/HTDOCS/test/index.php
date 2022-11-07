@@ -295,7 +295,7 @@ Function RegistrarUser(){
         if($error == 0){
             $sql = "INSERT INTO usuarios (rut_usuario, nombre_usuario, apellido_usuario, email_usuario, direccion_usuario, contrasenia_usuario, telefono_usuario, deuda_usuario) VALUES ('$rut','$nombre','$apellido','$email','$direccion','$password','$telefono',0)";
             $query = $conexion -> query($sql);
-            echo json_encode(["success"=>1]);
+            echo json_encode(["success"=>1,"token"=>bin2hex(openssl_random_pseudo_bytes(16))]);
             exit();
         }
         
