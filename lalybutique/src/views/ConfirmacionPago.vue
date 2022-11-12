@@ -70,7 +70,8 @@ export default {
             var monto = this.respuesta.amount
             var fecha = this.respuesta.transaction_date
             var estado = 'Pagado'
-            var datosEnviar={rut:rut,total:monto,estado:estado,fecha:fecha,codseg:''}
+            var id_venta = localStorage.getItem('cod_venta')
+            var datosEnviar={id_venta:id_venta,rut:rut,total:monto,estado:estado,fecha:fecha,codseg:''}
             let url = 'http://localhost/test/?venta=1';
             console.log(datosEnviar)
             axios.post(url,datosEnviar)
@@ -86,6 +87,7 @@ export default {
         }else{
             this.aprobado = 0;
         }
+        localStorage.clear();
         }
     }
     ,computed:{

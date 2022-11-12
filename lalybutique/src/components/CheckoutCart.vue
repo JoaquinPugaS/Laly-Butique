@@ -77,12 +77,13 @@ import axios from 'axios';
             this.datos = false;
             this.final = true;
             const tx = new WebpayPlus.Transaction(new Options(IntegrationCommerceCodes.WEBPAY_PLUS, IntegrationApiKeys.WEBPAY, Environment.Integration))
-            const random = Math.floor(Math.random() * 50);
-            const buyorder = 'Laly Boutique-'+random;
-            console.log(buyorder)
+            const orden = localStorage.getItem('cod_venta');
+            const buyorder = 'Laly Boutique-'+orden;
             if(!localStorage.getItem('user_token')){
                 const sessionId = Math.floor(Math.random() * 50);
                 localStorage.setItem('user_token',sessionId)
+                localStorage.setItem('user_rut', this.datosUser.rut);
+
             }
             const sessionId = localStorage.getItem('user_token');
             const returnUrl = 'http://localhost:3000/confirmacion/'  

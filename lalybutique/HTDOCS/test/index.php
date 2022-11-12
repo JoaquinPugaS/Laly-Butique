@@ -251,8 +251,8 @@ Function InsertarVenta(){
         $estado = $data->estado;
         $fecha = $data->fecha;
         $codseg = $data->codseg;
-        $id = 0001;
-        $sql = "INSERT INTO pedido (id_pedido, rut_usuario, total_a_pagar_orden, estado_de_orden, fecha_pedido, codigo_seguimiento) VALUES ($id, '$rut', $total, '$estado', '$fecha', '$codseg')";
+        $idventa = $data->id_venta;
+        $sql = "INSERT INTO venta (id_venta, rut_usuario, total_a_pagar_orden, estado_de_orden, fecha_pedido, codigo_seguimiento) VALUES ($idventa, '$rut', $total, '$estado', '$fecha', '$codseg')";
         $query = $conexion -> query($sql);
         echo json_encode(["success"=>1]);
         exit();
@@ -306,4 +306,22 @@ if(isset($_GET["RegistrarUser"])){
     RegistrarUSer();
 }
 
+Function AgregarCarrito(){
+    include_once 'db.php';
+    $objeto = new Conexion();
+    $conexion = $objeto->Conectar();
+    $data = json_decode(file_get_contents("php://input"));
+    $codigo = $data->codigo;
+    $id = $data->producto_id;
+    $cantidad = $data->cantidad;
+    $precio = $data->precio;
+    $sql = "INSERT INTO producto_pedido (id_venta, id_producto, cantidad_producto, precio_unitario) VALUES ($codigo, $id, $cantidad, $precio)";
+    $query = $conexion -> query($sql);
+    echo json_encode(["success"=>1,"cod_venta"=>$codigo]);
+    exit();
+    }
+
+if(isset($_GET["carrito"])){
+    AgregarCarrito();
+}
 ?>

@@ -18,22 +18,23 @@
                         <td>${{producto.precio}}</td>
                         <td>{{producto.cantidad}}</td>
                         <td>${{producto.precio * producto.cantidad}}</td>
-                        <td><a name="" id="" class="btn btn-primary" @click="eliminarCarro(producto)" role="button">Eliminar</a></td>
                         <td><a name="" id="" class="btn btn-primary" @click="addtoCart(producto)" role="button">Agregar</a></td>
+                        <td><a name="" id="" class="btn btn-primary" @click="eliminarCarro(producto)" role="button">Eliminar</a></td>
                     </tr>
                 </tbody>
             </table>
         </div>
             <h1>Total: ${{ cart_total }}</h1>
-            <router-link :to="{ name: 'Checkout'}" class="btn btn-success">Checkout</router-link>
+            <button class="btn btn-success" @click="Checkout()">Checkout</button>
 
     </div>
 </template>
 <script>
+import axios from 'axios';
 export default {
     data(){
         return{
-            total: 0
+            total: 0,
         }
     },
     methods:{
@@ -42,6 +43,19 @@ export default {
         },
         addtoCart(producto){
             this.$store.commit('addtoCart',producto)
+        },
+        Checkout(){
+            let id = Math.floor((Math.random() * 1000000) + 1);
+            for(var i in this.productos){
+                var datosEnviar = {producto_id: this.productos[i].id,cantidad:this.productos[i].cantidad,precio:this.productos[i].precio,codigo:id};
+                let url = "http://localhost/test/?carrito=1";
+                console.log(datosEnviar);
+                axios.post(url,datosEnviar).then((datosRespuesta=>{
+                    localStorage.setItem('cod_venta',datosRespuesta.data.cod_venta)
+                    window.location.href='Checkout'
+                    }
+                ))
+            }
         }
     }
     ,computed:{
