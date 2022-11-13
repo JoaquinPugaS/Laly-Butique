@@ -24,7 +24,7 @@
       </svg>
         </a>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-          <li><a>Compras</a></li>
+          <li><a> <router-link to="/Purchases">Compras</router-link> </a></li>
           <li><a v-on:click="CerrarSesion();">Salir</a></li>
         </ul>
       </div>

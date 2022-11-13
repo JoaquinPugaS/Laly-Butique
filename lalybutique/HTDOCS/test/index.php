@@ -324,4 +324,64 @@ Function AgregarCarrito(){
 if(isset($_GET["carrito"])){
     AgregarCarrito();
 }
+
+Function ComprasUsuario($rut){
+    include_once 'db.php';
+    $objeto = new Conexion();
+    $conexion = $objeto->Conectar();
+    $compras = array();
+    $sql = "SELECT * FROM venta WHERE rut_usuario ='$rut'";
+    $query = $conexion -> query($sql);
+    if($query->rowCount()){
+        while($row = $query-> fetch(PDO::FETCH_ASSOC)){
+            $item = array(
+                'id_venta' => $row['id_venta'],
+                'rut_usuario' => $row['rut_usuario'],
+                'total_pago' => $row['total_a_pagar_orden'],
+                'estado_orden' => $row['estado_de_orden'],
+                'fecha' => $row['fecha_pedido'],
+                'codigo_seguimiento' => $row['codigo_seguimiento'],
+            );
+            array_push($compras, $item);
+        }
+        echo json_encode($compras);
+        exit();
+        
+    }else{  
+        echo json_encode(["success"=>0]);
+    }
+}
+if(isset($_GET["compras"])){
+    $rut = $_GET["compras"];
+    ComprasUsuario($rut);
+}
+Function DetalleCompra($id_venta){
+    include_once 'db.php';
+    $objeto = new Conexion();
+    $conexion = $objeto->Conectar();
+    $compras = array();
+    $sql = "SELECT * FROM producto_pedido WHERE id_venta =$id_venta";
+    $query = $conexion -> query($sql);
+    if($query->rowCount()){
+        while($row = $query-> fetch(PDO::FETCH_ASSOC)){
+            $item = array(
+                'id_venta' => $row['id_venta'],
+                'id_producto' => $row['id_producto'],
+                'cantidad_producto' => $row['cantidad_producto'],
+                'precio_unitario' => $row['precio_unitario'],
+            );
+            array_push($compras, $item);
+        }
+        echo json_encode($compras);
+        exit();
+        
+    }else{  
+        echo json_encode(["success"=>0]);
+    }
+}
+if(isset($_GET["DetalleCompra"])){
+    $id_venta = $_GET["DetalleCompra"];
+    DetalleCompra($id_venta);
+}
+
 ?>

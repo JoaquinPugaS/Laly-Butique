@@ -79,19 +79,8 @@ export default {
     },
     methods:{
         consultarProductos(){
-            // fetch('http://localhost/test/?leer')
-            // .then(respuesta=>respuesta.json())
             let url  = 'http://localhost/test/?leer';
             axios.get(url).then((datosRespuesta)=>(this.productos = datosRespuesta.data));
-            // .then((datosRespuesta)=>{
-            //     console.log(datosRespuesta)
-            //     this.productos=[]
-            //     if(typeof datosRespuesta[0].success=== 'undefined' )
-            //     {
-            //         this.productos=datosRespuesta;
-            //     }
-            // })
-            // .catch(console.log)
         },
         borrarProducto(id,conf){
             if(conf == false){

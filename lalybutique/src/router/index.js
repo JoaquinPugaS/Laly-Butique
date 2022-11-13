@@ -14,6 +14,8 @@ import ProductDetail from '../components/ProductDetail'
 import CheckoutCart from '../components/CheckoutCart'
 import ConfirmacionPago from '../views/ConfirmacionPago'
 import RegisterView from '../components/RegisterView'
+import UserPurchases from '../views/UserPurchases'
+import PurchaseDetail from '../views/PurchaseDetail'
 const routes = [
   {
     path: '/admin',
@@ -91,6 +93,16 @@ const routes = [
         path:'/Register',
         name: 'Register',
         component: RegisterView
+      },
+      {
+        path:'/Purchases',
+        name: 'Purchases',
+        component: UserPurchases
+      },
+      {
+        path:'/Purchases/:id',
+        name: 'PurchaseDetail',
+        component: PurchaseDetail
       },
       
       

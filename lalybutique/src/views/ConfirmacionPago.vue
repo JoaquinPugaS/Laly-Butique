@@ -66,12 +66,11 @@ export default {
         this.respuesta = response
         if(this.respuesta.status=='AUTHORIZED' && this.respuesta.response_code == 0){
             this.aprobado = 1;
-            var rut = localStorage.getItem('user_rut')
             var monto = this.respuesta.amount
             var fecha = this.respuesta.transaction_date
             var estado = 'Pagado'
             var id_venta = localStorage.getItem('cod_venta')
-            var datosEnviar={id_venta:id_venta,rut:rut,total:monto,estado:estado,fecha:fecha,codseg:''}
+            var datosEnviar={id_venta:id_venta,rut:this.rut,total:monto,estado:estado,fecha:fecha,codseg:''}
             let url = 'http://localhost/test/?venta=1';
             console.log(datosEnviar)
             axios.post(url,datosEnviar)

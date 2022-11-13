@@ -80,7 +80,7 @@ import axios from 'axios';
             const orden = localStorage.getItem('cod_venta');
             const buyorder = 'Laly Boutique-'+orden;
             if(!localStorage.getItem('user_token')){
-                const sessionId = Math.floor(Math.random() * 50);
+                const sessionId = Math.floor(Math.random() * 5000);
                 localStorage.setItem('user_token',sessionId)
                 localStorage.setItem('user_rut', this.datosUser.rut);
 
@@ -89,7 +89,7 @@ import axios from 'axios';
             const returnUrl = 'http://localhost:3000/confirmacion/'  
             const response = await tx.create(buyorder, sessionId, this.cart_total, returnUrl);
             this.respuesta = response
-            console.log(this.datosUser)
+            // console.log(this.datosUser)
             const nombre = this.datosUser.nombre + " " + this.datosUser.apellido
             localStorage.setItem('user_nombre',nombre)
             // chrome.exe --user-data-dir="C://Chrome dev session" --disable-web-security
