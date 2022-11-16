@@ -36,7 +36,7 @@
                 <div class="mb-3" id="uploadImage">
                     <label for="imagen" class="form-label">Imagen: </label>
                     <input type="file"
-                        class="form-control" name="imagen" id="file-input" aria-describedby="helpId" placeholder="imagen" accept="image/png, image/jpeg, image/jpg" @change="handleFileChange($event)">
+                        class="form-control" name="imagen" id="file-input" aria-describedby="helpId" placeholder="imagen" accept="image/png, image/jpeg, image/jpg" @change="Test($event, 1)">
                 </div>
                 <div class="mb-3">
                     <label for="estado" class="form-label">Estado: </label> <br>
@@ -56,8 +56,44 @@
                     <br>
                     <small id="helpId" class="form-text text-muted">Ingresa el Estado del producto</small>
                 </div>
+                <div>
+                    <fieldset>
+                    <legend>¿Desea añadir una variante?</legend>
+                        <div>
+                            <input type="radio" name="resp" id="si" v-model="variante" @click="radio()">
+                            <label for="si">Si      </label>    |
+                            <input type="radio" name="resp" id="no">
+                            <label for="no">No</label>
+                            <div v-if="variante">
+                                <div class="mb-3">
+                                    <label for="NombreVariante" class="form-label">Nombre de la variante: </label>
+                                    <input type="text" minlength="1" maxlength="255"
+                                        class="form-control" required  name="NombreVariante" v-model="variantes.nombre" id="NombreVariante" aria-describedby="helpId" placeholder="Nombre de la variante">
+                                    <small id="helpId" class="form-text text-muted">Ingresa el nombre de la variante</small>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="CantidadVariante" class="form-label">Cantidad: </label>
+                                    <input type="number" min="1" max="127"
+                                        class="form-control" required  name="CantidadVariante" v-model="variantes.cantidad" id="CantidadVariante" aria-describedby="helpId" placeholder="Cantidad">
+                                    <small id="helpId" class="form-text text-muted">Ingresa la cantidad</small>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="PrecioVariante" class="form-label">Precio: </label>
+                                    <input type="number" min="1" max="999999999"
+                                        class="form-control" required  name="PrecioVariante" v-model="variantes.precio" id="PrecioVariante" aria-describedby="helpId" placeholder="Precio">
+                                    <small id="helpId" class="form-text text-muted">Ingresa el Precio</small>
+                                </div>
+                                <div class="mb-3" id="uploadImage">
+                                    <label for="imagenVariante" class="form-label">Imagen: </label>
+                                    <input type="file"
+                                        class="form-control" name="imagenVariante" id="file-input" aria-describedby="helpId" placeholder="imagenVariante" accept="image/png, image/jpeg, image/jpg" @change="Test($event, 2)">
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
                 <div class="btn-group" role="group" aria-label="">
-                    <button type="submit" class="btn btn-success">Añadir</button>
+                    <button type="submit" class="btn btn-success" @click="AñadirProducto()" >Añadir</button>
                     <router-link :to="{name:'ListProducts'}" class="btn btn-warning">Cancelar </router-link>
                 </div>
             </form>
@@ -85,15 +121,28 @@ const estadoD=[
 const EstadoSeleccionado = ref(estadoD[0])
 </script>
 <script>
+// eslint-disable-next-line
 var urll = " ";
 // eslint-disable-next-line
+var urlV = " ";
+// eslint-disable-next-line
+var id = Math.floor((Math.random() * 1000) + 1);
+// eslint-disable-next-line
 var sw = 0;
+// eslint-disable-next-line
+var sw1 = 0;
+// eslint-disable-next-line
+var ch = 0;
+// eslint-disable-next-line
+var ch1 = 0;
 import axios from "axios";
 export default {
     data(){
         return{
             producto:{},
             error: false,
+            variante: false,
+            variantes: {}
         }
     },
     beforeMount(){
@@ -102,35 +151,96 @@ export default {
     }
     },
     methods:{
-        AñadirProducto(urla){
-            this.urll = urla ;
-            if(this.EstadoSeleccionado.nombre === 'Seleccione uno'){
-                this.EstadoSeleccionado.nombre = 'Disponible'
-            }
-            this.producto.estado = this.EstadoSeleccionado.nombre
-            console.log(this.producto);
-            var datosEnviar={nombre:this.producto.nombre,stock:this.producto.stock,stock_critico:this.producto.stock_critico,precio:this.producto.precio,imagen:this.urll,estado:this.producto.estado}
-            // fetch('http://localhost/test/?insertar=1',{
-            //     method:'POST',
-            //     body:JSON.stringify(datosEnviar)
-            // })
-            let url = 'http://localhost/test/?insertar=1';
-            axios.post(url,datosEnviar)
-            // .then(respuesta=>respuesta.json())
-            .then((datosRespuesta=>{
-                if(datosRespuesta.data.success===1){
-                    window.location.href='ListProducts'
-                }else{
-                    console.log('Error');
-                    this.error = true;
+        radio: function(){
+            this.Radio();
+        },
+        Radio(){
+            this.variante = true;
+            this.ch1 = 1;
+        },
+        sleep(ms){
+            return new Promise(resolve => setTimeout(resolve, ms));
+        },
+        AñadirProducto(){
+            if(this.variante == true){
+                console.log('URL PRODUCTO' + urll);
+                console.log('URL VARIANTE' + urlV);
+                var cod = this.id;
+                var datosEnviar={codigo: cod,nombre: this.variantes.nombre, cantidad: this.variantes.cantidad, precio: this.variantes.precio, imagen: urlV}
+                console.log(datosEnviar);
+                let url = 'http://localhost/test/?insertarV=1';
+                axios.post(url,datosEnviar)
+                .then((datosRespuesta=>{
+                    if(datosRespuesta.data.success===1){
+                        id = datosRespuesta.data.codigo;
+                    }else{
+                        console.log('Error Variante');
+                    }
+                }))
+                if(this.EstadoSeleccionado.nombre === 'Seleccione uno'){
+                    this.EstadoSeleccionado.nombre = 'Disponible'
                 }
-            }))
+                this.producto.estado = this.EstadoSeleccionado.nombre
+                console.log(this.producto);
+                datosEnviar={codigo: id,nombre:this.producto.nombre,stock:this.producto.stock,stock_critico:this.producto.stock_critico,precio:this.producto.precio,imagen:urll,estado:this.producto.estado}
+                url = 'http://localhost/test/?insertar=1';
+                axios.post(url,datosEnviar)
+                .then((datosRespuesta=>{
+                    if(datosRespuesta.data.success===1){
+                        // window.location.href='ListProducts'
+                        console.log('listo');
+                    }else{
+                        console.log('Error');
+                        this.error = true;
+                    }
+                }))
+            }else{
+                console.log(urll);
+                if(this.EstadoSeleccionado.nombre === 'Seleccione uno'){
+                    this.EstadoSeleccionado.nombre = 'Disponible'
+                }
+                this.producto.estado = this.EstadoSeleccionado.nombre
+                datosEnviar={codigo: 0,nombre:this.producto.nombre,stock:this.producto.stock,stock_critico:this.producto.stock_critico,precio:this.producto.precio,imagen:urll,estado:this.producto.estado}
+                console.log(datosEnviar);
+                let url = 'http://localhost/test/?insertar=1';
+                axios.post(url,datosEnviar)
+                .then((datosRespuesta=>{
+                    if(datosRespuesta.data.success===1){
+                        // window.location.href='ListProducts'
+                        console.log('listo');
+                    }else{
+                        console.log('Error');
+                        this.error = true;
+                    }
+                }))
+            }
+        },
+        Test(event, num){
+            if(num==1){
+                this.sw = 1;
+                this.ch = 2;
+                this.handleFileChange(event);
+                this.sw1 = 0;
+                this.ch1 = 0;
+            }else{
+                this.sw1 = 1;
+                this.ch1 = 2;
+                this.sw = 0;
+                this.ch = 0;
+                this.handleFileChange1(event);
+            }
         },
         handleFileChange: function(event) {
             console.log("handlefilechange", event.target.files);
             this.file = event.target.files[0];
             this.filesSelected = event.target.files.length;
-            this.sw = 1;
+            this.subir();
+        },
+        handleFileChange1: function(event) {
+            console.log("handlefilechange1", event.target.files);
+            this.file = event.target.files[0];
+            this.filesSelected = event.target.files.length;
+            this.subir();
         },
         prepareFormData: function() {
             var preset = 'vue-upload';
@@ -139,10 +249,9 @@ export default {
             this.formData.append("tags", this.tags); 
             this.formData.append("file", this.fileContents);
         },
-        upload: function() {
-            if(this.sw === 1){
-
-                console.log("upload", this.file.name);
+        subir: function() {
+            if(this.sw == 1 && this.ch == 2){
+            console.log("upload", this.file.name);
             let reader = new FileReader();
             reader.addEventListener(
                 "load",
@@ -169,8 +278,7 @@ export default {
                     console.log(this.results);
                     console.log("public_id", this.results.public_id);
                     urll = this.results.url;
-                    console.log(urll)
-                    this.AñadirProducto(urll);
+                    //PRIMER UPLOAD
                     })
                     .catch(error => {
                     this.errors.push(error);
@@ -186,14 +294,61 @@ export default {
                     });
                 }.bind(this),
                 false
-            );
-            if (this.file && this.file.name) {
-                reader.readAsDataURL(this.file);
+                );
+                if (this.file && this.file.name) {
+                    reader.readAsDataURL(this.file);
+                }
             }
-            }else{
-                this.AñadirProducto(urll);
+            if(this.sw1 == 1 && this.ch1 == 2){
+            console.log("upload1", this.file.name);
+            let reader = new FileReader();
+            reader.addEventListener(
+                "load",
+                function() {
+                this.fileContents = reader.result;
+                this.prepareFormData();
+                let cloudinaryUploadURL = `https://api.cloudinary.com/v1_1/dcmca9cgi/upload`;
+                let requestObj = {
+                    url: cloudinaryUploadURL,
+                    method: "POST",
+                    data: this.formData,
+                    onUploadProgress: function(progressEvent) {
+                    console.log("progress", progressEvent);
+                    this.progress = Math.round(
+                        (progressEvent.loaded * 100.0) / progressEvent.total
+                    );
+                    console.log(this.progress);
+                    }.bind(this)
+                };
+                this.showProgress = true;
+                axios(requestObj)
+                    .then(response => {
+                    this.results = response.data;
+                    console.log(this.results);
+                    console.log("public_id", this.results.public_id);
+                    urlV = this.results.url;
+                    //SEGUNDO UPLOAD
+                    })
+                    .catch(error => {
+                    this.errors.push(error);
+                    console.log(this.error);
+                    })
+                    .finally(() => {
+                    setTimeout(
+                        function() {
+                        this.showProgress = false;
+                        }.bind(this),
+                        1000
+                    );
+                    });
+                }.bind(this),
+                false
+                );
+                if (this.file && this.file.name) {
+                    reader.readAsDataURL(this.file);
+                }
             }
-        }
+        },
     }
 }
 </script>
