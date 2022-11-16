@@ -24,7 +24,6 @@ function ObtenerProductos(){
                 );
                 array_push($productos, $item);
             }
-    
             echo json_encode($productos);
         }else{
             echo json_encode(array('mensaje'=>'no hay elementos'));
@@ -69,6 +68,7 @@ Function Insertar(){
         $objeto = new Conexion();
         $conexion = $objeto->Conectar();
         $data = json_decode(file_get_contents("php://input"));
+        $codigo = $data->codigo;
         $nombre = $data->nombre;
         $stock = $data->stock;
         $stock_critico = $data->stock_critico;
@@ -79,15 +79,37 @@ Function Insertar(){
         $query = $conexion -> query($sql);
         if($query->rowCount()){
             echo json_encode(["success"=>0]);
-        }else{
-            $sql = "INSERT INTO productos (nombre_producto, stock_producto, stock_critico_producto, precio_producto, imagen_producto, estado_producto) VALUES ('$nombre', $stock, $stock_critico, $precio, '$imagen', '$estado')";
-            $query = $conexion -> query($sql);
-            echo json_encode(["success"=>1]);
             exit();
+        }else{
+            $sql = "INSERT INTO productos (id_Tipo,nombre_producto,stock_producto, stock_critico_producto, precio_producto, imagen_producto, estado_producto) VALUES ($codigo ,'$nombre',$stock, $stock_critico, $precio, '$imagen', '$estado')";
+            $query = $conexion -> query($sql);
+            if($query->rowCount()){
+                echo json_encode(["success"=>1]);
+                exit();
+            }
         }
-    }
-    if(isset($_GET["insertar"])){
-        Insertar();
+}
+if(isset($_GET["insertar"])){
+    Insertar();
+}
+Function InsertarV(){
+    include_once 'db.php';
+    $objeto = new Conexion();
+    $conexion = $objeto->Conectar();
+    $data = json_decode(file_get_contents("php://input"));
+    $codigo = $data->codigo;
+    $nombre = $data->nombre;
+    $cantidad = $data->cantidad;
+    $precio = $data->precio;
+    $imagen = $data->imagen;
+    $sql = "INSERT INTO tipo (id_Tipo, descripcion_tipo, Cantidad, precio, imagen) VALUES ($codigo,'$nombre',$cantidad,$precio,'$imagen')";
+    $query = $conexion -> query($sql);
+    echo json_encode(["success"=>1,"codigo"=>$codigo]);
+    exit();
+}
+
+if(isset($_GET["insertarV"])){
+    InsertarV();
 }
 Function Login(){
     include_once 'db.php';
