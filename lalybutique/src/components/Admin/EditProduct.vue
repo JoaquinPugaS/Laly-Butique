@@ -126,7 +126,7 @@ export default {
             .then(respuesta=>respuesta.json())
             .then((datosRespuesta)=>{
                 console.log(datosRespuesta)
-                this.producto=datosRespuesta[0];
+                this.producto=datosRespuesta.producto[0];
                 this.EstadoSeleccionado.nombre = this.producto.estado
                 
         })

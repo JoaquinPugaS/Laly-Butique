@@ -60,10 +60,10 @@
                     <fieldset>
                     <legend>¿Desea añadir una variante?</legend>
                         <div>
-                            <input type="radio" name="resp" id="si" v-model="variante" @click="radio()">
-                            <label for="si">Si      </label>    |
-                            <input type="radio" name="resp" id="no">
-                            <label for="no">No</label>
+                        <input type="radio" name="resp" id="si" v-model="variante" @click="radio()">
+                        <label for="si">Si      </label>    |
+                        <input type="radio" name="resp" id="no">
+                        <label for="no">No</label>
                             <div v-if="variante">
                                 <div class="mb-3">
                                     <label for="NombreVariante" class="form-label">Nombre de la variante: </label>
@@ -87,6 +87,42 @@
                                     <label for="imagenVariante" class="form-label">Imagen: </label>
                                     <input type="file"
                                         class="form-control" name="imagenVariante" id="file-input" aria-describedby="helpId" placeholder="imagenVariante" accept="image/png, image/jpeg, image/jpg" @change="Test($event, 2)">
+                                </div>
+                                <legend>¿Desea añadir otra variante?</legend>
+                                <input type="radio" name="resp" id="si" v-model="variante" @click="radio()">
+                                <label for="si">Si      </label>    |
+                                <input type="radio" name="resp" id="no">
+                                <label for="no">No</label>
+                                <div v-for="cantidad= 1 in cantVar" :key="cantidad.length">
+                                    <div class="mb-3">
+                                        <label for="NombreVariante" class="form-label">Nombre de la variante: </label>
+                                        <input type="text" minlength="1" maxlength="255"
+                                            class="form-control" required  name="NombreVariante" v-model="variantes.nombre" id="NombreVariante" aria-describedby="helpId" placeholder="Nombre de la variante">
+                                        <small id="helpId" class="form-text text-muted">Ingresa el nombre de la variante</small>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="CantidadVariante" class="form-label">Cantidad: </label>
+                                        <input type="number" min="1" max="127"
+                                            class="form-control" required  name="CantidadVariante" v-model="variantes.cantidad" id="CantidadVariante" aria-describedby="helpId" placeholder="Cantidad">
+                                        <small id="helpId" class="form-text text-muted">Ingresa la cantidad</small>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="PrecioVariante" class="form-label">Precio: </label>
+                                        <input type="number" min="1" max="999999999"
+                                            class="form-control" required  name="PrecioVariante" v-model="variantes.precio" id="PrecioVariante" aria-describedby="helpId" placeholder="Precio">
+                                        <small id="helpId" class="form-text text-muted">Ingresa el Precio</small>
+                                    </div>
+                                    <div class="mb-3" id="uploadImage">
+                                        <label for="imagenVariante" class="form-label">Imagen: </label>
+                                        <input type="file"
+                                            class="form-control" name="imagenVariante" id="file-input" aria-describedby="helpId" placeholder="imagenVariante" accept="image/png, image/jpeg, image/jpg" @change="Test($event, 2)">
+                                    </div>
+                                    <legend>¿Desea añadir otra variante?</legend>
+                                    <input type="radio" name="resp" id="si" v-model="variante" @click="radio()">
+                                    <label for="si">Si      </label>    |
+                                    <input type="radio" name="resp" id="no">
+                                    <label for="no">No</label>
+
                                 </div>
                             </div>
                         </div>
@@ -121,11 +157,8 @@ const estadoD=[
 const EstadoSeleccionado = ref(estadoD[0])
 </script>
 <script>
-// eslint-disable-next-line
 var urll = " ";
-// eslint-disable-next-line
 var urlV = " ";
-// eslint-disable-next-line
 var id = Math.floor((Math.random() * 1000) + 1);
 // eslint-disable-next-line
 var sw = 0;
@@ -142,7 +175,9 @@ export default {
             producto:{},
             error: false,
             variante: false,
-            variantes: {}
+            variantes: {},
+            cantVar: 0,
+            varianteEnviar:{},
         }
     },
     beforeMount(){
@@ -155,6 +190,9 @@ export default {
             this.Radio();
         },
         Radio(){
+            this.cantVar ++;
+            this.varianteEnviar={nombre: this.variantes.nombre, cantidad: this.variantes.cantidad, precio: this.variantes.precio};
+            console.log(this.varianteEnviar.nombre)
             this.variante = true;
             this.ch1 = 1;
         },
@@ -163,6 +201,9 @@ export default {
         },
         AñadirProducto(){
             if(this.variante == true){
+                // for(var i in this.varianteEnviar){
+                    
+                // }
                 console.log('URL PRODUCTO' + urll);
                 console.log('URL VARIANTE' + urlV);
                 var cod = this.id;
