@@ -16,6 +16,7 @@ import ConfirmacionPago from '../views/ConfirmacionPago'
 import RegisterView from '../components/RegisterView'
 import UserPurchases from '../views/UserPurchases'
 import PurchaseDetail from '../views/PurchaseDetail'
+import GenerateSale from '../components/Admin/GenerateSale'
 const routes = [
   {
     path: '/admin',
@@ -41,6 +42,16 @@ const routes = [
         path: '/admin/Dashboard',
         name: 'Dashboard',
         component: Dashboard
+      },
+      {
+        path: '/admin/Dashboard',
+        name: 'Dashboard',
+        component: Dashboard
+      },
+      {
+        path: '/admin/GenerateSale',
+        name: 'GenerateSale',
+        component: GenerateSale
       },
     ]
   },

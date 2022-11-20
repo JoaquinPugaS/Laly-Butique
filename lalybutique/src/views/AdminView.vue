@@ -15,7 +15,7 @@
           <a class="nav-link" id="nava" > <router-link to="/admin/ListProducts">Productos</router-link> </a>
         </li>
         <li>
-          <a class="nav-link" id="nava" > <router-link to="/admin/ListProducts">Generar Venta</router-link> </a>
+          <a class="nav-link" id="nava" > <router-link to="/admin/GenerateSale">Generar Venta</router-link> </a>
         </li>
 
       </ul>
