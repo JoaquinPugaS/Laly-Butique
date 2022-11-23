@@ -3,17 +3,17 @@
     Generar Venta
     <div class="card-body" style="text-align: left">
             <form v-on:submit.prevent="upload" >
-                <div v-for="key in count" :key="key">
+                <div  v-for="key in count" :key="key">
                     <div class="mb-3">
                         <label for="stock" class="form-label">ID DEL PRODUCTO: </label>
                         <input type="number"
-                            class="form-control" required name="stock" min="1" max="9999" v-model="values['ID'+key]" :id="key" aria-describedby="helpId" placeholder="ID">
+                            class="form-control" required name="stock" min="1" max="9999" v-model="values['id '+key]" :id="key" aria-describedby="helpId" placeholder="ID">
                         <small id="helpId" class="form-text text-muted">Ingresa el ID del producto a vender</small>
                     </div>
                     <div class="mb-3">
                         <label for="stock_critico" class="form-label">CANTIDAD PRODUCTO: </label>
                         <input type="number"
-                            class="form-control" required name="stock_critico" min="1" max="99" v-model="values['CANT'+key]" :id="key"  aria-describedby="helpId" placeholder="Cant Producto">
+                            class="form-control" required name="stock_critico" min="1" max="99" v-model="values['cant '+key]" :key="key" aria-describedby="helpId" placeholder="Cant Producto">
                         <small id="helpId" class="form-text text-muted">Ingresa la cantidad del producto</small>
                     </div>
                 </div>
@@ -53,6 +53,7 @@
 </div>
 </template>
 <script setup>
+
 import {ref} from 'vue'
 import{
     Listbox,
@@ -73,80 +74,76 @@ const EstadoSeleccionado = ref(estadoD[0])
 <script>
 import axios from 'axios'
 export default {
-    name: 'App',
-    data: function(){
+    name: 'app',
+    data(){
         return{
             count: 1,
-            values: {},
+            values: [],
             ar: [],
             prod: [],
             fd: 1,
             rut: '',
+            id: 0,
+            total1:0,
+            cod:0,
         }
     },
     methods:{
-        add: function(){
-            this.count++;
+        add(){
+            this.count ++;
         },
-        submit: function(){
-            
-            // for(var key of Object.keys(this.values)){
-            //     // console.log(key + this.values[key]);
-            //     console.log(key + this.values['ID'+[key]]);
-            //     // this.ar= [key, this.values[key]]
-            // }
-            var preciototal = 0;
-            var cont = 1;
-            var i = 1
-            for(i in this.values){
-                if(cont % 2==0){
-                    var cant = this.values[i]
-                }else{
-                    var id = this.values[i]
+        submit(){
+            var i = 0;
+            for (var key of Object.keys(this.values)) {
+                i++;
+                // console.log(key)
+                if(key.includes('id')){
+                    // console.log(this.values[key]);
+                    this.id = this.values[key];
                 }
-                    var datosEnviar={idd: id, cantidad: cant}
-                    this.ar.push(datosEnviar)
-                // console.log(this.values[i])
-                cont ++;
+                if(key.includes('cant')){
+                    // console.log('CANT');
+                    this.cant = this.values[key];
+                }
+                if(i % 2 ==0){
+                    // console.log(this.id + ' '+ this.cant)
+                    this.ar.push({id: this.id, cant: this.cant});
+                }
+                
             }
-            var j = 1
-            let id1 = Math.floor((Math.random() * 1000000) + 1);
-            var id_Venta = 0;
-            for(j in this.ar){
-                if(j % 2 != 0){
-                    var idd = this.ar[j].idd
-                    var ccant = this.ar[j].cantidad
-                    datosEnviar = {producto_id: idd,cantidad:ccant,codigo:id1};
-                    var url = "http://localhost/test/?ventaM=1";
-                    axios.post(url,datosEnviar).then((datosRespuesta=>{
-                        if(datosRespuesta.data.success===1){
-                            console.log('guardo');
-                            console.log(datosRespuesta.data.precio_unitario);
-                            var precio_u = datosRespuesta.data.precio_unitario * ccant;
-                            preciototal = preciototal + precio_u;
-                            id_Venta = datosRespuesta.data.cod_venta;
-                        }
-                    // localStorage.setItem('cod_venta',datosRespuesta.data.cod_venta)
-                    // window.location.href='Checkout'
+            let id = Math.floor((Math.random() * 1000000) + 1);
+            let url = "http://localhost/test/?ventaM=1";
+            var toti = 0;
+            for(var j in this.ar){
+                // console.log(this.ar[j].id + ' '+ this.ar[j].cant);
+                var datosEnviar = {producto_id: this.ar[j].id, cantidad:this.ar[j].cant,codigo:id};
+                axios.post(url,datosEnviar).then((datosRespuesta=>{
+                    if(datosRespuesta.data.success===1){
+                        console.log('inserto tabla pedido');
+                        var total = (datosRespuesta.data.precio_unitario * datosRespuesta.data.cantidad);
+                        // console.log(datosRespuesta.data.precio_unitario * datosRespuesta.data.cantidad);
+                        this.cod = datosRespuesta.data.cod_venta;
+                        toti = toti + total;
                     }
-                    ))
-                }
+                })) 
             }
-            var fecha = new Date().toLocaleDateString();
+            this.addSale(toti,id);
+        },
+        addSale(toti,id){
             if(this.EstadoSeleccionado.nombre === 'Seleccione uno'){
                 this.EstadoSeleccionado.nombre = 'Pagado'
-            }     
-            url = "http://localhost/test/?venta=1";
-            datosEnviar={rut: this.rut,total: preciototal,estado: this.EstadoSeleccionado.nombre, fecha: fecha, codseg: '',id_venta:id_Venta};
+            }
+            this.total1 = toti
+            var url = "http://localhost/test/?venta=1";
+            let date = new Date().toLocaleDateString();
+            var datosEnviar={rut: this.rut, total: this.total1, estado: this.EstadoSeleccionado.nombre, fecha:date, codseg: 'No tiene', id_venta: id};
             axios.post(url,datosEnviar).then((datosRespuesta=>{
                 if(datosRespuesta.data.success===1){
-                    console.log('BIEN');
+                    console.log('LISTO')
                 }
             }))
-
-            // console.log(this.ar)
-            
         }
+        
     }
 }
 </script>
