@@ -28,7 +28,7 @@
 							</div>
 						</div>
 						<h4 class="price">Precio: <span>${{producto.precio}}</span></h4>
-                        <div v-if="variantes.length != 0 ">
+                        <div v-if="variant == true">
                             <h6 class="text-uppercase">Variaciones</h6> 
                             <div class="sizes mt-5">
                                 <label class="radio"> <input type="radio" name="size" value="{{variantes.nombre}}" checked> <span>{{variantes.nombre}}</span> </label> 
@@ -52,6 +52,7 @@ export default {
         return{
             producto:{},
             variantes:{},
+            variant: false,
         }
     },
     created:function(){
@@ -62,9 +63,11 @@ export default {
                 fetch('http://localhost/test/?consultar='+this.$route.params.id)
                 .then(respuesta=>respuesta.json())
                 .then((datosRespuesta)=>{
-                    console.log(datosRespuesta.variante.length)
                     this.producto=datosRespuesta.producto[0];
-                    this.variantes=datosRespuesta.variante[0];
+                    if(datosRespuesta.variante.length != 0){
+                        this.variantes=datosRespuesta.variante[0];
+                        this.variant = true;
+                    }
             })
         },
 

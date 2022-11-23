@@ -67,7 +67,8 @@ var idd = ' ';
 export default {
     data(){
         return{
-            productos:[]
+            productos:[],
+            noEliminar: false,
         }
     },
     beforeMount(){
@@ -94,14 +95,16 @@ export default {
             },
         confirmar(id){
             let url = 'http://localhost/test/?eliminar='+id;
-            // fetch('http://localhost/test/?eliminar='+id)
-            // .then(respuesta=>respuesta.json())
             axios.post(url)
             .then((datosRespuesta)=>{
-                console.log(datosRespuesta)
+                console.log(datosRespuesta.data.success)
+                if(datosRespuesta.data.success===2){
+                    this.noEliminar = true;
+                }
                 window.location.href='ListProducts'
             })
             .catch(console.log)
+
         },
         modificarProducto(id){
             let url = 'EditProduct'+id;
