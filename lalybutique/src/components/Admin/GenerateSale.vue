@@ -45,7 +45,7 @@
                     <small id="helpId" class="form-text text-muted">Ingresa el Estado de la venta</small>
                 </div>
                 <div class="btn-group" role="group" aria-label="">
-                    <button type="submit" class="btn btn-success" @click="submit">Generar Venta</button>
+                    <button type="submit" class="btn btn-success" @click="submit()">Generar Venta</button>
                     <router-link :to="{name:'ListProducts'}" class="btn btn-warning">Cancelar </router-link>
                 </div>
             </form>
@@ -53,7 +53,6 @@
 </div>
 </template>
 <script setup>
-
 import {ref} from 'vue'
 import{
     Listbox,
@@ -72,20 +71,15 @@ const estadoD=[
 const EstadoSeleccionado = ref(estadoD[0])
 </script>
 <script>
-import axios from 'axios'
+import axios from 'axios';
+var precio = 0;
 export default {
-    name: 'app',
     data(){
         return{
             count: 1,
             values: [],
             ar: [],
-            prod: [],
-            fd: 1,
             rut: '',
-            id: 0,
-            total1:0,
-            cod:0,
         }
     },
     methods:{
@@ -96,53 +90,57 @@ export default {
             var i = 0;
             for (var key of Object.keys(this.values)) {
                 i++;
-                // console.log(key)
                 if(key.includes('id')){
-                    // console.log(this.values[key]);
                     this.id = this.values[key];
                 }
                 if(key.includes('cant')){
-                    // console.log('CANT');
                     this.cant = this.values[key];
                 }
                 if(i % 2 ==0){
-                    // console.log(this.id + ' '+ this.cant)
                     this.ar.push({id: this.id, cant: this.cant});
                 }
-                
             }
             let id = Math.floor((Math.random() * 1000000) + 1);
             let url = "http://localhost/test/?ventaM=1";
-            var toti = 0;
+            var asd = 0;
+            var o = 0;
             for(var j in this.ar){
-                // console.log(this.ar[j].id + ' '+ this.ar[j].cant);
                 var datosEnviar = {producto_id: this.ar[j].id, cantidad:this.ar[j].cant,codigo:id};
                 axios.post(url,datosEnviar).then((datosRespuesta=>{
-                    if(datosRespuesta.data.success===1){
-                        console.log('inserto tabla pedido');
-                        var total = (datosRespuesta.data.precio_unitario * datosRespuesta.data.cantidad);
-                        // console.log(datosRespuesta.data.precio_unitario * datosRespuesta.data.cantidad);
-                        this.cod = datosRespuesta.data.cod_venta;
-                        toti = toti + total;
+                    asd=(datosRespuesta.data.precio_unitario * datosRespuesta.data.cantidad);
+                    o++;
+                    precio = precio +asd;
+                    if(o == this.ar.length){
+                        console.log('LARGO ARRAY: '+this.ar.length + ' O: '+o);
+                        console.log('MANDANDO');
+                        this.addPrice(precio,1,id);
+                    }else{
+                        console.log('LARGO ARRAY: '+this.ar.length + ' O: '+o);
+                        this.addPrice(precio,0,id);
                     }
-                })) 
-            }
-            this.addSale(toti,id);
-        },
-        addSale(toti,id){
-            if(this.EstadoSeleccionado.nombre === 'Seleccione uno'){
-                this.EstadoSeleccionado.nombre = 'Pagado'
-            }
-            this.total1 = toti
-            var url = "http://localhost/test/?venta=1";
-            let date = new Date().toLocaleDateString();
-            var datosEnviar={rut: this.rut, total: this.total1, estado: this.EstadoSeleccionado.nombre, fecha:date, codseg: 'No tiene', id_venta: id};
-            axios.post(url,datosEnviar).then((datosRespuesta=>{
-                if(datosRespuesta.data.success===1){
-                    console.log('LISTO')
                 }
-            }))
-        }
+                ))
+            }
+        },
+        addPrice(precios,num,id){
+            precio = precios
+            if(num == 1){
+                precio = precios
+                console.log('precios en el añadir'+precios);
+                if(this.EstadoSeleccionado.nombre === 'Seleccione uno'){
+                    this.EstadoSeleccionado.nombre = 'Pagado'
+                }
+                var url = "http://localhost/test/?venta=1";
+                let date = new Date().toLocaleDateString();
+                var datosEnviar={rut: this.rut, total: precios, estado: this.EstadoSeleccionado.nombre, fecha:date, codseg: 'No tiene', id_venta: id};
+                console.log(datosEnviar);
+                axios.post(url,datosEnviar).then((datosRespuesta=>{
+                    if(datosRespuesta.data.success===1){
+                        console.log('LISTO')
+                    }
+                }))
+            }
+        }   
         
     }
 }
