@@ -6,12 +6,14 @@
                 <thead>
                     <tr>
                         <th scope="col">ID PRODUCTO</th>
+                        <th scope="col">NOMBRE PRODUCTO</th>
                         <th scope="col">CANTIDAD PRODUCTO</th>
                         <th scope="col">Precio unitario</th>
                     </tr>
                 </thead>
                 <tbody v-for="compra in compras" :key="compra.id_venta">
                         <td>{{compra.id_producto}}</td>
+                        <td>{{compra.nombre}}</td>
                         <td>{{compra.cantidad_producto}}</td>
                         <td>{{compra.precio_unitario}}</td>
                 </tbody>
@@ -36,7 +38,9 @@ export default {
     methods:{
         ObtenerDetalle(){
             let url = "http://localhost/test/?DetalleCompra="+this.$route.params.id;
-            axios.get(url).then((datosRespuesta)=>(this.compras = datosRespuesta.data));        }
+            axios.get(url).then((datosRespuesta)=>(
+                console.log(datosRespuesta),
+                this.compras = datosRespuesta.data));        }
     }
 }
 
