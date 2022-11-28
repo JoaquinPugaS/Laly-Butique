@@ -17,6 +17,9 @@ import RegisterView from '../components/RegisterView'
 import UserPurchases from '../views/UserPurchases'
 import PurchaseDetail from '../views/PurchaseDetail'
 import GenerateSale from '../components/Admin/GenerateSale'
+import ListSales from '../components/Admin/ListSales'
+import DetailSale from '../components/Admin/DetailSale'
+import EditTrackingNumber from '../components/Admin/EditTrackingNumber'
 const routes = [
   {
     path: '/admin',
@@ -41,12 +44,24 @@ const routes = [
       {
         path: '/admin/Dashboard',
         name: 'Dashboard',
-        component: Dashboard
+        component: Dashboard,
+        // children: [
+        // ]
       },
       {
-        path: '/admin/Dashboard',
-        name: 'Dashboard',
-        component: Dashboard
+        path: '/admin/Dashboard/Sales',
+        name: 'Sales',
+        component: ListSales
+      },
+      {
+        path: '/admin/Dashboard/Sale/:id',
+        name: 'Sale',
+        component: DetailSale
+      },
+      {
+        path: '/admin/Dashboard/Edit/Sale/:id',
+        name: 'EditTrackingNumber',
+        component: EditTrackingNumber
       },
       {
         path: '/admin/GenerateSale',

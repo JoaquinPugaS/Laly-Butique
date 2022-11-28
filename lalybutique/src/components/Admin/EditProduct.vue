@@ -123,7 +123,6 @@ export default {
     methods:{
         obtenerInformacionID(){
             fetch('http://localhost/test/?consultar='+this.$route.params.id)
-            .then(respuesta=>respuesta.json())
             .then((datosRespuesta)=>{
                 console.log(datosRespuesta)
                 this.producto=datosRespuesta.producto[0];
