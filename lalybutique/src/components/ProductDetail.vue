@@ -5,10 +5,10 @@
 				<div class="wrapper row">
 					<div class="preview col-md-6">
 						<div class="preview-pic tab-content">
-                            <img v-bind:src="`${producto.imagen}`" class="card-img-top" alt="..." width="200" height="400" v-if="producto.imagen!= ''">
+                            <img v-bind:src="`${producto.imagen}`" class="card-img-top" alt="..." width="200" height="400" v-if="producto.imagen!= ' '">
                             <img v-else src="../assets/noDisp.png" width="250" height="200" style="margin-rigth: 20px;margin-left: 20px"  >
                             <!-- <div class="tab-pane active" id="pic-1"><img src="http://placekitten.com/400/252" /></div> -->
-                            <img v-bind:src="`${variantes.imagen}`" class="card-img-top" alt="..." width="200" height="400" v-if="variantes.imagen != ''">
+                            <!-- <img v-bind:src="`${variantes.imagen}`" class="card-img-top" alt="..." width="200" height="400" v-if="variantes.imagen != ''"> -->
 
 						</div>
 						<ul class="preview-thumbnail nav nav-tabs">
@@ -18,6 +18,7 @@
 					</div>
 					<div class="details col-md-6">
 						<h3 class="product-title">{{producto.nombre}}</h3>
+                        <h5>id: {{producto.id}}</h5>
 						<div class="rating">
 							<div class="stars">
 								<span class="fa fa-star checked"></span>
@@ -45,26 +46,30 @@
 			</div>
 		</div>
 	</div>
+    <!-- <v-alert type="success" v-if="alert==true"></v-alert> -->
 </template>
 <script>
+import axios from 'axios'
 export default {
     data(){
         return{
             producto:{},
             variantes:{},
             variant: false,
+            alert: false,
         }
     },
-    created:function(){
+    beforeMount(){
         this.obtenerInformacionID();
     },
     methods:{
             obtenerInformacionID(){
-                fetch('http://localhost/test/?consultar='+this.$route.params.id)
-                .then(respuesta=>respuesta.json())
+                let url = 'http://localhost/test/?consultar='+this.$route.params.id;
+                axios.get(url)
                 .then((datosRespuesta)=>{
-                    this.producto=datosRespuesta.producto[0];
-                    if(datosRespuesta.variante.length != 0){
+                    this.producto=datosRespuesta.data[0]
+                    console.log(datosRespuesta);
+                    if(datosRespuesta.data.variante.length != 0){
                         this.variantes=datosRespuesta.variante[0];
                         this.variant = true;
                     }
@@ -73,6 +78,7 @@ export default {
 
         addtoCart(){
             this.$store.commit('addtoCart',this.producto)
+            this.alert = true
         }
     },
     computed:{

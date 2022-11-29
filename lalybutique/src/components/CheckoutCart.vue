@@ -14,26 +14,26 @@
         <form>
             <div class="mb-3">
                 <label for="nombre" class="form-label">Nombre</label>
-                <input type="text" class="form-control" id="nombre" aria-describedby="emailHelp" v-model="datosUser.nombre">
+                <input type="text" required class="form-control" id="nombre" aria-describedby="emailHelp" v-model="datosUser.nombre">
                 <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
             </div>
             <div class="mb-3">
                 <label for="apellido" class="form-label">Apellido</label>
-                <input type="text" class="form-control" id="apellido" aria-describedby="emailHelp" v-model="datosUser.apellido">
+                <input type="text" required  class="form-control" id="apellido" aria-describedby="emailHelp" v-model="datosUser.apellido">
                 <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
             </div>
             <div class="mb-3">
                 <label for="rut" class="form-label">Rut</label>
-                <input type="text" class="form-control" id="rut" aria-describedby="emailHelp" v-model="datosUser.rut" >
+                <input type="text" required class="form-control" id="rut" aria-describedby="emailHelp" v-model="datosUser.rut" >
                 <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
             </div>
             <div class="mb-3">
                 <label for="Email" class="form-label">E-mail</label>
-                <input type="email" class="form-control" id="Email" v-model="datosUser.email">
+                <input type="email" required class="form-control" id="Email" v-model="datosUser.email">
             </div>
             <div class="mb-3">
                 <label for="Telefono" class="form-label">Teléfono</label>
-                <input type="text" class="form-control" id="Telefono" v-model="datosUser.telefono">
+                <input type="text" required class="form-control" id="Telefono" v-model="datosUser.telefono">
             </div>
             <button type="submit" @click="webPayf()" class="btn btn-primary">Confirmar</button>
         </form>
@@ -79,19 +79,21 @@ import axios from 'axios';
             const tx = new WebpayPlus.Transaction(new Options(IntegrationCommerceCodes.WEBPAY_PLUS, IntegrationApiKeys.WEBPAY, Environment.Integration))
             const orden = localStorage.getItem('cod_venta');
             const buyorder = 'Laly Boutique-'+orden;
+            var sessionId = 0;
             if(!localStorage.getItem('user_token')){
-                const sessionId = Math.floor(Math.random() * 5000);
-                localStorage.setItem('user_token',sessionId)
-                localStorage.setItem('user_rut', this.datosUser.rut);
-
+                // eslint-disable-next-line
+                sessionId = Math.floor(Math.random() * 5000);
+                localStorage.setItem('user_token1',sessionId);
+            }else{
+                // eslint-disable-next-line
+                sessionId = localStorage.getItem('user_token');
             }
-            const sessionId = localStorage.getItem('user_token');
             const returnUrl = 'http://localhost:3000/confirmacion/'  
             const response = await tx.create(buyorder, sessionId, this.cart_total, returnUrl);
             this.respuesta = response
-            // console.log(this.datosUser)
             const nombre = this.datosUser.nombre + " " + this.datosUser.apellido
-            localStorage.setItem('user_nombre',nombre)
+            var datos={rut:this.datosUser.rut, nombre:nombre};
+            localStorage.setItem('datos',JSON.stringify(datos))
             // chrome.exe --user-data-dir="C://Chrome dev session" --disable-web-security
             },
             EnviarDatos(){
@@ -101,7 +103,7 @@ import axios from 'axios';
                 .then((datosRespuesta=>{
                 if(datosRespuesta.data.success===2){
                     localStorage.setItem('user_token', datosRespuesta.data.token);
-                    localStorage.setItem('user_rut', datosRespuesta.data.rut);
+                    localStorage.setItem('rut', datosRespuesta.data.rut);
                 }else{
                     console.log('Error');
                     this.error = true;

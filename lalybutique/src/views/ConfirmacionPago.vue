@@ -59,8 +59,10 @@ export default {
     }
     ,methods:{
         async ObtenerToken(){
-        this.rut = localStorage.getItem('user_rut')
-        this.nombre = localStorage.getItem('user_nombre')
+        var datos = JSON.parse(localStorage.getItem('datos'));
+        console.log(datos);
+        this.rut = datos.rut
+        this.nombre = datos.nombre
         const tx = new WebpayPlus.Transaction(new Options(IntegrationCommerceCodes.WEBPAY_PLUS, IntegrationApiKeys.WEBPAY, Environment.Integration));
         const response = await tx.commit(tokenn);
         this.respuesta = response
