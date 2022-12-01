@@ -2,7 +2,8 @@
     <div class="b">
         <div >
         <ul class="list-group list-group-flush">
-            <li class="listdash"> <router-link to="/admin/Dashboard/Sales">Ventas</router-link></li>
+            <!-- <li class="listdash"> <router-link to="/admin/Dashboard/Sales">Ventas</router-link></li> -->
+            <a class="nav-link" id="nava"><router-link to="/admin/Dashboard/Sales">Ventas</router-link> </a>
             <li class="listdash">Deudores</li>
             <li class="listdash">Pedidos</li>
         </ul>

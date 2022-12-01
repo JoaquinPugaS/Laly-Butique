@@ -172,7 +172,6 @@ Function Eliminar($id){
     }else{
         echo json_encode(["success"=>0]);
     }
-
 }
 
 if(isset($_GET["eliminar"])){
@@ -200,6 +199,26 @@ Function Modificar($id){
 if(isset($_GET["modificar"])){
     $id = $_GET["modificar"];
     Modificar($id);
+}
+Function ModificarCodigoSeg($id){
+    include_once 'db.php';
+    $objeto = new Conexion();
+    $conexion = $objeto->Conectar();
+    $data = json_decode(file_get_contents("php://input"));
+    $rut = $data->rut;
+    $total = $data->total;
+    $estado = $data->estado;
+    $codSeg = $data->codSeg;
+    $fecha = $data->fecha;
+    $sql = "UPDATE venta SET rut_usuario='$rut', total_a_pagar_orden=$total, estado_de_orden='$estado',fecha_pedido=$fecha,codigo_seguimiento='$codSeg'where id_venta=$id";
+    $query = $conexion -> query($sql);
+    echo json_encode(["success"=>1]);
+    exit();
+}
+
+if(isset($_GET["modCod"])){
+    $id = $_GET["modCod"];
+    ModificarCodigoSeg($id);
 }
 
 Function Consultar($id){
@@ -311,8 +330,30 @@ Function InsertarVenta(){
     }
     
     
-if(isset($_GET["venta"])){
-    InsertarVenta();
+    if(isset($_GET["venta"])){
+        InsertarVenta();
+    }
+    Function InsertarVentaM(){
+    include_once 'db.php';
+    $objeto = new Conexion();
+        $conexion = $objeto->Conectar();
+        $data = json_decode(file_get_contents("php://input"));
+        $id = $data->producto_id;
+        $cantidad = $data->cantidad;
+        $cod_venta = $data->codigo;
+        $sql = "SELECT precio_producto FROM productos where id_producto='$id'";
+        $query = $conexion -> query($sql);
+        $datos = $query->fetch(PDO::FETCH_ASSOC);
+        $precio_u = $datos['precio_producto'];
+        $sql1 = "INSERT INTO producto_pedido (id_venta,id_producto,cantidad_producto,precio_unitario) VALUES($cod_venta,$id,$cantidad,$precio_u)";
+        $query1 = $conexion -> query($sql1);
+        echo json_encode(["success"=>1,"precio_unitario"=>$precio_u,"cantidad"=>$cantidad]);
+        exit();        
+    }
+    
+    
+if(isset($_GET["ventaM"])){
+    InsertarVentaM();
 }
 
 Function RegistrarUser(){
@@ -329,13 +370,10 @@ Function RegistrarUser(){
         $password1 = $data->contraseña;
         $password = password_hash($password1, PASSWORD_DEFAULT);
         $error = 0;
-        $sql = "SELECT * FROM usuarios WHERE rut_usuario = '$rut'";
-        $query = $conexion -> query($sql);
-        if($query->rowCount()){
-            $error = 1;
-            echo json_encode(["success"=>2]);
-            exit();
-        }
+        //     $error = 1;
+        //     echo json_encode(["success"=>2]);
+        //     exit();
+        // }
         $sql = "SELECT * FROM usuarios WHERE email_usuario = '$email'";
         $query = $conexion -> query($sql);
         if($query->rowCount()){
@@ -343,11 +381,26 @@ Function RegistrarUser(){
             echo json_encode(["success"=>3]);
             exit();
         }
-        if($error == 0){
-            $sql = "INSERT INTO usuarios (rut_usuario, nombre_usuario, apellido_usuario, email_usuario, direccion_usuario, contrasenia_usuario, telefono_usuario, deuda_usuario) VALUES ('$rut','$nombre','$apellido','$email','$direccion','$password','$telefono',0)";
-            $query = $conexion -> query($sql);
-            echo json_encode(["success"=>1,"token"=>bin2hex(openssl_random_pseudo_bytes(16))]);
-            exit();
+        
+            $sql1 = "SELECT * FROM usuarios WHERE rut_usuario = '$rut'";
+            $query1 = $conexion -> query($sql1);
+            if($query1->rowCount()){
+                $datos = $query1->fetch(PDO::FETCH_ASSOC);
+                $rut1 = $datos['rut_usuario'];
+                $deuda = $datos['deuda_usuario'];
+                $sql2 = "UPDATE usuarios SET nombre_usuario = '$nombre', apellido_usuario = '$apellido', email_usuario='$email',direccion_usuario='$direccion', contrasenia_usuario='$password',telefono_usuario='$telefono',deuda_usuario = $deuda, rut_usuario = '$rut1' where rut_usuario = '$rut'";
+                $query2 = $conexion -> query($sql2);
+                echo json_encode(["success"=>1,"token"=>bin2hex(openssl_random_pseudo_bytes(16))]);
+                exit();
+                
+            }else{
+                
+                    $sql3 = "INSERT INTO usuarios (rut_usuario, nombre_usuario, apellido_usuario, email_usuario, direccion_usuario, contrasenia_usuario, telefono_usuario, deuda_usuario) VALUES ('$rut','$nombre','$apellido','$email','$direccion','$password','$telefono',0)";
+                    $query3 = $conexion -> query($sql3);
+                    echo json_encode(["success"=>1,"token"=>bin2hex(openssl_random_pseudo_bytes(16))]);
+                    exit();
+                
+            
         }
         
     }
@@ -374,6 +427,37 @@ Function AgregarCarrito(){
 
 if(isset($_GET["carrito"])){
     AgregarCarrito();
+}
+Function InsertarDeuda(){
+    include_once 'db.php';
+    $objeto = new Conexion();
+    $conexion = $objeto->Conectar();
+    $data = json_decode(file_get_contents("php://input"));
+    $rut = $data->rut;
+    $deuda = $data->deuda;
+    $sql = "SELECT * from usuarios where rut_usuario = '$rut'";
+    $query = $conexion -> query($sql);
+    if($query->rowCount()){
+        $datos = $query->fetch(PDO::FETCH_ASSOC);
+        $deudadb = $datos['deuda_usuario'];
+        if($deudadb>0){
+            $deuda = $deuda + $deudadb;
+            $sql1 = "UPDATE usuario set deuda_usuario =$deuda WHERE rut_usuario = '$rut'";
+            $query1 = $conexion -> query($sql1);
+            echo json_encode(["success"=>1]);
+            exit();
+        }
+    }else{
+        $sql2 = "INSERT INTO usuarios (rut_usuario,deuda_usuario) VALUES ($rut,$deuda)";
+        $query2 = $conexion -> query($sql2);
+        echo json_encode(["success"=>1]);
+        exit();
+    }
+    
+    }
+
+if(isset($_GET["insertarDeuda"])){
+    InsertarDeuda();
 }
 
 Function ComprasUsuario($rut){
@@ -453,7 +537,8 @@ Function DetalleV($id_venta){
                 'rut' => $row['rut_usuario'],
                 'total' => $row['total_a_pagar_orden'],
                 'estado' => $row['estado_de_orden'],
-                'cod_seguimiento' => $nombre['codigo_seguimiento'],
+                'fecha' => $row['fecha_pedido'],
+                'cod_seguimiento' => $row['codigo_seguimiento'],
             );
             array_push($detalleV, $item);
         }

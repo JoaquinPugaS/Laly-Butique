@@ -44,6 +44,12 @@
                     <br>
                     <small id="helpId" class="form-text text-muted">Ingresa el Estado de la venta</small>
                 </div>
+                <div class="mb-3" v-if="EstadoSeleccionado.nombre == 'Pendiente'">
+                    <label for="SaldoPendiente" class="form-label">Saldo Pendiente: </label>
+                    <input type="number"
+                        class="form-control" required name="SaldoPendiente" min="1" max="9999999"  id="SaldoPendiente" v-model="deuda" aria-describedby="helpId" placeholder="Saldo Pendiente">
+                    <small id="helpId" class="form-text text-muted">Ingresa el saldo que quedaria debiendo</small>
+                </div>
                 <div class="btn-group" role="group" aria-label="">
                     <button type="submit" class="btn btn-success" @click="submit()">Generar Venta</button>
                     <router-link :to="{name:'ListProducts'}" class="btn btn-warning">Cancelar </router-link>
@@ -80,6 +86,7 @@ export default {
             values: [],
             ar: [],
             rut: '',
+            deuda:0,
         }
     },
     methods:{
@@ -109,6 +116,7 @@ export default {
                 axios.post(url,datosEnviar).then((datosRespuesta=>{
                     asd=(datosRespuesta.data.precio_unitario * datosRespuesta.data.cantidad);
                     o++;
+                    console.log(datosRespuesta.data);
                     precio = precio +asd;
                     if(o == this.ar.length){
                         console.log('LARGO ARRAY: '+this.ar.length + ' O: '+o);
@@ -139,6 +147,12 @@ export default {
                         console.log('LISTO')
                     }
                 }))
+                if(this.EstadoSeleccionado.nombre == "Pendiente"){
+                    url = "http://localhost/test/?insertarDeuda=1";
+                    datosEnviar = {rut: this.rut,deuda:this.deuda};
+                    axios.post(url,datosEnviar);
+                }
+                window.location.href='/admin'
             }
         }   
         

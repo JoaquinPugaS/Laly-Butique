@@ -68,9 +68,9 @@ export default {
                     localStorage.setItem('user_rut', this.usuario.rut);
                     window.location.href='/'
                 }
-                if(datosRespuesta.data.success===2){
-                    this.error1 = true;
-                }
+                // if(datosRespuesta.data.success===2){
+                //     this.error1 = true;
+                // }
                 if(datosRespuesta.data.success===3){
                     this.error2 = true;
                 }
