@@ -1,6 +1,6 @@
 <template>
     <body>
-    <h1>VENTAS</h1>
+    <h1 style="text-align:center">VENTAS</h1>
     <div class="container">
         <div class="card-body">
         <div class="table-responsive">
@@ -19,8 +19,12 @@
                         <td>${{venta.total_a_pagar}}</td>
                         <td>{{venta.estado_de_orden}}</td>
                         <td>{{venta.cod_seguimiento}}</td>
-                        <td><router-link :to="{ name: 'Sale', params: { id: venta.id_venta },}" class="btn btn-success">Detalle</router-link>
-                        <router-link :to="{ name: 'EditTrackingNumber', params: { id: venta.id_venta },}" class="btn btn-success">Cod</router-link></td>
+                        <td>
+                            <div class="btn-group" role="group" aria-label="">
+                                <router-link :to="{ name: 'Sale', params: { id: venta.id_venta },}" class="btn btn-success">Detalle</router-link>
+                            <router-link :to="{ name: 'EditTrackingNumber', params: { id: venta.id_venta },}" class="btn btn-info">Cod</router-link>
+                            </div>
+                            </td>
                 </tbody>
             </table>
         </div>
