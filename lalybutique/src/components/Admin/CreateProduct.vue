@@ -160,14 +160,6 @@ const EstadoSeleccionado = ref(estadoD[0])
 var urll = " ";
 var urlV = " ";
 var id = Math.floor((Math.random() * 1000) + 1);
-// eslint-disable-next-line
-var sw = 0;
-// eslint-disable-next-line
-var sw1 = 0;
-// eslint-disable-next-line
-var ch = 0;
-// eslint-disable-next-line
-var ch1 = 0;
 import axios from "axios";
 export default {
     data(){
@@ -201,11 +193,6 @@ export default {
         },
         AñadirProducto(){
             if(this.variante == true){
-                // for(var i in this.varianteEnviar){
-                    
-                // }
-                console.log('URL PRODUCTO' + urll);
-                console.log('URL VARIANTE' + urlV);
                 var cod = this.id;
                 var datosEnviar={codigo: cod,nombre: this.variantes.nombre, cantidad: this.variantes.cantidad, precio: this.variantes.precio, imagen: urlV}
                 console.log(datosEnviar);

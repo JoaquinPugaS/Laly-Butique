@@ -8,7 +8,7 @@
                             <img v-bind:src="`${producto.imagen}`" class="card-img-top" alt="..." width="200" height="400" v-if="producto.imagen!= ' '">
                             <img v-else src="../assets/noDisp.png" width="250" height="200" style="margin-rigth: 20px;margin-left: 20px"  >
                             <!-- <div class="tab-pane active" id="pic-1"><img src="http://placekitten.com/400/252" /></div> -->
-                            <!-- <img v-bind:src="`${variantes.imagen}`" class="card-img-top" alt="..." width="200" height="400" v-if="variantes.imagen != ''"> -->
+                            <img v-bind:src="`${variantes.imagen}`" class="card-img-top" alt="..." width="200" height="400" v-if="variantes.imagen != ''">
 
 						</div>
 						<ul class="preview-thumbnail nav nav-tabs">
@@ -29,10 +29,11 @@
 							</div>
 						</div>
 						<h4 class="price">Precio: <span>${{producto.precio}}</span></h4>
-                        <div v-if="variant == true">
+                        <div v-if="variant == true ">
                             <h6 class="text-uppercase">Variaciones</h6> 
-                            <div class="sizes mt-5">
-                                <label class="radio"> <input type="radio" name="size" value="{{variantes.nombre}}" checked> <span>{{variantes.nombre}}</span> </label> 
+                            <div class="sizes mt-5" v-for="variante in variantes" :key="variante.id">
+                                <h5>{{variante.descripcion}}</h5>
+                                    
                             </div>
                         </div>
                         <!-- <div class="sizes mt-5">
@@ -67,10 +68,10 @@ export default {
                 let url = 'http://localhost/test/?consultar='+this.$route.params.id;
                 axios.get(url)
                 .then((datosRespuesta)=>{
-                    this.producto=datosRespuesta.data[0]
-                    console.log(datosRespuesta);
-                    if(datosRespuesta.data.variante.length != 0){
-                        this.variantes=datosRespuesta.variante[0];
+                    this.producto=datosRespuesta.data[0][1]
+                    console.log(datosRespuesta.data);
+                    if(datosRespuesta.data[1].length > 1){
+                        this.variantes=datosRespuesta.data[1][1];
                         this.variant = true;
                     }
             })
