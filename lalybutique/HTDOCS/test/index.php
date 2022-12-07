@@ -225,7 +225,7 @@ Function Consultar($id){
     include_once 'db.php';
     $objeto = new Conexion();
     $conexion = $objeto->Conectar();
-    $productos = array();
+    $productos = array(['producto'],['variante']);
     $sql = "SELECT * FROM productos WHERE id_producto ='$id'";
     $query = $conexion -> query($sql);
     if($query->rowCount()){
@@ -239,7 +239,24 @@ Function Consultar($id){
                 'imagen' => $row['imagen_producto'],
                 'estado' => $row['estado_producto']
             );
-            array_push($productos, $item);
+            $tipo=$row['id_Tipo'];
+            array_push($productos[0], $item);
+        }
+        if($tipo != 0){
+            $sql = "SELECT * FROM tipo WHERE id_Tipo = '$tipo'";
+            $query = $conexion -> query($sql);
+            if($query->rowCount()){
+                while($row = $query-> fetch(PDO::FETCH_ASSOC)){
+                    $item = array(
+                        'id' => $row['id_Tipo'],
+                        'descripcion' => $row['descripcion_tipo'],
+                        'cantidad' => $row['Cantidad'],
+                        'precio' => $row['precio'],
+                        'imagen' => $row['imagen'],
+                    );
+                    array_push($productos[1],$item);
+                }
+            }
         }
         echo json_encode($productos);
         exit();
