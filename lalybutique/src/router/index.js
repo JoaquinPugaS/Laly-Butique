@@ -20,6 +20,7 @@ import GenerateSale from '../components/Admin/GenerateSale'
 import ListSales from '../components/Admin/ListSales'
 import DetailSale from '../components/Admin/DetailSale'
 import EditTrackingNumber from '../components/Admin/EditTrackingNumber'
+import ListDebtors from '../components/Admin/ListDebtors'
 const routes = [
   {
     path: '/admin',
@@ -52,6 +53,11 @@ const routes = [
         path: '/admin/Dashboard/Sales',
         name: 'Sales',
         component: ListSales
+      },
+      {
+        path: '/admin/Dashboard/Deudores',
+        name: 'Deudores',
+        component: ListDebtors
       },
       {
         path: '/admin/Dashboard/Sale/:id',

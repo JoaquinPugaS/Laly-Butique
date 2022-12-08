@@ -4,7 +4,7 @@
         <ul class="list-group list-group-flush">
             <!-- <li class="listdash"> <router-link to="/admin/Dashboard/Sales">Ventas</router-link></li> -->
             <a class="nav-link" id="nava"><router-link to="/admin/Dashboard/Sales">Ventas</router-link> </a>
-            <li class="listdash">Deudores</li>
+            <a class="listdash"><router-link to="/admin/Dashboard/Deudores">Deudores</router-link> </a>
             <li class="listdash">Pedidos</li>
         </ul>
 </div>

@@ -2,7 +2,7 @@
     <div v-if="session== false">
         <form v-on:submit.prevent="Login">
             <input type="text" id="username" class="fadeIn second" minlength="3" maxlength="254" required name="username" v-model="usuario.username" placeholder="Nombre de usuario">
-            <input type="password" id="password" class="fadeIn third" minlength="8" maxlength="24" required name="password" v-model="usuario.password" placeholder="Contraseña">
+            <input type="password" id="password" class="fadeIn third" maxlength="24" required name="password" v-model="usuario.password" placeholder="Contraseña">
             <input type="submit" class="fadeIn fourth" value="Entrar">
             <div class="alert alter-danger" role="alert" v-if="error">
                 Error, Nombre de usuario o contraseña Incorrectos..

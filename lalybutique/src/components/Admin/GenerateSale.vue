@@ -49,11 +49,29 @@
                     <br>
                     <small id="helpId" class="form-text text-muted">Ingresa el Estado de la venta</small>
                 </div>
-                <div class="mb-3" v-if="EstadoSeleccionado.nombre == 'Pendiente'">
-                    <label for="SaldoPendiente" class="form-label">Abono: </label>
-                    <input type="number"
-                        class="form-control" required name="SaldoPendiente" min="1" max="9999999"  id="SaldoPendiente" v-model="abono" aria-describedby="helpId" >
-                    <small id="helpId" class="form-text text-muted">Ingresa el abono que dará el cliente</small>
+                <div v-if="EstadoSeleccionado.nombre == 'Pendiente'">
+                    <div class="mb-3" >
+                        <label for="SaldoPendiente" class="form-label">Abono: </label>
+                        <input type="number"
+                            class="form-control" required name="SaldoPendiente" min="1" max="9999999"  id="SaldoPendiente" v-model="deuda.abono" aria-describedby="helpId" >
+                        <small id="helpId" class="form-text text-muted">Ingresa el abono que dará el cliente</small>
+                    </div>
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label">Nombre</label>
+                        <input type="text" minlength="1" maxlength="30" required class="form-control" id="nombre" aria-describedby="emailHelp" v-model="deuda.nombre">
+                    </div>
+                    <div class="mb-3">
+                        <label for="apellido" class="form-label">Apellido</label>
+                        <input type="text" minlength="1" maxlength="30" required  class="form-control" id="apellido" aria-describedby="emailHelp" v-model="deuda.apellido">
+                    </div>
+                    <div class="mb-3">
+                        <label for="Direccion" class="form-label">Direccion</label>
+                        <input type="text" minlength="1" maxlength="100" required class="form-control" id="Direccion" aria-describedby="emailHelp" v-model="deuda.direccion" >
+                    </div>
+                    <div class="mb-3">
+                        <label for="Telefono" class="form-label">Teléfono</label>
+                        <input type="text" required minlength="9" maxlength="9" class="form-control" id="Telefono" v-model="deuda.telefono">
+                    </div>
                 </div>
                 <div class="btn-group" role="group" aria-label="">
                     <button type="submit" class="btn btn-success">Generar Venta</button>
@@ -133,6 +151,7 @@ export default {
             descuento:0,
             abonoS: false,
             errorRut: false,
+            deuda:{}
         }
     },
     methods:{
@@ -203,10 +222,10 @@ export default {
                             this.clickButton();
                         }
                     }))
-                    this.descuento = this.total - this.abono;
+                    this.descuento = this.total - this.deuda.abono;
                     if(this.EstadoSeleccionado.nombre == "Pendiente"){
                         url = "http://localhost/test/?insertarDeuda=1";
-                        datosEnviar = {rut: this.rut,deuda:this.descuento};
+                        datosEnviar = {rut: this.rut,nombre: this.deuda.nombre,apellido: this.deuda.apellido,direccion:this.deuda.direccion,telefono:this.deuda.telefono,deuda:this.descuento};
                         axios.post(url,datosEnviar).then((datosRespuesta=>{
                             console.log(datosRespuesta.data);
                         }))

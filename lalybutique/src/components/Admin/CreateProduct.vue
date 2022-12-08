@@ -56,7 +56,7 @@
                     <br>
                     <small id="helpId" class="form-text text-muted">Ingresa el Estado del producto</small>
                 </div>
-                <div>
+                <!-- <div>
                     <fieldset>
                     <legend>¿Desea añadir una variante?</legend>
                         <div>
@@ -127,7 +127,7 @@
                             </div>
                         </div>
                     </fieldset>
-                </div>
+                </div> -->
                 <div class="btn-group" role="group" aria-label="">
                     <button type="submit" class="btn btn-success" @click="AñadirProducto()" >Añadir</button>
                     <router-link :to="{name:'ListProducts'}" class="btn btn-warning">Cancelar </router-link>
