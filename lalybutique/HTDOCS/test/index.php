@@ -477,9 +477,14 @@ Function InsertarDeuda(){
         $deudadb = $datos['deuda_usuario'];
         if($deudadb>0){
             $deuda = $deuda + $deudadb;
-            $sql1 = "UPDATE usuario set deuda_usuario =$deuda WHERE rut_usuario = '$rut'";
+            $sql1 = "UPDATE usuarios set deuda_usuario =$deuda WHERE rut_usuario = '$rut'";
             $query1 = $conexion -> query($sql1);
-            echo json_encode(["success"=>1]);
+            echo json_encode(["success"=>2]);
+            exit();
+        }else{
+            $sql3 = "UPDATE usuarios set deuda_usuario =$deuda WHERE rut_usuario = '$rut'";
+            $query3 = $conexion -> query($sql3);
+            echo json_encode(["success"=>3]);
             exit();
         }
     }else{

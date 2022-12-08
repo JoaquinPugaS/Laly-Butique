@@ -207,7 +207,9 @@ export default {
                     if(this.EstadoSeleccionado.nombre == "Pendiente"){
                         url = "http://localhost/test/?insertarDeuda=1";
                         datosEnviar = {rut: this.rut,deuda:this.descuento};
-                        axios.post(url,datosEnviar);
+                        axios.post(url,datosEnviar).then((datosRespuesta=>{
+                            console.log(datosRespuesta.data);
+                        }))
                         this.abonoS = true;
                     }
                 
