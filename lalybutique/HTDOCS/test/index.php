@@ -346,6 +346,35 @@ Function ObtenerVentas(){
 if(isset($_GET["ventas"])){
     ObtenerVentas();
 }
+Function ObtenerDeudores(){
+    include_once 'db.php';
+    $objeto = new Conexion();
+    $conexion = $objeto->Conectar();
+    $deudores = array();
+    $sql = "SELECT * FROM usuarios WHERE deuda_usuario > 0";
+    $query = $conexion -> query($sql);
+    if($query->rowCount()){
+        while($row = $query-> fetch(PDO::FETCH_ASSOC)){
+            $item = array(
+                'rut' => $row['rut_usuario'],
+                'nombre' => $row['nombre_usuario'],
+                'apellido' => $row['apellido_usuario'],
+                'direccion' => $row['direccion_usuario'],
+                'telefono' => $row['telefono_usuario'],
+                'deuda' => $row['deuda_usuario'],
+            );
+            array_push($deudores, $item);
+        }
+        echo json_encode($deudores);
+        exit();
+        
+    }else{  
+        echo json_encode(["success"=>0]);
+    }
+}
+if(isset($_GET["deudores"])){
+    ObtenerDeudores();
+}
 Function InsertarVenta(){
     include_once 'db.php';
         $objeto = new Conexion();
@@ -359,6 +388,7 @@ Function InsertarVenta(){
         $idventa = $data->id_venta;
         $sql = "INSERT INTO venta (id_venta, rut_usuario, total_a_pagar_orden, estado_de_orden, fecha_pedido, codigo_seguimiento) VALUES ($idventa, '$rut', $total, '$estado', '$fecha', '$codseg')";
         $query = $conexion -> query($sql);
+
         echo json_encode(["success"=>1]);
         exit();
         
@@ -405,10 +435,6 @@ Function RegistrarUser(){
         $password1 = $data->contraseña;
         $password = password_hash($password1, PASSWORD_DEFAULT);
         $error = 0;
-        //     $error = 1;
-        //     echo json_encode(["success"=>2]);
-        //     exit();
-        // }
         $sql = "SELECT * FROM usuarios WHERE email_usuario = '$email'";
         $query = $conexion -> query($sql);
         if($query->rowCount()){
@@ -463,12 +489,39 @@ Function AgregarCarrito(){
 if(isset($_GET["carrito"])){
     AgregarCarrito();
 }
+Function RestarProductoVenta(){
+    include_once 'db.php';
+    $objeto = new Conexion();
+    $conexion = $objeto->Conectar();
+    $data = json_decode(file_get_contents("php://input"));
+    $id = $data->id;
+    $cantidad = $data->cantidad;
+    $sql = "SELECT stock_producto from productos WHERE id_producto = '$id'";
+    $query = $conexion -> query($sql);
+    $cantdb = $query->fetch(PDO::FETCH_ASSOC);
+    $stockdb = $cantdb['stock_producto'];
+    $cantidadtotal = $stockdb - $cantidad;
+    $sql1 = "UPDATE productos SET stock_producto = $cantidadtotal WHERE id_producto = '$id'" ;
+    $query1 = $conexion -> query($sql1);
+    //ACA PARA ABAJO HAY QUE VALIDAR EL TOPE DE PRODUCTOS NEGATIVOS 
+    
+    echo json_encode(["success"=>1]);
+    exit();
+    }
+
+if(isset($_GET["restarProducto"])){
+    RestarProductoVenta();
+}
 Function InsertarDeuda(){
     include_once 'db.php';
     $objeto = new Conexion();
     $conexion = $objeto->Conectar();
     $data = json_decode(file_get_contents("php://input"));
     $rut = $data->rut;
+    $nombre = $data->nombre;
+    $apellido = $data->apellido;
+    $direccion = $data->direccion;
+    $telefono = $data->telefono;
     $deuda = $data->deuda;
     $sql = "SELECT * from usuarios where rut_usuario = '$rut'";
     $query = $conexion -> query($sql);
@@ -488,7 +541,7 @@ Function InsertarDeuda(){
             exit();
         }
     }else{
-        $sql2 = "INSERT INTO usuarios (rut_usuario,deuda_usuario) VALUES ($rut,$deuda)";
+        $sql2 = "INSERT INTO usuarios (rut_usuario,nombre_usuario,apellido_usuario,direccion_usuario,telefono_usuario,deuda_usuario) VALUES ($rut,'$nombre','$apellido','$direccion','$telefono',$deuda)";
         $query2 = $conexion -> query($sql2);
         echo json_encode(["success"=>1]);
         exit();
@@ -540,7 +593,7 @@ Function DetalleCompra($id_venta){
     if($query->rowCount()){
         while($row = $query-> fetch(PDO::FETCH_ASSOC)){
             $id = $row['id_producto'];
-            $sql1 = "SELECT nombre_producto FROM productos where id_producto = $id";
+            $sql1 = "SELECT nombre_producto FROM productos where id_producto = '$id'";
             $query1 = $conexion -> query($sql1);
             $nombre = $query1->fetch(PDO::FETCH_ASSOC);
             $item = array(

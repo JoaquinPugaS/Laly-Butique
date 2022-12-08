@@ -8,7 +8,7 @@
                             <img v-bind:src="`${producto.imagen}`" class="card-img-top" alt="..." width="200" height="400" v-if="producto.imagen!= ' '">
                             <img v-else src="../assets/noDisp.png" width="250" height="200" style="margin-rigth: 20px;margin-left: 20px"  >
                             <!-- <div class="tab-pane active" id="pic-1"><img src="http://placekitten.com/400/252" /></div> -->
-                            <img v-bind:src="`${variantes.imagen}`" class="card-img-top" alt="..." width="200" height="400" v-if="variantes.imagen != ''">
+                            <!-- <img v-bind:src="`${variantes.imagen}`" class="card-img-top" alt="..." width="200" height="400" v-if="variantes.imagen != ''"> -->
 
 						</div>
 						<ul class="preview-thumbnail nav nav-tabs">

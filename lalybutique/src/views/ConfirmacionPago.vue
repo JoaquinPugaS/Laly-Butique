@@ -86,7 +86,17 @@ export default {
                     console.log('error')
                 }
             }))
-            
+            for(var i in this.productos){
+                var datosEnviar = {id: this.productos[i].id,cantidad:this.productos[i].cantidad};
+                let url = "http://localhost/test/?restarProducto";
+                console.log(datosEnviar);
+                axios.post(url,datosEnviar).then((datosRespuesta=>{
+                    if(datosRespuesta.data.success==1){
+                        console.log('restado');
+                    }
+                    }
+                ))
+            }
             
         }else{
             this.aprobado = 0;

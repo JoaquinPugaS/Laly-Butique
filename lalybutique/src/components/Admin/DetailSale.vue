@@ -38,7 +38,7 @@ export default {
         ObtenerDetalle(){
             let url = "http://localhost/test/?DetalleCompra="+this.$route.params.id;
             axios.get(url).then((datosRespuesta)=>(
-                console.log(datosRespuesta),
+                console.log(datosRespuesta.data),
                 this.venta = datosRespuesta.data));        }
     }
 }
