@@ -46,6 +46,14 @@
 				</div>
 			</div>
 		</div>
+    <div class="alert alert-success d-flex align-items-center" role="alert" v-if="alert==true" style="text-align:right">
+        <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+        <div>
+            Producto agregado satisfactoriamente
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
 	</div>
     <!-- <v-alert type="success" v-if="alert==true"></v-alert> -->
 </template>

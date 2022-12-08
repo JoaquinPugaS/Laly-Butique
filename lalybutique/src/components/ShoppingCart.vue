@@ -18,11 +18,14 @@
                         <td>${{producto.precio}}</td>
                         <td>{{producto.cantidad}}</td>
                         <td>${{producto.precio * producto.cantidad}}</td>
-                        <td><a name="" id="" class="btn btn-primary" @click="addtoCart(producto)" role="button">Agregar</a></td>
-                        <td><a name="" id="" class="btn btn-primary" @click="eliminarCarro(producto)" role="button">Eliminar</a></td>
+                            
+                        <td><a class="bi-plus-circle" @click="addtoCart(producto)" role="button"></a>
+                        <i class="bi bi-dash-circle" @click="eliminarCarro(producto)" role="button"></i>
+                        <i class="bi bi-trash-fill" @click="RemoveProduct(producto)" role="button"></i></td>
                     </tr>
                 </tbody>
             </table>
+                <i class="bi bi-trash-fill" @click="ClearCart()" role="button"></i>
         </div>
             <h1>Total: ${{ cart_total }}</h1>
             <button class="btn btn-success" @click="Checkout()">Checkout</button>
@@ -43,6 +46,12 @@ export default {
         },
         addtoCart(producto){
             this.$store.commit('addtoCart',producto)
+        },
+        ClearCart(){
+            this.$store.commit('ClearCart')
+        },
+        RemoveProduct(producto){
+            this.$store.commit('RemoveProduct',producto)
         },
         Checkout(){
             let id = Math.floor((Math.random() * 1000000) + 1);
@@ -69,5 +78,6 @@ export default {
             return this.$store.getters.cartTotal
         },
     },
+    
 }
 </script>

@@ -11,7 +11,7 @@
         <a @click="invitado()">Si Quieres comprar como invitado click aquí</a>
     </div>
     <div v-if="datos == true">
-        <form>
+        <form v-on:submit.prevent="webPayf" >
             <div class="mb-3">
                 <label for="nombre" class="form-label">Nombre</label>
                 <input type="text" required class="form-control" id="nombre" aria-describedby="emailHelp" v-model="datosUser.nombre">
@@ -35,13 +35,13 @@
                 <label for="Telefono" class="form-label">Teléfono</label>
                 <input type="text" required class="form-control" id="Telefono" v-model="datosUser.telefono">
             </div>
-            <button type="submit" @click="webPayf()" class="btn btn-primary">Confirmar</button>
+            <button id="bConfirmar" class="btn btn-primary">Confirmar</button>
         </form>
     </div>
-        <form v-if="final == true" method="post" action="https://webpay3gint.transbank.cl/webpayserver/init_transaction.cgi">
-            <input type="hidden"  name="token_ws" v-model="respuesta.token" />
-            <input type="submit" value="Ir a pagar" />
-        </form>
+    <form method="post" action="https://webpay3gint.transbank.cl/webpayserver/init_transaction.cgi">
+        <input type="hidden"  name="token_ws" v-model="respuesta.token" />
+        <input type="submit" id="bWebpay" disabled value="Ir a pagar" />
+    </form>
 </template>
 <script>
 import { WebpayPlus } from 'transbank-sdk'; // ES6 Modules
@@ -74,9 +74,9 @@ import axios from 'axios';
                 this.webPay();
             },
             async webPay(){
-            this.datos = false;
-            this.final = true;
-            const tx = new WebpayPlus.Transaction(new Options(IntegrationCommerceCodes.WEBPAY_PLUS, IntegrationApiKeys.WEBPAY, Environment.Integration))
+                // this.datos = false;
+                this.final = true;
+                const tx = new WebpayPlus.Transaction(new Options(IntegrationCommerceCodes.WEBPAY_PLUS, IntegrationApiKeys.WEBPAY, Environment.Integration))
             const orden = localStorage.getItem('cod_venta');
             const buyorder = 'Laly Boutique-'+orden;
             var sessionId = 0;
@@ -95,6 +95,20 @@ import axios from 'axios';
             var datos={rut:this.datosUser.rut, nombre:nombre};
             localStorage.setItem('datos',JSON.stringify(datos))
             // chrome.exe --user-data-dir="C://Chrome dev session" --disable-web-security
+            const button = document.querySelector('#bWebpay');
+                button.disabled = false;
+            const button1 = document.querySelector('#bConfirmar');
+            button1.disabled = true;
+            const input_nombre = document.querySelector('#nombre');
+            input_nombre.disabled = true;
+            const input_apellido = document.querySelector('#apellido');
+            input_apellido.disabled = true;
+            const input_rut = document.querySelector('#rut');
+            input_rut.disabled = true;
+            const input_Email = document.querySelector('#Email');
+            input_Email.disabled = true;
+            const input_Telefono = document.querySelector('#Telefono');
+            input_Telefono.disabled = true;
             },
             EnviarDatos(){
                 var datosEnviar={username:this.usuario.username,password:this.usuario.password}
@@ -103,7 +117,10 @@ import axios from 'axios';
                 .then((datosRespuesta=>{
                 if(datosRespuesta.data.success===2){
                     localStorage.setItem('user_token', datosRespuesta.data.token);
-                    localStorage.setItem('rut', datosRespuesta.data.rut);
+                    localStorage.setItem('user_rut', datosRespuesta.data.rut);
+                    this.ObtenerDatosUser();
+                    this.datos = true;
+                    this.session = true;
                 }else{
                     console.log('Error');
                     this.error = true;

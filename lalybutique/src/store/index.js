@@ -17,6 +17,9 @@ export default createStore({
         cartItems: state => {
             return state.Cart
         },
+        cartItemsTotal: state => {
+            return state.Cart.length
+        },
         cartTotal: state => {
             return state.Cart.reduce((a, b) => a + (b.precio * b.cantidad),0)
         }
@@ -35,7 +38,7 @@ export default createStore({
         },
         removeFromCart(state,product){
             let item = state.Cart.find(i => i.id === product.id)
-
+            
             if(item){
                 if(item.cantidad > 1){
                     item.cantidad--
@@ -45,11 +48,20 @@ export default createStore({
                 updateLocalStorage(state.Cart)
             }
         },
+        RemoveProduct(state,product){
+            state.Cart = state.Cart.filter(i => i.id !== product.id)
+            updateLocalStorage(state.Cart)
+        },
         updateCartFromLocalStorage(state){
             const Cart = localStorage.getItem('Cart')
             if(Cart){
                 state.Cart = JSON.parse(Cart)
+                
             }
+        },
+        ClearCart(state){
+            state.Cart = [];
+            updateLocalStorage(state.Cart)
         }
     },
     actions:{
