@@ -6,6 +6,7 @@
         Fecha: <a>{{respuesta.transaction_date}}</a><br>
         Nombre: <a>{{nombre}}</a><br>
         Rut: <a>{{rut}}</a><br>
+        Direccion: <a>{{direccion}}</a><br>
         <br>
     </div>
     <div class="table-responsive">
@@ -52,6 +53,7 @@ export default {
             aprobado: -1,
             nombre: '',
             rut: '',
+            direccion: '',
         }
     }
     ,beforeMount(){
@@ -63,6 +65,7 @@ export default {
         console.log(datos);
         this.rut = datos.rut
         this.nombre = datos.nombre
+        this.direccion = datos.direccion
         const tx = new WebpayPlus.Transaction(new Options(IntegrationCommerceCodes.WEBPAY_PLUS, IntegrationApiKeys.WEBPAY, Environment.Integration));
         const response = await tx.commit(tokenn);
         this.respuesta = response

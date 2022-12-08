@@ -122,10 +122,10 @@ export default {
     },
     methods:{
         obtenerInformacionID(){
-            fetch('http://localhost/test/?consultar='+this.$route.params.id)
+            let url = 'http://localhost/test/?consultar='+this.$route.params.id;
+            axios.get(url)
             .then((datosRespuesta)=>{
-                console.log(datosRespuesta)
-                this.producto=datosRespuesta.producto[0];
+                this.producto=datosRespuesta.data[0][1];
                 this.EstadoSeleccionado.nombre = this.producto.estado
                 
         })
@@ -135,11 +135,6 @@ export default {
         console.log('link',urll)
         this.producto.estado = this.EstadoSeleccionado.nombre
         var datosEnviar={id:this.$route.params.id,nombre:this.producto.nombre,stock:this.producto.stock,stock_critico:this.producto.stock_critico,precio:this.producto.precio,imagen:this.urll,estado:this.producto.estado}
-        // fetch('http://localhost/test/?modificar='+this.$route.params.id,{
-        //     method:'POST',
-        //     body:JSON.stringify(datosEnviar)
-        // })
-        // .then(respuesta=>respuesta.json())
         let url = 'http://localhost/test/?modificar='+this.$route.params.id;
         axios.post(url,datosEnviar)
         .then((datosRespuesta=>{

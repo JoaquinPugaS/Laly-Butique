@@ -164,13 +164,31 @@ Function Eliminar($id){
     include_once 'db.php';
     $objeto = new Conexion();
     $conexion = $objeto->Conectar();
-    $sql = "DELETE FROM productos WHERE id_producto ='$id'";
+    $sql = "SELECT id_venta from producto_pedido where id_producto = '$id'";
     $query = $conexion -> query($sql);
-    if($query){
-        echo json_encode(["success"=>1]);
-        exit();
+    if($query -> rowCount()){
+        while($row = $query-> fetch(PDO::FETCH_ASSOC)){
+            $id_venta = $row['id_venta'];
+            $sql2 = "SELECT * FROM venta where id_venta = $id_venta and estado_de_orden = 'Pagado'";
+            $query2 = $conexion -> query($sql2);
+            if($query2 -> rowCount()){
+                $sql4 = "UPDATE productos set estado_producto = 'No Disponible' where id_producto = '$id'";
+                $query4 = $conexion -> query($sql4);
+                if($query4){
+                    echo json_encode(["success"=>2]);
+                    exit();
+                }
+            }
+        }
     }else{
-        echo json_encode(["success"=>0]);
+        $sql1 = "DELETE FROM productos WHERE id_producto ='$id'";
+        $query1 = $conexion -> query($sql1);
+        if($query1){
+            echo json_encode(["success"=>1]);
+            exit();
+        }else{
+            echo json_encode(["success"=>0]);
+        }
     }
 }
 

@@ -17,7 +17,9 @@
                         <td>{{compra.total_pago}}</td>
                         <td>{{compra.estado_orden}}</td>
                         <td>{{compra.codigo_seguimiento}}</td>
+                        <div class="btn-group" role="group">
                         <td><router-link :to="{ name: 'PurchaseDetail', params: { id: compra.id_venta },}" class="btn btn-success">Detalle</router-link></td>
+                        </div>
                 </tbody>
             </table>
         </div>
