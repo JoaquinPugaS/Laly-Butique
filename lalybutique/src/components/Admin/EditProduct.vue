@@ -147,6 +147,7 @@ export default {
                 this.producto=datosRespuesta.data[0][1];
                 this.EstadoSeleccionado.nombre = this.producto.estado
                 this.TipoSeleccionado.nombre = this.producto.nombre_tipo
+                this.TipoSeleccionado.id = this.producto.id_tipo
         })
         url = 'http://localhost/test/?Tipos';
             axios.get(url).then((datosRespuesta =>{
@@ -158,6 +159,7 @@ export default {
         console.log('link',urll)
         this.producto.estado = this.EstadoSeleccionado.nombre
         this.producto.tipo = this.TipoSeleccionado.id
+        console.log(this.TipoSeleccionado)
         var datosEnviar={id:this.$route.params.id,nombre:this.producto.nombre,tipo:this.producto.tipo,stock:this.producto.stock,stock_critico:this.producto.stock_critico,precio:this.producto.precio,imagen:this.urll,estado:this.producto.estado}
         let url = 'http://localhost/test/?modificar='+this.$route.params.id;
         axios.post(url,datosEnviar)
