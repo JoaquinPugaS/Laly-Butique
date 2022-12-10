@@ -13,14 +13,20 @@ function ObtenerProductos(){
         $query = $conexion -> query('SELECT * FROM productos');
         if($query->rowCount()){
             while($row = $query-> fetch(PDO::FETCH_ASSOC)){
+                $id = $row['id_Tipo'];
+                $sql1 = "SELECT nombre_tipo from tipo where id_Tipo = $id";
+                $query1 = $conexion -> query($sql1);
+                $nombre = $query1->fetch(PDO::FETCH_ASSOC);
                 $item = array(
                     'id' => $row['id_producto'],
+                    'id_tipo' => $row['id_Tipo'],
                     'nombre' => $row['nombre_producto'],
                     'stock' => $row['stock_producto'],
                     'stock_critico' => $row['stock_critico_producto'],
                     'precio' => $row['precio_producto'],
                     'imagen' => $row['imagen_producto'],
-                    'estado' => $row['estado_producto']
+                    'estado' => $row['estado_producto'],
+                    'nombre_tipo' => $nombre['nombre_tipo']
                 );
                 array_push($productos, $item);
             }
@@ -68,8 +74,8 @@ Function Insertar(){
         $objeto = new Conexion();
         $conexion = $objeto->Conectar();
         $data = json_decode(file_get_contents("php://input"));
-        $codigo = $data->codigo;
         $nombre = $data->nombre;
+        $tipo = $data->tipo;
         $stock = $data->stock;
         $stock_critico = $data->stock_critico;
         $precio = $data->precio;
@@ -81,7 +87,7 @@ Function Insertar(){
             echo json_encode(["success"=>0]);
             exit();
         }else{
-            $sql = "INSERT INTO productos (id_Tipo,nombre_producto,stock_producto, stock_critico_producto, precio_producto, imagen_producto, estado_producto) VALUES ($codigo ,'$nombre',$stock, $stock_critico, $precio, '$imagen', '$estado')";
+            $sql = "INSERT INTO productos (id_Tipo,nombre_producto,stock_producto, stock_critico_producto, precio_producto, imagen_producto, estado_producto) VALUES ($tipo ,'$nombre',$stock, $stock_critico, $precio, '$imagen', '$estado')";
             $query = $conexion -> query($sql);
             if($query->rowCount()){
                 echo json_encode(["success"=>1]);
@@ -92,24 +98,33 @@ Function Insertar(){
 if(isset($_GET["insertar"])){
     Insertar();
 }
-Function InsertarV(){
+Function AgregarTipo(){
     include_once 'db.php';
     $objeto = new Conexion();
     $conexion = $objeto->Conectar();
     $data = json_decode(file_get_contents("php://input"));
-    $codigo = $data->codigo;
     $nombre = $data->nombre;
-    $cantidad = $data->cantidad;
-    $precio = $data->precio;
-    $imagen = $data->imagen;
-    $sql = "INSERT INTO tipo (id_Tipo, descripcion_tipo, Cantidad, precio, imagen) VALUES ($codigo,'$nombre',$cantidad,$precio,'$imagen')";
+    $sql = "SELECT * FROM tipo where nombre_tipo = '$nombre'";
     $query = $conexion -> query($sql);
-    echo json_encode(["success"=>1,"codigo"=>$codigo]);
-    exit();
+    if($query->rowCount()){
+        echo json_encode(["success"=>2]);
+        exit();
+    }else{
+        $sql = "INSERT INTO tipo (nombre_tipo) VALUES ('$nombre')";
+        $query = $conexion -> query($sql);
+        if($query){
+            echo json_encode(["success"=>1]);
+            exit();
+        }else{
+            echo json_encode(["success"=>0]);
+            exit();
+        }
+    }
+    
 }
 
-if(isset($_GET["insertarV"])){
-    InsertarV();
+if(isset($_GET["addTipo"])){
+    AgregarTipo();
 }
 Function Login(){
     include_once 'db.php';
@@ -203,12 +218,13 @@ Function Modificar($id){
     $conexion = $objeto->Conectar();
     $data = json_decode(file_get_contents("php://input"));
     $nombre = $data->nombre;
+    $tipo = $data->tipo;
     $stock = $data->stock;
     $stock_critico = $data->stock_critico;
     $precio = $data->precio;
     $imagen = $data->imagen;
     $estado = $data->estado;
-    $sql = "UPDATE productos SET nombre_producto='$nombre', stock_producto=$stock, stock_critico_producto=$stock_critico,precio_producto=$precio,imagen_producto='$imagen',estado_producto='$estado' where id_producto='$id'";
+    $sql = "UPDATE productos SET id_Tipo=$tipo,nombre_producto='$nombre', stock_producto=$stock, stock_critico_producto=$stock_critico,precio_producto=$precio,imagen_producto='$imagen',estado_producto='$estado' where id_producto='$id'";
     $query = $conexion -> query($sql);
     echo json_encode(["success"=>1]);
     exit();
@@ -248,33 +264,22 @@ Function Consultar($id){
     $query = $conexion -> query($sql);
     if($query->rowCount()){
         while($row = $query-> fetch(PDO::FETCH_ASSOC)){
+            $id = $row['id_Tipo'];
+            $sql1 = "SELECT nombre_tipo from tipo where id_Tipo = $id";
+            $query1 = $conexion -> query($sql1);
+            $nombre = $query1->fetch(PDO::FETCH_ASSOC);
             $item = array(
                 'id' => $row['id_producto'],
+                'id_tipo' => $row['id_Tipo'],
                 'nombre' => $row['nombre_producto'],
                 'stock' => $row['stock_producto'],
                 'stock_critico' => $row['stock_critico_producto'],
                 'precio' => $row['precio_producto'],
                 'imagen' => $row['imagen_producto'],
-                'estado' => $row['estado_producto']
+                'estado' => $row['estado_producto'],
+                'nombre_tipo' => $nombre['nombre_tipo']
             );
-            $tipo=$row['id_Tipo'];
             array_push($productos[0], $item);
-        }
-        if($tipo != 0){
-            $sql = "SELECT * FROM tipo WHERE id_Tipo = '$tipo'";
-            $query = $conexion -> query($sql);
-            if($query->rowCount()){
-                while($row = $query-> fetch(PDO::FETCH_ASSOC)){
-                    $item = array(
-                        'id' => $row['id_Tipo'],
-                        'descripcion' => $row['descripcion_tipo'],
-                        'cantidad' => $row['Cantidad'],
-                        'precio' => $row['precio'],
-                        'imagen' => $row['imagen'],
-                    );
-                    array_push($productos[1],$item);
-                }
-            }
         }
         echo json_encode($productos);
         exit();
@@ -287,6 +292,7 @@ if(isset($_GET["consultar"])){
     $id = $_GET["consultar"];
     Consultar($id);
 }
+
 Function ConsultarUsuario($rut){
     include_once 'db.php';
     $objeto = new Conexion();
@@ -316,6 +322,31 @@ Function ConsultarUsuario($rut){
 if(isset($_GET["consultaruser"])){
     $rut = $_GET["consultaruser"];
     ConsultarUsuario($rut);
+}
+Function LeerTipo(){
+    include_once 'db.php';
+    $objeto = new Conexion();
+    $conexion = $objeto->Conectar();
+    $tipo = array();
+    $sql = "SELECT * FROM tipo";
+    $query = $conexion -> query($sql);
+    if($query->rowCount()){
+        while($row = $query-> fetch(PDO::FETCH_ASSOC)){
+            $item = array(
+                'id' => $row['id_Tipo'],
+                'nombre' => $row['nombre_tipo']
+            );
+            array_push($tipo, $item);
+        }
+        echo json_encode($tipo);
+        exit();
+        
+    }else{  
+        echo json_encode(["success"=>0]);
+    }
+}
+if(isset($_GET["Tipos"])){
+    LeerTipo();
 }
 Function ObtenerVentas(){
     include_once 'db.php';

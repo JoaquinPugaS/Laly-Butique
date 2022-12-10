@@ -11,6 +11,7 @@
                             <tr>
                                 <th scope="col">ID</th>
                                 <th scope="col">NOMBRE</th>
+                                <th scope="col">TIPO</th>
                                 <th scope="col">STOCK</th>
                                 <th scope="col">STOCK CRITICO</th>
                                 <th scope="col">PRECIO</th>
@@ -22,6 +23,7 @@
                             <tr v-for="producto in productos" :key="producto.id">
                                 <td>{{producto.id}}</td>
                                 <td>{{producto.nombre}}</td>
+                                <td>{{producto.nombre_tipo}}</td>
                                 <td>{{producto.stock}}</td>
                                 <td>{{producto.stock_critico}}</td>
                                 <td>{{producto.precio}}</td>

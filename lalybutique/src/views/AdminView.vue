@@ -17,6 +17,9 @@
         <li>
           <a class="nav-link" id="nava" > <router-link to="/admin/GenerateSale">Generar Venta</router-link> </a>
         </li>
+        <li>
+          <a class="nav-link" id="nava" > <router-link to="/admin/CreateType">Crear Tipo</router-link> </a>
+        </li>
 
       </ul>
       <a v-on:click="CerrarSesion();">SALIR</a>

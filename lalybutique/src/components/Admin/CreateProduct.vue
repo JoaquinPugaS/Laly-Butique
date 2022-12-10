@@ -16,6 +16,19 @@
                     <small id="helpId" class="form-text text-muted">Ingresa el nombre del producto</small>
                 </div>
                 <div class="mb-3">
+                    <label for="tipo" class="form-label">Tipo: </label> <br>
+                    <Listbox v-model="TipoSeleccionado">
+                        <ListboxButton>{{TipoSeleccionado.nombre}}</ListboxButton>
+                        <ListboxOptions>
+                            <ListboxOption v-for="tipo in tipos" :key="tipo.id" :value="tipo">
+                                {{tipo.nombre}}
+                            </ListboxOption>
+                        </ListboxOptions>
+                    </Listbox>
+                    <br>
+                    <small id="helpId" class="form-text text-muted">Ingresa el tipo de producto</small>
+                </div>
+                <div class="mb-3">
                     <label for="stock" class="form-label">Stock: </label>
                     <input type="number"
                         class="form-control" required min="1" max="9999"  name="stock" v-model="producto.stock" maxlength="4"  id="stock" aria-describedby="helpId" placeholder="Stock">
@@ -43,12 +56,7 @@
                     <Listbox v-model="EstadoSeleccionado">
                         <ListboxButton>{{ EstadoSeleccionado.nombre }}</ListboxButton>
                         <ListboxOptions>
-                            <ListboxOption 
-                            v-for="estado in estados"
-                            :key="estado.id" 
-                            :value="estado" 
-                            :disabled="estado.nodisponible"
-                            >
+                            <ListboxOption v-for="estado in estados" :key="estado.id" :value="estado" :disabled="estado.nodisponible">
                                 {{estado.nombre}}
                             </ListboxOption>
                         </ListboxOptions>
@@ -56,78 +64,6 @@
                     <br>
                     <small id="helpId" class="form-text text-muted">Ingresa el Estado del producto</small>
                 </div>
-                <!-- <div>
-                    <fieldset>
-                    <legend>¿Desea añadir una variante?</legend>
-                        <div>
-                        <input type="radio" name="resp" id="si" v-model="variante" @click="radio()">
-                        <label for="si">Si      </label>    |
-                        <input type="radio" name="resp" id="no">
-                        <label for="no">No</label>
-                            <div v-if="variante">
-                                <div class="mb-3">
-                                    <label for="NombreVariante" class="form-label">Nombre de la variante: </label>
-                                    <input type="text" minlength="1" maxlength="255"
-                                        class="form-control" required  name="NombreVariante" v-model="variantes.nombre" id="NombreVariante" aria-describedby="helpId" placeholder="Nombre de la variante">
-                                    <small id="helpId" class="form-text text-muted">Ingresa el nombre de la variante</small>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="CantidadVariante" class="form-label">Cantidad: </label>
-                                    <input type="number" min="1" max="127"
-                                        class="form-control" required  name="CantidadVariante" v-model="variantes.cantidad" id="CantidadVariante" aria-describedby="helpId" placeholder="Cantidad">
-                                    <small id="helpId" class="form-text text-muted">Ingresa la cantidad</small>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="PrecioVariante" class="form-label">Precio: </label>
-                                    <input type="number" min="1" max="999999999"
-                                        class="form-control" required  name="PrecioVariante" v-model="variantes.precio" id="PrecioVariante" aria-describedby="helpId" placeholder="Precio">
-                                    <small id="helpId" class="form-text text-muted">Ingresa el Precio</small>
-                                </div>
-                                <div class="mb-3" id="uploadImage">
-                                    <label for="imagenVariante" class="form-label">Imagen: </label>
-                                    <input type="file"
-                                        class="form-control" name="imagenVariante" id="file-input" aria-describedby="helpId" placeholder="imagenVariante" accept="image/png, image/jpeg, image/jpg" @change="Test($event, 2)">
-                                </div>
-                                <legend>¿Desea añadir otra variante?</legend>
-                                <input type="radio" name="resp" id="si" v-model="variante" @click="radio()">
-                                <label for="si">Si      </label>    |
-                                <input type="radio" name="resp" id="no">
-                                <label for="no">No</label>
-                                <div v-for="cantidad= 1 in cantVar" :key="cantidad.length">
-                                    <div class="mb-3">
-                                        <label for="NombreVariante" class="form-label">Nombre de la variante: </label>
-                                        <input type="text" minlength="1" maxlength="255"
-                                            class="form-control" required  name="NombreVariante" v-model="variantes.nombre" id="NombreVariante" aria-describedby="helpId" placeholder="Nombre de la variante">
-                                        <small id="helpId" class="form-text text-muted">Ingresa el nombre de la variante</small>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="CantidadVariante" class="form-label">Cantidad: </label>
-                                        <input type="number" min="1" max="127"
-                                            class="form-control" required  name="CantidadVariante" v-model="variantes.cantidad" id="CantidadVariante" aria-describedby="helpId" placeholder="Cantidad">
-                                        <small id="helpId" class="form-text text-muted">Ingresa la cantidad</small>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="PrecioVariante" class="form-label">Precio: </label>
-                                        <input type="number" min="1" max="999999999"
-                                            class="form-control" required  name="PrecioVariante" v-model="variantes.precio" id="PrecioVariante" aria-describedby="helpId" placeholder="Precio">
-                                        <small id="helpId" class="form-text text-muted">Ingresa el Precio</small>
-                                    </div>
-                                    <div class="mb-3" id="uploadImage">
-                                        <label for="imagenVariante" class="form-label">Imagen: </label>
-                                        <input type="file"
-                                            class="form-control" name="imagenVariante" id="file-input" aria-describedby="helpId" placeholder="imagenVariante" accept="image/png, image/jpeg, image/jpg" @change="Test($event, 2)">
-                                    </div>
-                                    <legend>¿Desea añadir otra variante?</legend>
-                                    <input type="radio" name="resp" id="si" v-model="variante" @click="radio()">
-                                    <label for="si">Si      </label>    |
-                                    <input type="radio" name="resp" id="no">
-                                    <label for="no">No</label>
-
-                                </div>
-                            </div>
-                        </div>
-                    </fieldset>
-                </div> -->
                 <div class="btn-group" role="group" aria-label="">
                     <button type="submit" class="btn btn-success" @click="AñadirProducto()" >Añadir</button>
                     <router-link :to="{name:'ListProducts'}" class="btn btn-warning">Cancelar </router-link>
@@ -152,9 +88,12 @@ const estados= [
 ]
 const estadoD=[
     {id: 0, nombre: 'Seleccione uno', nodisponible: false},
-
+]
+const estadoT=[
+    {id: 0, nombre: 'Seleccione uno', nodisponible: false},
 ]
 const EstadoSeleccionado = ref(estadoD[0])
+var TipoSeleccionado = ref(estadoT[0])
 </script>
 <script>
 var urll = " ";
@@ -170,11 +109,14 @@ export default {
             variantes: {},
             cantVar: 0,
             varianteEnviar:{},
+            tipos: {}
         }
     },
     beforeMount(){
     if(!localStorage.getItem('admin_token')){
         window.location.href='/Login'
+    }else{
+        this.GetTipos();
     }
     },
     methods:{
@@ -190,6 +132,13 @@ export default {
         },
         sleep(ms){
             return new Promise(resolve => setTimeout(resolve, ms));
+        },
+        GetTipos(){
+            let url = 'http://localhost/test/?Tipos';
+            axios.get(url).then((datosRespuesta =>{
+                this.tipos = datosRespuesta.data;
+                console.log(this.tipos);
+            }))
         },
         AñadirProducto(){
             if(this.variante == true){
@@ -228,7 +177,8 @@ export default {
                     this.EstadoSeleccionado.nombre = 'Disponible'
                 }
                 this.producto.estado = this.EstadoSeleccionado.nombre
-                datosEnviar={codigo: 0,nombre:this.producto.nombre,stock:this.producto.stock,stock_critico:this.producto.stock_critico,precio:this.producto.precio,imagen:urll,estado:this.producto.estado}
+                this.producto.tipo = this.TipoSeleccionado.id
+                datosEnviar={nombre:this.producto.nombre,tipo:this.producto.tipo,stock:this.producto.stock,stock_critico:this.producto.stock_critico,precio:this.producto.precio,imagen:urll,estado:this.producto.estado}
                 console.log(datosEnviar);
                 let url = 'http://localhost/test/?insertar=1';
                 axios.post(url,datosEnviar)

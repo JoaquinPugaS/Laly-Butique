@@ -13,6 +13,19 @@
                     <small id="helpId" class="form-text text-muted">Ingresa el nombre del producto</small>
                 </div>
                 <div class="mb-3">
+                    <label for="tipo" class="form-label">Tipo: </label> <br>
+                    <Listbox v-model="TipoSeleccionado">
+                        <ListboxButton>{{TipoSeleccionado.nombre}}</ListboxButton>
+                        <ListboxOptions>
+                            <ListboxOption v-for="tipo in tipos" :key="tipo.id" :value="tipo">
+                                {{tipo.nombre}}
+                            </ListboxOption>
+                        </ListboxOptions>
+                    </Listbox>
+                    <br>
+                    <small id="helpId" class="form-text text-muted">Ingresa el tipo de producto</small>
+                </div>
+                <div class="mb-3">
                     <label for="stock" class="form-label">Stock: </label>
                     <input type="number"
                         class="form-control" required name="stock" min="1" max="9999" v-model="producto.stock" id="stock" aria-describedby="helpId" placeholder="Stock">
@@ -98,7 +111,12 @@ const estados= [
 const estadoD=[
 {id: 0, nombre:'', nodisponible: false},
 ]
+const estadoT=[
+    {id: 0, nombre: 'Seleccione uno', nodisponible: false},
+]
 const EstadoSeleccionado = ref(estadoD[0])
+var TipoSeleccionado = ref(estadoT[0])
+
 </script>
 <script>
 var urll = " ";
@@ -108,7 +126,8 @@ export default {
 
     data(){
         return{
-            producto:{}
+            producto:{},
+            tipos:{}
         }
 
     },
@@ -127,14 +146,19 @@ export default {
             .then((datosRespuesta)=>{
                 this.producto=datosRespuesta.data[0][1];
                 this.EstadoSeleccionado.nombre = this.producto.estado
-                
+                this.TipoSeleccionado.nombre = this.producto.nombre_tipo
         })
+        url = 'http://localhost/test/?Tipos';
+            axios.get(url).then((datosRespuesta =>{
+                this.tipos = datosRespuesta.data;
+            }))
     },
     ModificarProducto(urla){
         this.urll = urla;
         console.log('link',urll)
         this.producto.estado = this.EstadoSeleccionado.nombre
-        var datosEnviar={id:this.$route.params.id,nombre:this.producto.nombre,stock:this.producto.stock,stock_critico:this.producto.stock_critico,precio:this.producto.precio,imagen:this.urll,estado:this.producto.estado}
+        this.producto.tipo = this.TipoSeleccionado.id
+        var datosEnviar={id:this.$route.params.id,nombre:this.producto.nombre,tipo:this.producto.tipo,stock:this.producto.stock,stock_critico:this.producto.stock_critico,precio:this.producto.precio,imagen:this.urll,estado:this.producto.estado}
         let url = 'http://localhost/test/?modificar='+this.$route.params.id;
         axios.post(url,datosEnviar)
         .then((datosRespuesta=>{
