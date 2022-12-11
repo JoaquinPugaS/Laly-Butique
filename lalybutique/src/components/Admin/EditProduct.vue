@@ -6,6 +6,9 @@
         </div>
         <div class="card-body" style="text-align: left">
             <form v-on:submit.prevent="upload" >
+                <div class="alert alter-danger" role="alert" v-if="error">
+                        Error, El nombre del producto ya existe en la base de datos
+                </div>
                 <div class="mb-3">
                     <label for="nombre" class="form-label">Nombre: </label>
                     <input type="text"
@@ -42,6 +45,19 @@
                     <input type="number"
                         class="form-control" required name="precio" min="1" max="999999999" v-model="producto.precio" id="precio" aria-describedby="helpId" placeholder="Precio">
                     <small id="helpId" class="form-text text-muted">Ingresa el Precio del producto</small>
+                </div>
+                <div class="mb-3">
+                    <label for="talla" class="form-label">Talla: </label> <br>
+                    <Listbox v-model="TallaSeleccionada">
+                        <ListboxButton>{{TallaSeleccionada.nombre}}</ListboxButton>
+                        <ListboxOptions>
+                            <ListboxOption v-for="talla in Tallas" :key="talla.id" :value="talla">
+                                {{talla.nombre}}
+                            </ListboxOption>
+                        </ListboxOptions>
+                    </Listbox>
+                    <br>
+                    <small id="helpId" class="form-text text-muted">Ingresa la talla de producto</small>
                 </div>
                 <div class="mb-3" id="uploadImage">
                     <label for="imagen" class="form-label">Imagen: </label>
@@ -108,14 +124,26 @@ const estados= [
     {id: 2, nombre: 'No disponible', nodisponible: false},
     {id: 3, nombre: 'Agotado', nodisponible: false},
 ]
+const Tallas= [
+    {id: 1, nombre: 'XS', nodisponible: false},
+    {id: 2, nombre: 'S', nodisponible: false},
+    {id: 3, nombre: 'M', nodisponible: false},
+    {id: 4, nombre: 'L', nodisponible: false},
+    {id: 5, nombre: 'XL', nodisponible: false},
+    {id: 6, nombre: 'XXL', nodisponible: false},
+]
+const estadoTallas=[
+    {id: 0, nombre: 'Seleccione uno', nodisponible: false},
+]
 const estadoD=[
-{id: 0, nombre:'', nodisponible: false},
+    {id: 0, nombre: 'Seleccione uno', nodisponible: false},
 ]
 const estadoT=[
     {id: 0, nombre: 'Seleccione uno', nodisponible: false},
 ]
 const EstadoSeleccionado = ref(estadoD[0])
 var TipoSeleccionado = ref(estadoT[0])
+var TallaSeleccionada = ref(estadoTallas[0])
 
 </script>
 <script>
@@ -127,7 +155,8 @@ export default {
     data(){
         return{
             producto:{},
-            tipos:{}
+            tipos:{},
+            error:false,
         }
 
     },
@@ -148,6 +177,7 @@ export default {
                 this.EstadoSeleccionado.nombre = this.producto.estado
                 this.TipoSeleccionado.nombre = this.producto.nombre_tipo
                 this.TipoSeleccionado.id = this.producto.id_tipo
+                this.TallaSeleccionada.nombre = this.producto.talla
         })
         url = 'http://localhost/test/?Tipos';
             axios.get(url).then((datosRespuesta =>{
@@ -159,13 +189,17 @@ export default {
         console.log('link',urll)
         this.producto.estado = this.EstadoSeleccionado.nombre
         this.producto.tipo = this.TipoSeleccionado.id
+        this.producto.talla = this.TallaSeleccionada.nombre
         console.log(this.TipoSeleccionado)
-        var datosEnviar={id:this.$route.params.id,nombre:this.producto.nombre,tipo:this.producto.tipo,stock:this.producto.stock,stock_critico:this.producto.stock_critico,precio:this.producto.precio,imagen:this.urll,estado:this.producto.estado}
+        var datosEnviar={id:this.$route.params.id,nombre:this.producto.nombre,tipo:this.producto.tipo,stock:this.producto.stock,stock_critico:this.producto.stock_critico,precio:this.producto.precio,talla:this.producto.talla,imagen:this.urll,estado:this.producto.estado}
         let url = 'http://localhost/test/?modificar='+this.$route.params.id;
         axios.post(url,datosEnviar)
         .then((datosRespuesta=>{
-            console.log(datosRespuesta);
-            window.location.href='../ListProducts'
+            if(datosRespuesta.data.success==1){
+                window.location.href='../ListProducts'
+            }else{
+                this.error = true;
+            }
         }))
     },
         handleFileChange: function(event) {

@@ -2,7 +2,7 @@
     <div class="container">
         <div class="card">
             <div class="card-header">
-                Agregar un tipo de producto
+                Editar Tipo
             </div>
             <div class="card-body" style="text-align: left">
                 <form v-on:submit.prevent="upload" >
@@ -16,7 +16,7 @@
                         <small id="helpId" class="form-text text-muted">Ingresa el nombre del tipo</small>
                     </div>
                     <div class="btn-group" role="group" aria-label="">
-                        <button type="submit" class="btn btn-success" >Añadir</button>
+                        <button type="submit" class="btn btn-success" >Editar</button>
                         <router-link :to="{name:'ListProducts'}" class="btn btn-warning">Cancelar </router-link>
                     </div>
                 </form>
@@ -25,25 +25,44 @@
     </div>
 </template>
 <script>
-import axios from 'axios';
-
+import axios from 'axios'
 export default {
     data(){
         return{
             tipo:{},
-            error: false,
+            error:false,
         }
     },
+    beforeMount(){
+    if(!localStorage.getItem('admin_token')){
+        window.location.href='/Login'
+    }
+    },
+    created:function(){
+        this.ObtenerInformacionID();
+    },
     methods:{
-        upload(){
-                let url = 'http://localhost/test/?addTipo';
-            var datosEnviar= {nombre: this.tipo.nombre};
-            axios.post(url,datosEnviar).then((datosRespuesta=>{
-                if(datosRespuesta.data.success===1){
-                    window.location.href='TypesList'
-                }else if(datosRespuesta.data.success===2){
-                    this.error = true;
-                }
+        upload: function(){
+                this.ModificarTipo();
+        },
+        ObtenerInformacionID(){
+        let url = 'http://localhost/test/?consultarTipo='+this.$route.params.id;
+        axios.get(url)
+        .then((datosRespuesta=>{
+            console.log(datosRespuesta),
+            this.tipo=datosRespuesta.data[0]
+        }))
+        },
+        ModificarTipo(){
+            var datosEnviar={id: this.tipo.id,nombre:this.tipo.nombre}
+            let url = 'http://localhost/test/?modificarTipo='+this.$route.params.id;
+            axios.post(url,datosEnviar)
+            .then((datosRespuesta=>{
+                if(datosRespuesta.data.success==1){
+                    window.location.href="../TypesList"
+                }else(
+                    this.error = true
+                )
             }))
         }
     }

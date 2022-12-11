@@ -22,6 +22,8 @@ import DetailSale from '../components/Admin/DetailSale'
 import EditTrackingNumber from '../components/Admin/EditTrackingNumber'
 import ListDebtors from '../components/Admin/ListDebtors'
 import CreateType from '../components/Admin/CreateType'
+import TypesList from '../components/Admin/TypesList'
+import EditType from '../components/Admin/EditType'
 const routes = [
   {
     path: '/admin',
@@ -42,6 +44,16 @@ const routes = [
         path: '/admin/ListProducts',
         name: 'ListProducts',
         component: ListProducts
+      },
+      {
+        path: '/admin/TypesList',
+        name: 'TypesList',
+        component: TypesList
+      },
+      {
+        path: '/admin/EditType/:id',
+        name: 'EditType',
+        component: EditType
       },
       {
         path: '/admin/Dashboard',

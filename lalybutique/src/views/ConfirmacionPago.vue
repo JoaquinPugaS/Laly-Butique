@@ -3,6 +3,7 @@
 <div v-if="aprobado==1">
     APROBADO
     <div style="text-align: left">
+        Codigo de venta: <a>{{respuesta.buy_order}}</a><br>
         Fecha: <a>{{respuesta.transaction_date}}</a><br>
         Nombre: <a>{{nombre}}</a><br>
         Rut: <a>{{rut}}</a><br>
@@ -35,9 +36,23 @@
         Total a pagar: <a style="padding-right: 100px">${{cart_total}}</a>
     </div>
 </div>
-<div v-if="aprobado==0">
-    RECHAZADO
+<div class="modal fade" id="Error" tabindex="-1" aria-labelledby="ErrorLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Error</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Ocurrió un error en la venta, por favor intente realizar la compra nuevamente
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="Refrescar()">Cerrar</button>
+            </div>
+        </div>
+    </div>
 </div>
+<button  id="btnOpen" hidden  data-bs-toggle="modal" data-bs-target="#Error"></button>
 </template>
 <script>
 import { WebpayPlus } from 'transbank-sdk'; // ES6 Modules
@@ -98,11 +113,28 @@ export default {
                 ))
             }
             
-        }else{
+        }else if(this.respuesta.response_code != 0){
             this.aprobado = 0;
+            id_venta = localStorage.getItem('cod_venta')
+            console.log(id_venta);
+            let url = 'http://localhost/test/?ErrorPago=1';
+            axios.post(url,id_venta).then((datosRespuesta=>{
+                if(datosRespuesta.data.success==1){
+                    this.clickButton()
+                }
+            }))
+
         }
-        localStorage.clear();
-        }
+        // localStorage.clear();
+        },
+        clickButton() {
+            var click_event = new CustomEvent('click');
+            var btn_element = document.querySelector('#btnOpen');
+            btn_element.dispatchEvent(click_event);
+        },
+        Refrescar(){
+            window.location.href='/Cart'
+        },
     }
     ,computed:{
             cart_total(){

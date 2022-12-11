@@ -46,6 +46,19 @@
                         class="form-control" required  name="precio" v-model="producto.precio" id="precio" aria-describedby="helpId" placeholder="Precio">
                     <small id="helpId" class="form-text text-muted">Ingresa el Precio del producto</small>
                 </div>
+                <div class="mb-3">
+                    <label for="talla" class="form-label">Talla: </label> <br>
+                    <Listbox v-model="TallaSeleccionada">
+                        <ListboxButton>{{TallaSeleccionada.nombre}}</ListboxButton>
+                        <ListboxOptions>
+                            <ListboxOption v-for="talla in Tallas" :key="talla.id" :value="talla">
+                                {{talla.nombre}}
+                            </ListboxOption>
+                        </ListboxOptions>
+                    </Listbox>
+                    <br>
+                    <small id="helpId" class="form-text text-muted">Ingresa la talla de producto</small>
+                </div>
                 <div class="mb-3" id="uploadImage">
                     <label for="imagen" class="form-label">Imagen: </label>
                     <input type="file"
@@ -86,6 +99,17 @@ const estados= [
     {id: 2, nombre: 'No disponible', nodisponible: false},
     {id: 3, nombre: 'Agotado', nodisponible: false},
 ]
+const Tallas= [
+    {id: 1, nombre: 'XS', nodisponible: false},
+    {id: 2, nombre: 'S', nodisponible: false},
+    {id: 3, nombre: 'M', nodisponible: false},
+    {id: 4, nombre: 'L', nodisponible: false},
+    {id: 5, nombre: 'XL', nodisponible: false},
+    {id: 6, nombre: 'XXL', nodisponible: false},
+]
+const estadoTallas=[
+    {id: 0, nombre: 'Seleccione uno', nodisponible: false},
+]
 const estadoD=[
     {id: 0, nombre: 'Seleccione uno', nodisponible: false},
 ]
@@ -94,6 +118,7 @@ const estadoT=[
 ]
 const EstadoSeleccionado = ref(estadoD[0])
 var TipoSeleccionado = ref(estadoT[0])
+var TallaSeleccionada = ref(estadoTallas[0])
 </script>
 <script>
 var urll = " ";
@@ -178,13 +203,15 @@ export default {
                 }
                 this.producto.estado = this.EstadoSeleccionado.nombre
                 this.producto.tipo = this.TipoSeleccionado.id
-                datosEnviar={nombre:this.producto.nombre,tipo:this.producto.tipo,stock:this.producto.stock,stock_critico:this.producto.stock_critico,precio:this.producto.precio,imagen:urll,estado:this.producto.estado}
+                this.producto.talla = this.TallaSeleccionada.nombre
+                console.log(this.producto.talla);
+                datosEnviar={nombre:this.producto.nombre,tipo:this.producto.tipo,stock:this.producto.stock,stock_critico:this.producto.stock_critico,precio:this.producto.precio,talla:this.producto.talla,imagen:urll,estado:this.producto.estado}
                 console.log(datosEnviar);
                 let url = 'http://localhost/test/?insertar=1';
                 axios.post(url,datosEnviar)
                 .then((datosRespuesta=>{
                     if(datosRespuesta.data.success===1){
-                        // window.location.href='ListProducts'
+                        window.location.href='ListProducts'
                         console.log('listo');
                     }else{
                         console.log('Error');
