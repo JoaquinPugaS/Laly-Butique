@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 06-12-2022 a las 23:50:45
+-- Tiempo de generación: 13-12-2022 a las 04:31:48
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.1.6
 
@@ -53,6 +53,7 @@ CREATE TABLE `productos` (
   `stock_producto` int(4) NOT NULL,
   `stock_critico_producto` tinyint(2) NOT NULL,
   `precio_producto` int(9) NOT NULL,
+  `talla_producto` varchar(4) NOT NULL,
   `imagen_producto` varchar(255) NOT NULL,
   `estado_producto` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -61,31 +62,11 @@ CREATE TABLE `productos` (
 -- Volcado de datos para la tabla `productos`
 --
 
-INSERT INTO `productos` (`id_producto`, `id_Tipo`, `nombre_producto`, `stock_producto`, `stock_critico_producto`, `precio_producto`, `imagen_producto`, `estado_producto`) VALUES
-(55, 0, 'Edu', 20, 5, 2000, 'http://res.cloudinary.com/dcmca9cgi/image/upload/v1668883290/jwnfjtompf4twl6tcxwl.png', 'Disponible'),
-(58, 0, 'PUGA', 123, 2, 12, 'http://res.cloudinary.com/dcmca9cgi/image/upload/v1666041890/wyixyw4x5ewkqmrhp3gl.jpg', 'Agotado'),
-(60, 0, 'vasto', 123, 2, 1, 'http://res.cloudinary.com/dcmca9cgi/image/upload/v1666132777/kscslkncmltv6b7mm1j3.jpg', 'Disponible'),
-(66, 0, 'diego', 23, 23, 2, 'http://res.cloudinary.com/dcmca9cgi/image/upload/v1666045733/qnq1jh8o7sfgzf3mixhx.jpg', 'Disponible'),
-(82, 534, 'TESTvariantes', 23, 2, 32, 'http://res.cloudinary.com/dcmca9cgi/image/upload/v1668638596/t9rtysoyuz6tai0rtbhs.jpg', 'Disponible'),
-(83, 263, 'Lucas234', 23, 23, 23, 'http://res.cloudinary.com/dcmca9cgi/image/upload/v1668639439/wrtqbof6tpl12lcwbhri.png', 'Disponible'),
-(84, 446, 'adsadsa', 232, 23, 23, 'http://res.cloudinary.com/dcmca9cgi/image/upload/v1668639851/oedmxabjoqngqtlmtlx8.jpg', 'Disponible'),
-(85, 586, '2334', 34, 3, 3, 'http://res.cloudinary.com/dcmca9cgi/image/upload/v1668639948/wrgzlptpt0hmvi0rqsaz.jpg', 'Disponible'),
-(86, 171, 'asdasdas', 23, 2, 23, 'http://res.cloudinary.com/dcmca9cgi/image/upload/v1668640059/fdyrn8iui3k7mchm2auh.png', 'Disponible'),
-(87, 171, 'BF', 23, 2, 23, 'http://res.cloudinary.com/dcmca9cgi/image/upload/v1668640059/fdyrn8iui3k7mchm2auh.png', 'Disponible'),
-(88, 109, 'tjsfw3j', 23, 2, 32, 'http://res.cloudinary.com/dcmca9cgi/image/upload/v1668640532/njpeoszouawzhpboennt.jpg', 'Disponible'),
-(90, 0, 'iopiop', 43, 3, 43, 'http://res.cloudinary.com/dcmca9cgi/image/upload/v1668641005/xauunblrgxzi8k0bt9tt.jpg', 'Disponible'),
-(91, 730, 'POLERA OSCAR', 32, 5, 23, 'http://res.cloudinary.com/dcmca9cgi/image/upload/v1668886115/kkmogpa5ybp8wtegmpqt.jpg', 'Disponible'),
-(92, 730, 'POLERA OSCARa', 32, 5, 23, 'http://res.cloudinary.com/dcmca9cgi/image/upload/v1668642177/topzpthmveycdjyfgrq1.jpg', 'Disponible'),
-(93, 0, 'CTM', 324, 23, 2, 'http://res.cloudinary.com/dcmca9cgi/image/upload/v1668642231/q1lwb1czdtcnprij4iqu.png', 'Disponible'),
-(94, 0, 'SDASD', 24, 2, 23, 'http://res.cloudinary.com/dcmca9cgi/image/upload/v1668642322/qe9qkfzgcmsorted9p9j.jpg', 'Disponible'),
-(95, 0, 'ADSADS', 23, 2, 2, 'http://res.cloudinary.com/dcmca9cgi/image/upload/v1668642363/pjh531rvowiynwgabiu6.jpg', 'Disponible'),
-(96, 0, 'DASDS', 2423, 23, 23, 'http://res.cloudinary.com/dcmca9cgi/image/upload/v1668642392/ubd8jtgejlcmgzp5pvzh.jpg', 'Disponible'),
-(97, 0, 'DPOP,BNMG4', 45, 4, 45, 'http://res.cloudinary.com/dcmca9cgi/image/upload/v1668642522/e9fftyrm4vpwrstvoywu.jpg', 'Disponible'),
-(98, 230, 'HOLAAAA', 34, 2, 34, 'http://res.cloudinary.com/dcmca9cgi/image/upload/v1668642695/dcpgzajocv4kknus0mzz.png', 'Disponible'),
-(99, 0, 'ASDASDASDAS', 32, 2, 3, 'http://res.cloudinary.com/dcmca9cgi/image/upload/v1668642892/mykpjgdezoygw37dpuzt.png', 'Disponible'),
-(100, 924, 'CMD', 200, 5, 2500, 'http://res.cloudinary.com/dcmca9cgi/image/upload/v1668886330/mi6mfzvmojccm40olvk9.jpg', 'Disponible'),
-(101, 0, 'CHAO', 23, 2, 2, ' ', 'No Disponible'),
-(102, 0, 'baby otaku', 20, 2, 345, ' ', 'Disponible');
+INSERT INTO `productos` (`id_producto`, `id_Tipo`, `nombre_producto`, `stock_producto`, `stock_critico_producto`, `precio_producto`, `talla_producto`, `imagen_producto`, `estado_producto`) VALUES
+(106, 1, 'ola', 2, 5, 2000, '', ' ', 'Disponible'),
+(107, 2, 'ola1', -1, 3, 2000, '', ' ', 'Disponible'),
+(111, 1, 'Polera Nike', 20, 5, 2000, 'L', ' ', 'Disponible'),
+(113, 2, 'Chaqueta naik', 20, 5, 6000, 'XXL', ' ', 'Disponible');
 
 -- --------------------------------------------------------
 
@@ -105,48 +86,102 @@ CREATE TABLE `producto_pedido` (
 --
 
 INSERT INTO `producto_pedido` (`id_venta`, `id_producto`, `cantidad_producto`, `precio_unitario`) VALUES
+(3294, 55, 1, 2000),
+(3294, 91, 1, 23),
+(7592, 106, 1, 2000),
+(62992, 91, 1, 23),
 (75960, 99, 3, 3),
+(82997, 107, 3, 2000),
+(87663, 55, 1, 2000),
+(96965, 55, 2, 2000),
 (110381, 55, 2, 2000),
 (110381, 66, 3, 2),
+(112326, 66, 1, 60000),
+(117675, 106, 1, 2000),
+(122970, 91, 1, 23),
+(136649, 55, 2, 2000),
 (165223, 55, 2, 2000),
 (165223, 98, 4, 34),
 (171006, 55, 2, 2000),
 (171006, 99, 3, 3),
+(174619, 55, 2, 2000),
+(189905, 55, 2, 2000),
+(226202, 55, 1, 2000),
 (228970, 55, 3, 2000),
 (228970, 99, 2, 3),
 (267819, 55, 2, 2000),
+(330570, 105, 2, 200000),
 (350646, 55, 6, 2000),
 (356722, 55, 1, 2000),
+(362682, 55, 1, 2000),
+(373743, 105, 2, 200000),
+(386745, 55, 14, 2000),
+(387874, 106, 1, 2000),
+(396871, 55, 1, 2000),
 (400392, 55, 1, 2000),
 (403794, 55, 2, 2000),
 (405924, 55, 1, 2000),
 (405924, 60, 1, 1),
 (412026, 55, 3, 2000),
 (412026, 99, 2, 3),
+(418081, 105, 1, 200000),
+(423544, 55, 1, 2000),
+(441080, 55, 2, 2000),
+(483809, 55, 2, 2000),
+(491853, 106, 1, 2000),
 (494393, 99, 5, 3),
 (500743, 55, 1, 2000),
+(502805, 60, 1, 22990),
+(502805, 66, 1, 60000),
 (513180, 55, 2, 2000),
+(534341, 55, 2, 2000),
+(536071, 66, 4, 2),
+(543476, 55, 2, 2000),
+(556150, 55, 1, 2000),
 (558017, 55, 3, 2000),
 (558017, 99, 3, 3),
+(567437, 105, 1, 200000),
 (575164, 66, 5, 2),
+(617834, 55, 2, 2000),
+(642188, 107, 4, 2000),
+(643234, 55, 1, 2000),
 (661425, 55, 2, 2000),
 (661425, 99, 6, 3),
+(665877, 66, 2, 60000),
+(667494, 55, 2, 2000),
 (669410, 55, 1, 2000),
 (683114, 55, 3, 2000),
 (683114, 98, 2, 34),
+(684389, 60, 1, 1),
+(688446, 55, 1, 2000),
+(695750, 55, 2, 2000),
 (701345, 55, 2, 2000),
+(716619, 106, 1, 2000),
 (724590, 55, 5, 2000),
 (724590, 99, 6, 3),
+(731326, 55, 1, 2000),
+(733677, 55, 2, 2000),
+(741254, 55, 2, 2000),
 (759981, 55, 2, 2000),
+(763570, 55, 2, 2000),
 (767406, 55, 3, 2000),
 (774468, 100, 1, 2500),
 (774468, 101, 1, 2),
+(890483, 55, 2, 2000),
 (890567, 66, 1, 2),
 (890567, 89, 3, 0),
+(912851, 55, 2, 2000),
 (920258, 55, 2, 2000),
 (921798, 55, 6, 2000),
 (921798, 99, 10, 3),
+(926254, 106, 1, 2000),
+(930204, 55, 2, 2000),
+(936846, 60, 1, 22990),
+(937668, 55, 2, 2000),
 (961510, 55, 2, 2000),
+(975563, 55, 2, 2000),
+(980783, 55, 2, 2000),
+(989076, 55, 1, 2000),
 (991597, 98, 5, 34),
 (991597, 99, 6, 3);
 
@@ -158,20 +193,16 @@ INSERT INTO `producto_pedido` (`id_venta`, `id_producto`, `cantidad_producto`, `
 
 CREATE TABLE `tipo` (
   `id_Tipo` int(5) NOT NULL,
-  `descripcion_tipo` varchar(255) NOT NULL,
-  `Cantidad` tinyint(3) NOT NULL,
-  `precio` int(5) NOT NULL,
-  `imagen` varchar(255) NOT NULL
+  `nombre_tipo` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `tipo`
 --
 
-INSERT INTO `tipo` (`id_Tipo`, `descripcion_tipo`, `Cantidad`, `precio`, `imagen`) VALUES
-(230, 'xlll', 43, 43, 'http://res.cloudinary.com/dcmca9cgi/image/upload/v1668642708/tu2cfy9xyqtdxq3uqv1d.jpg'),
-(730, 'CATOLICA', 23, 23, 'http://res.cloudinary.com/dcmca9cgi/image/upload/v1668642029/worqxciqc4ecsyeb0a1z.jpg'),
-(924, 'powershell', 5, 258, 'http://res.cloudinary.com/dcmca9cgi/image/upload/v1668886365/jqsalcmzzq3nkgesifxj.png');
+INSERT INTO `tipo` (`id_Tipo`, `nombre_tipo`) VALUES
+(1, 'Poleras'),
+(2, 'Chaquetas');
 
 -- --------------------------------------------------------
 
@@ -195,14 +226,12 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`rut_usuario`, `nombre_usuario`, `apellido_usuario`, `email_usuario`, `direccion_usuario`, `contrasenia_usuario`, `telefono_usuario`, `deuda_usuario`) VALUES
-('104952968', '', '', '', '', '', '', 4000),
-('106084173', '', '', '', '', '', '', 4000),
 ('1233123', 'hola', 'si', 'asd@gmail.com', 'xaxurro casa', '123', '123', 0),
-('12345678', '', '', '', '', '', '', 3000),
-('212790206', 'Lucas', 'Ossandón', 'lucasossandon1404@gmail.com', 'Del hierro 177, Limache', '$2y$10$rWQdrIS74yjQntiZswX1K.YcM4CVnW3qcdqhHdxGLFJt7ycwLYWwe', '945114144', 0),
+('212315591', 'Joaquin', 'Puga', '', 'los gladiolos 032', '', '932605683', 3500),
+('212790206', 'Lucas', 'Ossandón', 'lucasossandon1404@gmail.com', 'Del hierro 177, Limache', '$2y$10$rWQdrIS74yjQntiZswX1K.YcM4CVnW3qcdqhHdxGLFJt7ycwLYWwe', '945114144', 6500),
+('37246026', 'Vicente', 'Lopez', '', '123 casa 2', '', '123 casa ', 3500),
 ('54252532', 'LOlo', 'manzanas', 'lolomanzanas@gmail.com', 'pasaje las rosas', '$2y$10$34I11iOZ7hdFdHx/REcS5ujhj9Tn2rimYzs9thHQl1gi8DBRrx/wW', '532843', 0),
-('658472349', 'hoeasd', 'godfl', 'hoegod@gmail.com', 'asdgre', '$2y$10$rllLgelPhbH8JkesnP1DdOwD7OQB9CB7Ff357DTXrjzBHMaNZgMVq', '34543', 20),
-('77777777', '', '', '', '', '', '', 1000);
+('658472349', 'hoeasd', 'godfl', 'hoegod@gmail.com', 'asdgre', '$2y$10$rllLgelPhbH8JkesnP1DdOwD7OQB9CB7Ff357DTXrjzBHMaNZgMVq', '34543', 20);
 
 -- --------------------------------------------------------
 
@@ -224,43 +253,10 @@ CREATE TABLE `venta` (
 --
 
 INSERT INTO `venta` (`id_venta`, `rut_usuario`, `total_a_pagar_orden`, `estado_de_orden`, `fecha_pedido`, `codigo_seguimiento`) VALUES
-(0, '212790206', 0, 'Pagado', '0000-00-00', ''),
-(75960, '456731', 6009, 'Pagado', '0000-00-00', 'No tiene'),
-(110381, '456', 4000, 'Pagado', '0000-00-00', 'No tiene'),
-(165223, '212790206', 4000, 'Pagado', '0000-00-00', 'No tiene'),
-(171006, '797897', 4000, 'Pagado', '0000-00-00', 'Y34534F'),
-(215889, '212790206', 2, 'Pagado', '2022-11-23', ''),
-(224570, '212790206', 23, 'Pagado', '2022-11-13', ''),
-(228970, '456786', 6006, 'Pagado', '0000-00-00', 'No tiene'),
-(231931, '212790206', 2000, 'Pagado', '2022-11-23', ''),
-(267819, '', 4000, 'Pagado', '2022-11-29', ''),
-(269569, '212790206', 2000, 'Pagado', '2022-11-13', ''),
-(350646, '77777777', 12000, 'Pagado', '0000-00-00', 'No tiene'),
-(356722, '212790206', 2000, 'Pagado', '2022-11-29', ''),
-(400392, '212790206', 2000, 'Pagado', '2022-11-29', ''),
-(403794, '454', 4000, 'Pagado', '0000-00-00', 'No tiene'),
-(405924, '212790206', 2001, 'Pagado', '2022-11-27', ''),
-(472965, '', 0, 'Pagado', '0000-00-00', ''),
-(494393, '789', 15, 'Pagado', '0000-00-00', 'No tiene'),
-(500743, '212790206', 2000, 'Pagado', '2022-11-29', ''),
-(575164, '45687', 10, 'Pagado', '0000-00-00', 'No tiene'),
-(616207, '212', 0, 'Pagado', '0000-00-00', 'No tiene'),
-(661425, '456896', 4000, 'Pagado', '0000-00-00', 'No tiene'),
-(669410, '212790206', 2000, 'Pagado', '2022-11-29', ''),
-(682265, '23', 4000, 'Pagado', '0000-00-00', 'No tiene'),
-(683114, '212790206', 6000, 'Pagado', '0000-00-00', 'No tiene'),
-(699194, '212790206', 10201, 'Pagado', '2022-11-12', ''),
-(700715, '5', 18, 'Pagado', '0000-00-00', 'No tiene'),
-(701345, '77777777', 4000, 'Pendiente', '0000-00-00', 'No tiene'),
-(724590, '666666', 10000, 'Pagado', '0000-00-00', 'No tiene'),
-(759981, '212790206', 4000, 'Pagado', '0000-00-00', 'No tiene'),
-(767406, '212790206', 6000, 'Pagado', '2022-11-29', ''),
-(774468, '212790206', 2502, 'Pendiente', '0000-00-00', 'No tiene'),
-(812686, '', 0, 'Pagado', '0000-00-00', 'No tiene'),
-(886189, '', 0, 'Pagado', '0000-00-00', 'No tiene'),
-(890567, '99999', 2, 'Pagado', '0000-00-00', 'No tiene'),
-(921798, '464678', 12000, 'Pagado', '0000-00-00', 'No tiene'),
-(991597, '4535', 170, 'Pagado', '0000-00-00', 'No tiene');
+(330570, '212790206', 400000, 'Pagado', '0000-00-00', 'No tiene'),
+(502805, '212790206', 82990, 'Pagado', '2022-12-08', ''),
+(642188, '212790206', 8000, 'Pagado', '2022-12-11', ''),
+(936846, '212790206', 22990, 'Pagado', '2022-12-08', '');
 
 --
 -- Índices para tablas volcadas
@@ -310,7 +306,13 @@ ALTER TABLE `venta`
 -- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
-  MODIFY `id_producto` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
+  MODIFY `id_producto` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=118;
+
+--
+-- AUTO_INCREMENT de la tabla `tipo`
+--
+ALTER TABLE `tipo`
+  MODIFY `id_Tipo` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
