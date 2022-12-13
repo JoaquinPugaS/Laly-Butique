@@ -28,6 +28,7 @@
 								<span class="fa fa-star"></span>
 							</div>
 						</div>
+						<h4 class="talla">Talla: <span>{{producto.talla}}</span></h4>
 						<h4 class="price">Precio: <span>${{producto.precio}}</span></h4>
                         <div v-if="variant == true ">
                             <h6 class="text-uppercase">Variaciones</h6> 
@@ -77,7 +78,6 @@ export default {
                 axios.get(url)
                 .then((datosRespuesta)=>{
                     this.producto=datosRespuesta.data[0][1]
-                    console.log(datosRespuesta.data);
                     if(datosRespuesta.data[1].length > 1){
                         this.variantes=datosRespuesta.data[1][1];
                         this.variant = true;

@@ -24,6 +24,8 @@ import ListDebtors from '../components/Admin/ListDebtors'
 import CreateType from '../components/Admin/CreateType'
 import TypesList from '../components/Admin/TypesList'
 import EditType from '../components/Admin/EditType'
+import ProductosPorCategoria from '../components/ProductosPorCategoria'
+import ListCategorys from '../components/ListCategorys'
 const routes = [
   {
     path: '/admin',
@@ -102,12 +104,22 @@ const routes = [
       {
         path: '/Products',
         name: 'Products',
-        component: ProductsCatalog
+        component: ProductsCatalog,
+      },
+      {
+        path: 'Products/:id',
+        name: 'categorias',
+        component: ProductosPorCategoria,
       },
       {
         path: '/Product/:id',
         name: 'ProductDetail',
         component: ProductDetail
+      },
+      {
+        path: '/WASA',
+        name: 'wasa',
+        component: ListCategorys
       },
       {
         path:'/Login',

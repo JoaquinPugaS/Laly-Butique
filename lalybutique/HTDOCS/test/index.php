@@ -359,6 +359,44 @@ if(isset($_GET["consultar"])){
     $id = $_GET["consultar"];
     Consultar($id);
 }
+Function consultarPorTipo($id){
+    include_once 'db.php';
+    $objeto = new Conexion();
+    $conexion = $objeto->Conectar();
+    $productos = array();
+    $sql = "SELECT * FROM productos WHERE id_Tipo ='$id'";
+    $query = $conexion -> query($sql);
+    if($query->rowCount()){
+        while($row = $query-> fetch(PDO::FETCH_ASSOC)){
+            // $id = $row['id_Tipo'];
+            // $sql1 = "SELECT nombre_tipo from tipo where id_Tipo = $id";
+            // $query1 = $conexion -> query($sql1);
+            // $nombre = $query1->fetch(PDO::FETCH_ASSOC);
+            $item = array(
+                'id' => $row['id_producto'],
+                'id_tipo' => $row['id_Tipo'],
+                'nombre' => $row['nombre_producto'],
+                'stock' => $row['stock_producto'],
+                'stock_critico' => $row['stock_critico_producto'],
+                'precio' => $row['precio_producto'],
+                'talla' => $row['talla_producto'],
+                'imagen' => $row['imagen_producto'],
+                'estado' => $row['estado_producto'],
+                // 'nombre_tipo' => $nombre['nombre_tipo']
+            );
+            array_push($productos, $item);
+        }
+        echo json_encode($productos);
+        exit();
+        
+    }else{  
+        echo json_encode(["success"=>0]);
+    }
+}
+if(isset($_GET["consultarPorTipo"])){
+    $id = $_GET["consultarPorTipo"];
+    consultarPorTipo($id);
+}
 Function consultarTipo($id){
     include_once 'db.php';
     $objeto = new Conexion();

@@ -1,16 +1,7 @@
 <template>
     LISTA DE PRODUCTOS
-    <!-- <div id="categorias" >
-        Tipos:
-        <fieldset>
-        <div  v-for="tipo in tipos" :key="tipo.id">
-            <input type="radio" name="tipo" @click="mostrarTipos(tipo.id)" v-model="tipo.id">{{tipo.nombre}}
-        </div>
-            <input type="radio" name="tipo" @click="consultarProductos()">Todos
-
-        </fieldset>
-    </div> -->
-    <list-categorys></list-categorys>
+    <list-categorys>
+    </list-categorys>
     <div class="Container">
         <div class="card" style="width: 18rem;display: inline-flex;margin-right: 20px;margin-bottom:20px" v-for="producto  in productos" :key="producto.id">
             <router-link :to="{ name: 'ProductDetail', params: { id: producto.id },}">
@@ -28,7 +19,6 @@
 <script>
 import axios from "axios";
 import ListCategorys from '@/components/ListCategorys.vue'
-
 export default {
     components: {ListCategorys}
     ,data(){
@@ -37,14 +27,21 @@ export default {
             tipos:{}
         }
     },
-    created:function(){
+watch:{
+    '$route.params.id':function(){
+        this.consultarProductos();
+    }
+}
+    ,beforeMount(){
         this.consultarProductos();
         // this.consultarTipos();
     },
     methods:{
         consultarProductos(){
-            let url  = 'http://localhost/test/?listar';
+            let url  = 'http://localhost/test/?consultarPorTipo='+this.$route.params.id;
+            console.log(url);
             axios.get(url).then((datosRespuesta)=>(this.productos = datosRespuesta.data));
+            console.log(this.productos);
         },
         mostrarTipos(id){
             // console.log('ID: '+id);
