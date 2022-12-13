@@ -5,23 +5,19 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li>
-          <a class="nav-link" id="nava"><router-link to="/admin/Dashboard">Resumen</router-link> </a>
-        </li>
-        <li>
-          <a class="nav-link" id="nava"><router-link to="/admin/CreateProduct">Crear</router-link> </a>
-          
-        </li>
-        <li>
           <a class="nav-link" id="nava" > <router-link to="/admin/ListProducts">Productos</router-link> </a>
         </li>
         <li>
           <a class="nav-link" id="nava" > <router-link to="/admin/GenerateSale">Generar Venta</router-link> </a>
         </li>
         <li>
-          <a class="nav-link" id="nava" > <router-link to="/admin/CreateType">Crear Tipo</router-link> </a>
+          <a class="nav-link" id="nava" > <router-link to="/admin/TypesList">Tipos</router-link> </a>
         </li>
         <li>
-          <a class="nav-link" id="nava" > <router-link to="/admin/TypesList">Tipos</router-link> </a>
+          <a class="nav-link" id="nava" > <router-link to="/admin/Dashboard/Sales">Ventas</router-link> </a>
+        </li>
+        <li>
+          <a class="nav-link" id="nava" > <router-link to="/admin/Dashboard/Deudores">Deudores</router-link> </a>
         </li>
 
       </ul>

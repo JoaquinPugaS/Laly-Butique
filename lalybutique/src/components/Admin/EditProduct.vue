@@ -192,6 +192,7 @@ export default {
         this.producto.talla = this.TallaSeleccionada.nombre
         console.log(this.TipoSeleccionado)
         var datosEnviar={id:this.$route.params.id,nombre:this.producto.nombre,tipo:this.producto.tipo,stock:this.producto.stock,stock_critico:this.producto.stock_critico,precio:this.producto.precio,talla:this.producto.talla,imagen:this.urll,estado:this.producto.estado}
+        console.log(datosEnviar);
         let url = 'http://localhost/test/?modificar='+this.$route.params.id;
         axios.post(url,datosEnviar)
         .then((datosRespuesta=>{

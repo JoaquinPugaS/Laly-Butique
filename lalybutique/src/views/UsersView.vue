@@ -9,7 +9,7 @@
         </li>
         <li>
           
-          <a class="nav-link" id="nava" > <router-link to="/Cart">Carrito <span style="background-color:purple;font-weight: bold;">{{cartItemsTotal}}</span></router-link> </a>
+          <a class="nav-link" id="nava" > <router-link to="/Cart">Carrito <span style="background-color:#f52cd0;font-weight: bold;">{{cartItemsTotal}}</span></router-link> </a>
         </li>
       </ul>
       <a v-if="token == false" class="nav-link"  id="nava"><router-link to='/Login'><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
@@ -25,7 +25,7 @@
         </a>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
           <li><a> <router-link to="/Purchases">Compras</router-link> </a></li>
-          <li><a v-on:click="CerrarSesion();">Salir</a></li>
+          <li><a style="colo" v-on:click="CerrarSesion();">Salir</a></li>
         </ul>
       </div>
 
@@ -84,6 +84,12 @@ export default {
     font-weight: bold;
     color: #be7af0;
     text-decoration: none;
+  }
+  a:hover{
+    font-weight: bold;
+    color: #be7af0;
+    text-decoration: none;
+
   }
   
   nav a.router-link-exact-active {

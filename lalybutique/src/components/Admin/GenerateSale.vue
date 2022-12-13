@@ -138,6 +138,7 @@ const EstadoSeleccionado = ref(estadoD[0])
 </script>
 <script>
 import axios from 'axios';
+// eslint-disable-next-line
 var precio = 0;
 export default {
     data(){
@@ -180,11 +181,16 @@ export default {
                         }
                     }
                     let id = Math.floor((Math.random() * 1000000) + 1);
+                    // eslint-disable-next-line
                     let url = "http://localhost/test/?ventaM=1";
+                    // eslint-disable-next-line
                     var asd = 0;
+                    // eslint-disable-next-line
                     var o = 0;
                     for(var j in this.ar){
                         var datosEnviar = {producto_id: this.ar[j].id, cantidad:this.ar[j].cant,codigo:id};
+                        console.log(datosEnviar);
+                        this.RestarProducto(this.ar[j].id,this.ar[j].cant);
                         axios.post(url,datosEnviar).then((datosRespuesta=>{
                             asd=(datosRespuesta.data.precio_unitario * datosRespuesta.data.cantidad);
                             o++;
@@ -203,7 +209,18 @@ export default {
                     }
                 }
         },
-        addPrice(precios,num,id){
+        RestarProducto(id1, cantidad1){
+        var datosEnviar1 = {id: id1,cantidad:cantidad1};
+        let url = "http://localhost/test/?restarProducto";
+        console.log(datosEnviar1);
+        axios.post(url,datosEnviar1).then((datosRespuesta=>{
+            if(datosRespuesta.data.success==1){
+                console.log('restado');
+            }
+            }
+        ))
+        }
+        ,addPrice(precios,num,id){
             precio = precios
             if(num == 1){
                 precio = precios
@@ -231,6 +248,7 @@ export default {
                         }))
                         this.abonoS = true;
                     }
+
                 
                 
             }

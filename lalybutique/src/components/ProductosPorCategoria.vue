@@ -5,7 +5,7 @@
     <div class="Container">
         <div class="card" style="width: 18rem;display: inline-flex;margin-right: 20px;margin-bottom:20px" v-for="producto  in productos" :key="producto.id">
             <router-link :to="{ name: 'ProductDetail', params: { id: producto.id },}">
-            <img v-bind:src="`${producto.imagen}`" class="card-img-top" alt="..." width="200" height="200" v-if="producto.imagen!= ' '">
+            <img v-bind:src="`${producto.imagen}`" class="card-img-top" alt="..." width="200" height="250" v-if="producto.imagen!= ' '">
             <img v-else src="../assets/noDisp.png" width="250" height="200" style="margin-rigth: 20px;margin-left: 20px" >
             <div class="card-body">
                 <h5 class="card-title">{{producto.nombre}}</h5>

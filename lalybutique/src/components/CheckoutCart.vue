@@ -18,6 +18,10 @@
         Error, el email no es valido...
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert" v-if="errorFono">
+        Error, ingrese un telefono valido...
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
     <div v-if="datos == true">
         <form v-on:submit.prevent="webPayf" >
             <div class="mb-3">
@@ -42,7 +46,7 @@
             </div>
             <div class="mb-3">
                 <label for="Telefono" class="form-label">Teléfono</label>
-                <input type="text" required minlength="9" maxlength="9" class="form-control" id="Telefono" v-model="datosUser.telefono">
+                <input type="text" required minlength="0" maxlength="9" class="form-control" id="Telefono" v-model="datosUser.telefono">
             </div>
             <button id="bConfirmar" class="btn btn-primary">Confirmar</button>
         </form>
@@ -68,6 +72,7 @@ import axios from 'axios';
                 final: false,
                 errorRut: false,
                 errorEmail: false,
+                errorFono: false
             }
         },
         beforeMount(){
@@ -95,8 +100,14 @@ import axios from 'axios';
                 if(!this.datosUser.email.match(patron)){
                     this.errorEmail = true;
                 }else{
-                    const tx = new WebpayPlus.Transaction(new Options(IntegrationCommerceCodes.WEBPAY_PLUS, IntegrationApiKeys.WEBPAY, Environment.Integration))
-                    const orden = localStorage.getItem('cod_venta');
+                    let patron2 = /^(0|[1-9][0-9]*)$/;
+                    if(!this.datosUser.telefono.match(patron2)){
+                        this.errorFono = true;
+
+                    }else{
+
+                        const tx = new WebpayPlus.Transaction(new Options(IntegrationCommerceCodes.WEBPAY_PLUS, IntegrationApiKeys.WEBPAY, Environment.Integration))
+                        const orden = localStorage.getItem('cod_venta');
                     const buyorder = 'Laly Boutique-'+orden;
                     var sessionId = 0;
                     if(!localStorage.getItem('user_token')){
@@ -118,16 +129,17 @@ import axios from 'axios';
                         button1.disabled = true;
                     const input_nombre = document.querySelector('#nombre');
                         input_nombre.disabled = true;
-                    const input_apellido = document.querySelector('#apellido');
+                        const input_apellido = document.querySelector('#apellido');
                         input_apellido.disabled = true;
                     const input_rut = document.querySelector('#rut');
-                        input_rut.disabled = true;
+                    input_rut.disabled = true;
                     const input_Email = document.querySelector('#Email');
-                        input_Email.disabled = true;
+                    input_Email.disabled = true;
                     const input_Telefono = document.querySelector('#Telefono');
-                        input_Telefono.disabled = true;
+                    input_Telefono.disabled = true;
                     const input_Direccion = document.querySelector('#Direccion');
-                        input_Direccion.disabled = true;
+                    input_Direccion.disabled = true;
+                }
                 }
             }
             },

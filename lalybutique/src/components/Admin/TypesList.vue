@@ -3,6 +3,8 @@
         <div class="card">
             <div class="card-header">
                 Tipos de productos
+                <router-link :to="{ name: 'CreateType'}" class="btn btn-info">Agregar</router-link>
+
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -30,7 +32,7 @@
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <h5 style="color:black">¿Desea eliminar el producto seleccionado?</h5>
+                                                        <h5 style="color:black">¿Desea eliminar el tipo de producto seleccionado?</h5>
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" v-on:click="BorrarTipo('',true)" class="btn btn-success">Aceptar</button>

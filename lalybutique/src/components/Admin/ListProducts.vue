@@ -3,6 +3,9 @@
         <div class="card">
             <div class="card-header">
                 Productos
+                <router-link :to="{ name: 'CreateProduct'}" class="btn btn-info">Agregar</router-link>
+                <router-link :to="{ name: 'TypesList'}" class="btn btn-success">Tipos de productos</router-link>
+
             </div>
             <div class="card-body">
                 <div class="table-responsive">

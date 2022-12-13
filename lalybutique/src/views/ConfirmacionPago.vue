@@ -1,5 +1,4 @@
 <template>
-<a>{{respuesta}}</a>
 <div v-if="aprobado==1">
     APROBADO
     <div style="text-align: left">

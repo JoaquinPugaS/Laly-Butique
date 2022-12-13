@@ -1,11 +1,21 @@
 <template>
-    <div class="cell">
+    <div style="text-align:left">
+    <b><i>
+
+        Categorias:
+    </i></b>
+    
         <ul>
-            <li v-for="tipo in tipos" :key="tipo.id">
-            <router-link
-            :to="{name: 'categorias', params: {id:tipo.id},}">
-            {{tipo.nombre}}
-            </router-link>
+            <li id= 'lateralMenu' v-for="tipo in tipos" :key="tipo.id">
+            <b><i>
+
+                
+                <router-link
+                :to="{name: 'categorias', params: {id:tipo.id},}">
+                {{tipo.nombre}}
+                </router-link>
+            </i>
+            </b>
             </li>
         </ul>
     </div>
@@ -33,4 +43,17 @@ export default {
     }
 }
 </script>
+<style scoped>
+li{
+    color: black;
+    text-decoration: none;
+
+    
+}
+
+
+
+
+
+</style>
 

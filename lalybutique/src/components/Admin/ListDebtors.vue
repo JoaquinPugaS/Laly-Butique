@@ -49,10 +49,12 @@ export default {
     },
     methods:{
         ObtenerDeudores(){
-            let url = 'http://localhost/test/?deudores';
+            let url = 'http://localhost/test/?deuda';
             axios.get(url).then((datosRespuesta)=>(this.deudores = datosRespuesta.data
+            ,console.log(datosRespuesta)
             ),
             );
+
         }
     }
 }
